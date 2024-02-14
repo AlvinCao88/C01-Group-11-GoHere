@@ -8,7 +8,6 @@ USER_ADD_WASHROOM_REQUEST {
   address: string,
   city: string,
   province: string,
-  image: image,
   description: string
 }
 ```
