@@ -1,3 +1,6 @@
+## Getting Started
+Create a branch for your feature name according to Gitflow conventions (`feat/...`) and branch it off of the `dev` branch. Do not commit directly to `main`.
+
 ## Database Schema
 
 ```javascript
