@@ -13,4 +13,11 @@ try {
 
 const db = conn.db("GoHere");
 
-export default db;
+export default {
+  instance: db,
+  collections: {
+    WASHROOMS: "Washrooms",
+    ADD_WASHROOM_REQUESTS: "AddWashroomRequests",
+    ADMINS: "Admins"
+  }
+}

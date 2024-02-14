@@ -1,8 +1,8 @@
 import express from "express";
 
 // Import API Routes
-import userQueryRouter from "./routes/userQuery.route.js";
-import userRequestRouter from "./routes/userRequest.route.js";
+import queriesRouter from "./routes/query.route.js";
+import additionsRouter from "./routes/addition.route.js";
 import adminRouter from "./routes/admin.route.js"
 
 // Import Middleware
@@ -10,8 +10,8 @@ import adminRouter from "./routes/admin.route.js"
 const app = express();
 app.use(express.json());
 
-app.route("/user/query", userQueryRouter);
-app.route("/user/request", userRequestRouter);
+app.route("/user/query", queriesRouter);
+app.route("/user/request", additionsRouter);
 app.route("/admin", adminRouter);
 
 app.listen(8000);
