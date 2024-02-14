@@ -11,6 +11,6 @@ try {
   console.log(e);
 }
 
-const db = conn.db("db_name");
+const db = conn.db("GoHere");
 
 export default db;
