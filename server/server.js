@@ -10,8 +10,8 @@ import adminRouter from "./routes/admin.route.js"
 const app = express();
 app.use(express.json());
 
-app.route("/user/query", queriesRouter);
-app.route("/user/request", additionsRouter);
-app.route("/admin", adminRouter);
+app.use("/user/query", queriesRouter);
+app.use("/user/request", additionsRouter);
+app.use("/admin", adminRouter);
 
 app.listen(8000);
