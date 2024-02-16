@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv"
 
 // Import API Routes
 import queriesRouter from "./routes/query.route.js";
@@ -7,6 +8,7 @@ import adminRouter from "./routes/admin.route.js";
 
 // Import Middleware
 
+dotenv.config()
 const app = express();
 app.use(express.json());
 

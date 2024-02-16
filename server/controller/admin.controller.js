@@ -112,7 +112,56 @@ async function getSingleAddWashroomRequest(req, res) {
  * @param {import("express").Response} res
  */
 async function validateAddWashroomRequest(req, res) {
-  
+  try {
+    const { name, fullAddress } = await req.body;
+
+    // Validate the information sent
+    if (!name || !fullAddress)
+      return res.status(400).json({ error: "Missing fields in body." });
+    if (fullAddress.split(",").length != 4)
+      return res.status(400).json({ error: "Address not of correct format." });
+
+    // Get long/lat information from google Geocode API
+    // Search string is "name, address, city, province postal_code, country"
+    const geocodeRes = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${name},${fullAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    );
+
+    // There may be multiple results, we select the first one
+    const { results: geocodeBody, status } = await geocodeRes.json();
+    if (status !== "OK")
+      return res.status(400).json({ error: "Failed to find location." });
+
+    // Get open/close hours and contact information from google Places API
+    const placesRes = await fetch(
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${geocodeBody[0].place_id}&fields=opening_hours,formatted_phone_number,website&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    );
+    const { result: placesBody } = await placesRes.json();
+
+    // Insert into DB
+    const collection = db.instance.collection(db.collections.WASHROOMS);
+    const result = await collection.insertOne({
+      name: name,
+      fullAddress: fullAddress,
+      latittude: geocodeBody[0].geometry.location.lat,
+      longitude: geocodeBody[0].geometry.location.lng,
+      hours:
+        placesBody && placesBody.opening_hours
+          ? placesBody.opening_hours.weekday_text
+          : [],
+      contact: {
+        number: placesBody ? placesBody.formatted_phone_number : "",
+        website: placesBody ? placesBody.website : "",
+      },
+    });
+
+    res.json({
+      response: "Sucessfully added washroom.",
+      insertedId: result.insertedId,
+    });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
 }
 
 export { 
