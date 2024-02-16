@@ -20,12 +20,18 @@ router.get("/testRestrictedGetRequest", verifyToken, async (req, res) => {
 
 /**
  * Returns a single washroom request from the database.
+ * ":id" represents the id of the washroom getting fetched
  */
 router.get("/addWashroom/getRequest/:id", getSingleAddWashroomRequest)
 
 /**
  * Adds a new washroom into the database based on body contents and deletes
  * the corresponding washroom request.
+ * Requires a nonempty body containing
+ * {
+ *   name: "name of washroom to be added"
+ *   fullAddress: "Address, City, Province PostalCode, Country"
+ * }
  */
 router.post("/addWashroom/validateRequest", validateAddWashroomRequest)
 
