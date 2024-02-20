@@ -33,6 +33,6 @@ router.get("/addWashroom/getRequest/:id", getSingleAddWashroomRequest)
  *   fullAddress: "Address, City, Province PostalCode, Country"
  * }
  */
-router.post("/addWashroom/validateRequest", validateAddWashroomRequest)
+router.post("/addWashroom/validateRequest/:id", validateAddWashroomRequest)
 
 export default router;
