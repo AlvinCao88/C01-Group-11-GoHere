@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv"
+import cors from "cors"
 
 // Import API Routes
 import queriesRouter from "./routes/query.route.js";
@@ -11,6 +12,7 @@ import adminRouter from "./routes/admin.route.js";
 dotenv.config()
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 app.use("/user/query", queriesRouter);
 app.use("/user/request", additionsRouter);
