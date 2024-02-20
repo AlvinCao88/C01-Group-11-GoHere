@@ -1,0 +1,54 @@
+* {
+  font-size: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+input,
+textarea {
+  border-radius: 10px;
+  padding: 10px 3px;
+  margin: 10px 0;
+}
+
+.request-input {
+  background: #dedede;
+}
+
+.request-input:focus {
+  outline: none;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.request-container {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px black solid;
+}
+
+.validate-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#validate-button {
+  /* align-self: end; */
+  padding: 20px;
+  margin: 20px;
+}
