@@ -9,10 +9,18 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~3.1.3",
+    "@stripe/stripe-react-native": "^0.35.1",
     "expo": "~50.0.3",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
-    "react-native": "0.73.2"
+    "react-dom": "18.2.0",
+    "react-native": "0.73.4",
+    "react-native-stripe-checkout-webview": "^0.0.13",
+    "react-native-web": "~0.19.6",
+    "react-native-webview": "^13.8.1",
+    "stripe": "^14.18.0",
+    "@expo/webpack-config": "~19.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

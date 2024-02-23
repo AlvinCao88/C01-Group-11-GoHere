@@ -63,8 +63,16 @@ src/
 ```
 For UI and design decisions, refer to how the current app looks like.
 
-## NextJS frontend
-Not much to talk about. Send questions in discord.
+## React frontend
+Similar structure to the react native app.
+```
+App.js
+src/
+    - components/
+    - assets/
+    - pages/
+```
+
 
 ## Testing
 Since everyone is busy over reading week, I say we don't do this part for sprint 1. However, for those who are creating backend endpoints, please **document your endpoint**. For now, document using comments above the route receiver. Include
