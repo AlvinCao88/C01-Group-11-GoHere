@@ -20,14 +20,6 @@ export default function App() {
   
 };
 
-/*
-<View style={styles.container}>
-      <StatusBar style="dark" />
-      <StripeProvider publishableKey="pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm">
-        <Checkout />
-      </StripeProvider>
-    </View> */
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

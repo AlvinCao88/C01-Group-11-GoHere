@@ -5,7 +5,7 @@ import { useStripe } from "@stripe/stripe-react-native";
 const API_URL = "http://localhost:8000";
 
 const Checkout = () => {
-    const [name, setName] = useState("");
+    //const [name, setName] = useState("");
     const [amount, setAmount] = useState("1");
     const stripe = useStripe();
 
@@ -17,19 +17,21 @@ const Checkout = () => {
             }
             console.log("a");
             //the response below is failing, likely because my phone isn't hosting it...
+            //TODO: test the donate button to see how it works.
             const response = await fetch(`${API_URL}/donate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ amount: finalAmount, name }),
+                body: JSON.stringify({ amount: finalAmount}),
             });
-            console.log("b");
+
             const data = await response.json();
             if (!response.ok) {
                 return Alert.alert(data.message);
             }
 
+            // PaymentSheet will handle the process of entering card details and such
             const initSheet = await stripe.initPaymentSheet({
                 paymentIntentClientSecret: data.clientSecret,
             });
@@ -58,13 +60,9 @@ const Checkout = () => {
     
     return (
         <View>
+            <Text>Enter donation amount below</Text>
             <TextInput
-                placeholder="Name"
-                style={{ padding: 10, borderColor: "black", borderWidth: 1 }}
-                value={name}
-                onChangeText={(e) => setName(e)}
-            />
-            <TextInput
+                textAlign='center'
                 placeholder="Amount"
                 keyboardType="numeric"
                 style={{ padding: 10, borderColor: "black", borderWidth: 1 }}
