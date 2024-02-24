@@ -1,5 +1,7 @@
 import { MongoClient } from "mongodb";
-const connectionString = "mongodb://localhost:27017";
+import 'dotenv/config'
+
+const connectionString = process.env.MONGODB_URL;
 
 const client = new MongoClient(connectionString);
 
@@ -7,6 +9,7 @@ let conn;
 
 try {
   conn = await client.connect();
+  console.log("connected to MONGODB");
 } catch (e) {
   console.log(e);
 }
