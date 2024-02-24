@@ -5,15 +5,14 @@ import { useStripe } from "@stripe/stripe-react-native";
 const API_URL = "http://localhost:8000";
 
 const Checkout = () => {
-    //const [name, setName] = useState("");
     const [amount, setAmount] = useState("1");
     const stripe = useStripe();
 
     const donate = async () => {
         try {
-            const finalAmount = parseInt(amount);
-            if (finalAmount < 1) {
-                return Alert.alert("You cannot donate below 1 CAD");
+            const finalAmount = parseFloat(amount).toFixed(2); //limit to 2 decimal places
+            if (finalAmount <= 0) {
+                return Alert.alert("You cannot donate less than 0 dollars.");
             }
             console.log("a");
             //the response below is failing, likely because my phone isn't hosting it...
@@ -37,7 +36,6 @@ const Checkout = () => {
             });
 
             if (initSheet.error) {
-                console.error(initSheet.error);
                 return Alert.alert(initSheet.error.message);
             }
 
@@ -50,11 +48,12 @@ const Checkout = () => {
                 return Alert.alert(presentSheet.error.message);
             }
 
-            Alert.alert("Donated successfully! Thank you for the donation.");
+            // letting the user know it was successful
+            Alert.alert("Thank you for the donation.");
 
         } catch (err) {
             console.error(err);
-            Alert.alert("Payment failed!");
+            Alert.alert("Payment failed.");
         }
     };
     
@@ -64,12 +63,12 @@ const Checkout = () => {
             <TextInput
                 textAlign='center'
                 placeholder="Amount"
-                keyboardType="numeric"
+                keyboardType="decimal-pad"
                 style={{ padding: 10, borderColor: "black", borderWidth: 1 }}
                 value={amount}
                 onChangeText={(e) => setAmount(e)}
             />
-            <Button title="Donate" onPress={donate} />
+            <Button title="Donate" onPress={donate} color='#e84338' />
         </View>
     )
 }

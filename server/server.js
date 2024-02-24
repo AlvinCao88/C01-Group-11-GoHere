@@ -28,12 +28,14 @@ app.listen(8000);
 // amount is in CENTS!
 app.post("/donate", async (req, res) => {
     try {
-        // Getting data from client
-        let { amount } = req.body;
+        let amount = req.body;
         // Simple validation
-        if (!amount)
+        if (!amount) {
             return res.status(400).json({ message: "Need to enter an amount" });
-        amount = parseInt(amount);
+        }
+        amount = Math.round(amount * 100); //amount was a float with 2 decimal places
+                                           //amount in paymentIntents is in cents so * 100
+                                           //brings it to the correct amount
         
         // Initiate payment
         const paymentIntent = await stripe.paymentIntents.create({
@@ -42,13 +44,12 @@ app.post("/donate", async (req, res) => {
             payment_method_types: ["card"],
         });
         
-        // Extracting the client secret 
+        // clientSecret holds important info but hides sensitive ones
         const clientSecret = paymentIntent.client_secret;
-        // Sending the client secret as response
         res.json({ message: "Payment initiated", clientSecret });
+
     } catch (err) {
         // Catch any error and send error 500 to client
-        console.error(err);
         console.log(err.message);
         res.status(500).json({ message: "Internal Server Error"});
     }
