@@ -1,18 +1,24 @@
 * {
-  font-size: 20px;
+  /* font-size: 20px; */
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 input,
 textarea {
   border-radius: 10px;
-  padding: 10px 3px;
+  padding: 15px 10px;
   margin: 10px 0;
+}
+
+label {
+  font-weight: bold;
 }
 
 .request-input {
   background: #dedede;
+  resize: none;
 }
 
 .request-input:focus {
@@ -24,31 +30,41 @@ textarea {
   width: 100vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding: 5em;
+  gap: 3rem;
 }
 
 .request-container {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px black solid;
+  border: 1px black solid;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: fit-content;
 }
 
 .validate-form {
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 .input-container {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  max-width: 800px;
 }
 
 #validate-button {
-  /* align-self: end; */
-  padding: 20px;
-  margin: 20px;
+  padding: 15px 20px;
+  width: contain-content;
+  width: fit-content;
+}
+
+.success-box {
+  color: green
+}
+
+.error-box {
+  color: red
 }

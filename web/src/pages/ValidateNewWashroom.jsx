@@ -5,6 +5,8 @@ import "./ValidateNewWashroom.css";
 const ValidateNewWashroom = () => {
   const { id } = useParams();
   const [requestDetails, setRequestDetails] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
   const nameRef = useRef(null);
   const fullAddressRef = useRef(null);
 
@@ -23,6 +25,7 @@ const ValidateNewWashroom = () => {
       setRequestDetails(data.response);
     } catch (e) {
       console.log(e);
+      // TODO: redirect back
     }
   }
 
@@ -46,13 +49,21 @@ const ValidateNewWashroom = () => {
 
       if (!res.ok) {
         console.log(await res.json());
+        setIsSuccess(false);
+        setIsError(true);
         return;
       }
 
       nameRef.current.value = "";
       fullAddressRef.current.value = "";
+      setIsSuccess(true);
+      setIsError(false);
+
+      // TODO: redirect to prev page
     } catch (e) {
       console.log(e);
+      setIsSuccess(false);
+      setIsError(true);
     }
   }
 
@@ -63,6 +74,8 @@ const ValidateNewWashroom = () => {
   return (
     <div className="container">
       <div className="request-container">
+        <h1>Processing Washroom Request: {id}</h1>
+        <br />
         <div className="input-container">
           <label htmlFor="address">Address</label>
           <input
@@ -113,11 +126,13 @@ const ValidateNewWashroom = () => {
       <div className="validate-container">
         <form onSubmit={validateWashroom} className="validate-form">
           <div className="input-container">
-            <label htmlFor="name">Place Name</label>
+            <label htmlFor="name">Name on Google Maps</label>
             <input name="name" id="name" type="text" ref={nameRef} />
           </div>
           <div className="input-container">
-            <label htmlFor="full-adderess">Full Address</label>
+            <label htmlFor="full-address">
+              Full Address (Address, City, Province Postal Code, Country)
+            </label>
             <input
               name="full-address"
               id="full-adderess"
@@ -125,7 +140,16 @@ const ValidateNewWashroom = () => {
               ref={fullAddressRef}
             />
           </div>
-          <input id="validate-button" type="submit" value="Submit" />
+          <input
+            id="validate-button"
+            type="submit"
+            value="Submit"
+            disabled={isSuccess}
+          />
+          {isSuccess && <div className="success-box">Washroom added!</div>}
+          {isError && (
+            <div className="error-box">An error occured, please try again.</div>
+          )}
         </form>
       </div>
     </div>
