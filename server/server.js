@@ -1,5 +1,6 @@
 import express from "express";
-import dbConfig from "./config/db.config.js";
+
+
 
 // Import API Routes
 import queriesRouter from "./routes/query.route.js";
