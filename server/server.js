@@ -1,11 +1,9 @@
 import express from "express";
 
-
-
 // Import API Routes
 import queriesRouter from "./routes/query.route.js";
 import additionsRouter from "./routes/addition.route.js";
-import adminRouter from "./routes/admin.route.js"
+import adminRouter from "./routes/admin.route.js";
 
 // Import Middleware
 

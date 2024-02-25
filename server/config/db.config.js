@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import 'dotenv/config'
+import "dotenv/config";
 
 const connectionString = process.env.MONGODB_URL;
 
@@ -21,6 +21,6 @@ export default {
   collections: {
     WASHROOMS: "Washrooms",
     ADD_WASHROOM_REQUESTS: "AddWashroomRequests",
-    ADMINS: "Admins"
-  }
-}
+    ADMINS: "Admins",
+  },
+};
