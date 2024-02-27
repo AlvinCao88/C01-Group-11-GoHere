@@ -1,7 +1,70 @@
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 function LoginPage({ mode }) {
+
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if(mode === "signup"){
+      processSignUp(email, password);
+      return;
+    }
+    processLogin(email, password);
+  }
+
+  const processLogin = async (email, password) => {
+    try{
+      const response = await fetch("/api/v1/admin/loginUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "email": email,
+          "password": password
+        })
+      })
+
+      if(response.ok){
+        const responseBody = await response.json()
+        localStorage.setItem("token", responseBody.token)
+        window.location.href = '/admin'
+      }
+
+  } catch (error){
+    console.log(error)
+  }
+  }
+
+  const processSignUp = async (email, password) => {
+    try{
+      const response = await fetch("/api/v1/admin/registerUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "email": email,
+          "password": password
+        })
+      })
+
+      if(response.ok){
+        const responseBody = await response.json()
+        localStorage.setItem("token", responseBody.token)
+        window.location.href = '/admin'
+      }
+
+  } catch (error){
+    console.log(error)
+  }
+  }
+
   return (
     <div
       className="d-flex justify-content-center"
@@ -14,14 +77,14 @@ function LoginPage({ mode }) {
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control onChange={(e) => {setEmail(e.target.value)}} type="email" placeholder="Enter email" />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control onChange={(e) => {setPassword(e.target.value)}} type="password" placeholder="Password" />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button onClick={(e) => {handleSubmit(e)}} variant="primary" type="submit">
             {mode === "signup" ? "Sign Up" : "Log In"}
           </Button>
           <div className="m-3">
@@ -30,7 +93,7 @@ function LoginPage({ mode }) {
               : `Dont Have An Account?  `}
             <a
               href={mode === "signup" ? `./login` : `./signup`}
-              class={{ marginLeft: "10px" }}
+              style={{ marginLeft: "10px" }}
             >
               <u>{mode === "signup" ? `LOG IN` : `SIGN UP`}</u>
             </a>

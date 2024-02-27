@@ -1,9 +1,29 @@
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 
 function AdminPage({ mode }) {
-  const handleSuperSecretAdminGetRequest = () => {
-    //To Do: write a post request
-  };
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    setToken(localStorage.getItem('token'))
+  })
+
+
+  const handleSuperSecretAdminGetRequest = async () => {
+    try{
+      const response = await fetch("/api/v1/admin/testRestrictedGetRequest", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+
+      const responseBody = await response.json()
+      console.log(responseBody['response'])
+  } catch (error){
+    console.log(error)
+  }
+}
 
   const redirectToLogin = (e) => {
     e.preventDefault();
