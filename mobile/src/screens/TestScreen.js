@@ -4,7 +4,7 @@ import TestComponent from "../components/TestComponent";
 
 export default function TestScreen() {
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TestComponent />
     </View>
   );

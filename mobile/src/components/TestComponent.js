@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 export default function TestComponent() {
   return (
     <View>
-      <Text>Hello World</Text>
+      <Text>Test Place holder</Text>
     </View>
   )
 }
