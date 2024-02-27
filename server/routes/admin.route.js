@@ -1,7 +1,12 @@
 import { Router } from "express";
-import { registerUser, loginUser } from "../controller/admin.controller.js"
 import { verifyToken } from "../middleware/auth.js";
-import { getSingleAddWashroomRequest, validateAddWashroomRequest } from "../controller/admin.controller.js"
+import {
+  registerUser,
+  loginUser,
+  getManyWashroomRequests,
+  getSingleAddWashroomRequest,
+  validateAddWashroomRequest,
+} from "../controller/admin.controller.js";
 
 const router = Router();
 router.use(verifyToken)
@@ -22,7 +27,7 @@ router.get("/testRestrictedGetRequest", verifyToken, async (req, res) => {
  * Returns a single washroom request from the database.
  * ":id" represents the id of the washroom getting fetched
  */
-router.get("/addWashroom/getRequest/:id", getSingleAddWashroomRequest)
+router.get("/addWashroom/getRequest/:id", getSingleAddWashroomRequest);
 
 /**
  * Adds a new washroom into the database based on body contents and deletes
@@ -33,6 +38,8 @@ router.get("/addWashroom/getRequest/:id", getSingleAddWashroomRequest)
  *   fullAddress: "Address, City, Province PostalCode, Country"
  * }
  */
-router.post("/addWashroom/validateRequest/:id", validateAddWashroomRequest)
+router.post("/addWashroom/validateRequest/:id", validateAddWashroomRequest);
+
+router.get("/addWashroom/getManyRequests", getManyWashroomRequests);
 
 export default router;
