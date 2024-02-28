@@ -1,35 +1,47 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Button, Form, Spinner, Stack } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 import "./ValidateNewWashroom.css";
 
 const ValidateNewWashroom = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [requestDetails, setRequestDetails] = useState({});
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const nameRef = useRef(null);
   const fullAddressRef = useRef(null);
 
-  async function fetchWashroomReqeust() {
-    try {
-      const res = await fetch(
-        `http://localhost:8000/admin/addWashroom/getRequest/${id}`,
-        {
-          method: "GET",
-        },
-      );
+  useEffect(() => {
+    async function fetchWashroomReqeust() {
+      try {
+        const res = await fetch(
+          `http://localhost:8000/admin/addWashroom/getRequest/${id}`,
+          {
+            method: "GET",
+          },
+        );
 
-      const data = await res.json();
-      console.log(data);
+        const data = await res.json();
+        if (!data || !data.response) {
+          navigate("/validate/washrooms");
+        }
 
-      setRequestDetails(data.response);
-    } catch (e) {
-      console.log(e);
-      // TODO: redirect back
+        console.log(data);
+
+        setRequestDetails(data.response);
+      } catch (e) {
+        console.log(e);
+        navigate("/validate/washrooms");
+      }
     }
-  }
+
+    fetchWashroomReqeust();
+  }, [id, navigate]);
 
   async function validateWashroom(e) {
+    setLoading(true);
+
     e.preventDefault();
 
     try {
@@ -49,110 +61,77 @@ const ValidateNewWashroom = () => {
 
       if (!res.ok) {
         console.log(await res.json());
-        setIsSuccess(false);
         setIsError(true);
+        setLoading(false);
         return;
       }
 
       nameRef.current.value = "";
       fullAddressRef.current.value = "";
-      setIsSuccess(true);
       setIsError(false);
+      setLoading(false);
 
-      // TODO: redirect to prev page
+      navigate("/validate/washrooms");
     } catch (e) {
       console.log(e);
-      setIsSuccess(false);
+      setLoading(false);
       setIsError(true);
     }
   }
 
-  useEffect(() => {
-    fetchWashroomReqeust();
-  }, []);
-
   return (
-    <div className="container">
-      <div className="request-container">
-        <h1>Processing Washroom Request: {id}</h1>
-        <br />
-        <div className="input-container">
-          <label htmlFor="address">Address</label>
-          <input
-            className="request-input"
-            name="address"
-            id="address"
-            type="text"
-            readOnly
-            value={requestDetails.address || ""}
-          />
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="city">City</label>
-          <input
-            className="request-input"
-            name="city"
-            id="city"
-            type="text"
-            readOnly
-            value={requestDetails.city || ""}
-          />
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="province">Province</label>
-          <input
-            className="request-input"
-            name="province"
-            id="province"
-            type="text"
-            readOnly
-            value={requestDetails.province || ""}
-          />
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="description">Description</label>
-          <textarea
-            className="request-input"
-            name="description"
-            id="description"
-            readOnly
+    <Stack gap={5} className="m-5 all-container">
+      <div className="position-relative p-5 border border-5 border-primary rounded-5">
+        <p className="request-id bg-primary text-white">
+          Request ID: {requestDetails._id}
+        </p>
+        <Form.Group className="mb-3">
+          <Form.Label>Address</Form.Label>
+          <Form.Control value={requestDetails.address || ""} disabled />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>City</Form.Label>
+          <Form.Control value={requestDetails.city || ""} disabled />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Province</Form.Label>
+          <Form.Control value={requestDetails.province || ""} disabled />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            className="textarea"
+            as="textarea"
+            rows={4}
             value={requestDetails.description || ""}
+            disabled
           />
-        </div>
+        </Form.Group>
       </div>
-      <div className="validate-container">
-        <form onSubmit={validateWashroom} className="validate-form">
-          <div className="input-container">
-            <label htmlFor="name">Name on Google Maps</label>
-            <input name="name" id="name" type="text" ref={nameRef} />
-          </div>
-          <div className="input-container">
-            <label htmlFor="full-address">
-              Full Address (Address, City, Province Postal Code, Country)
-            </label>
-            <input
-              name="full-address"
-              id="full-adderess"
-              type="text"
-              ref={fullAddressRef}
-            />
-          </div>
-          <input
-            id="validate-button"
-            type="submit"
-            value="Submit"
-            disabled={isSuccess}
+
+      <Form onSubmit={validateWashroom}>
+        <Form.Group className="mb-3">
+          <Form.Label>Name on Google Maps</Form.Label>
+          <Form.Control type="text" placeholder="Tim Hortons" ref={nameRef} />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Full Address</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Address, City, Province Postal Code, Country"
+            ref={fullAddressRef}
           />
-          {isSuccess && <div className="success-box">Washroom added!</div>}
-          {isError && (
-            <div className="error-box">An error occured, please try again.</div>
-          )}
-        </form>
-      </div>
-    </div>
+        </Form.Group>
+        <Button className="text-white" type="submit">
+          {loading ? <Spinner size="sm" /> : "Submit"}
+        </Button>
+        {isError && (
+          <div className="text-primary mt-3">
+            An error occured, please try again.
+          </div>
+        )}
+      </Form>
+    </Stack>
   );
 };
 

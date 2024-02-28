@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import "./NewWashroomRequests.css";
+import { Link } from "react-router-dom";
 
 const NewWashroomRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -22,18 +25,34 @@ const NewWashroomRequests = () => {
 
     getWashroomRequests();
   }, []);
+
   return (
-    <div>
+    <Container className="mt-5">
+      <h3 className="mb-5">Washroom Requests Sent by Users</h3>
+      <Row className="list-header">
+        <Col xs={3}>Location</Col>
+        <Col>Description</Col>
+        <Col xs={2}>Controls</Col>
+        <hr className="my-3"/>
+      </Row>
       {requests &&
         requests.map((e) => (
-          <div key={e._id}>
-            {e.address}
-            {e.city}
-            {e.province}
-            {e.description}
-          </div>
+          <Row direction="horizontal" gap={3} key={e._id}>
+            <Col xs={3}>
+              {e.address}, {e.city}, {e.province}
+            </Col>
+            <Col>{e.description}</Col>
+            <Col xs={2}>
+              <Button variant="primary">
+                <Link className="link" to={`/validate/washroom/${e._id}`}>
+                  Validate
+                </Link>
+              </Button>
+            </Col>
+            <hr className="my-3"/>
+          </Row>
         ))}
-    </div>
+    </Container>
   );
 };
 

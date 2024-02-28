@@ -1,9 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
-import ValidateNewWashroom from "./pages/ValidateNewWashroom"
-import NewWashroomRequest from "./pages/NewWashroomRequests"
-import "bootstrap/dist/css/bootstrap.css";
+import MainPageLayout from "./components/MainPageLayout";
+import ValidateNewWashroom from "./pages/ValidateNewWashroom";
+import NewWashroomRequest from "./pages/NewWashroomRequests";
+import "./custom.scss";
 
 function App() {
   return (
@@ -13,8 +14,16 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<LoginPage mode={"signup"} />} />
           <Route path="/admin" element={<AdminPage />} />
-          <Route path="/validate/washrooms" element={ <NewWashroomRequest/> }/>
-          <Route path="/validate/washroom/:id" element={ <ValidateNewWashroom/> }/>
+          <Route element={<MainPageLayout />}>
+            <Route
+              path="/validate/washrooms"
+              element={<NewWashroomRequest />}
+            />
+            <Route
+              path="/validate/washroom/:id"
+              element={<ValidateNewWashroom />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
     </>

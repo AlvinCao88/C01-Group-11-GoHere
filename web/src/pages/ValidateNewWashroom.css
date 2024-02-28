@@ -1,70 +1,21 @@
-* {
-  /* font-size: 20px; */
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-input,
-textarea {
-  border-radius: 10px;
-  padding: 15px 10px;
-  margin: 10px 0;
-}
-
 label {
   font-weight: bold;
+  font-size: 20px;
 }
 
-.request-input {
-  background: #dedede;
+.textarea {
   resize: none;
 }
 
-.request-input:focus {
-  outline: none;
-}
-
-.container {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  padding: 5em;
-  gap: 3rem;
-}
-
-.request-container {
-  display: flex;
-  flex-direction: column;
-  border: 1px black solid;
-  padding: 20px;
-  border-radius: 10px;
-  min-width: fit-content;
-}
-
-.validate-form {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-.input-container {
-  display: flex;
-  flex-direction: column;
+.all-container {
   max-width: 800px;
 }
 
-#validate-button {
-  padding: 15px 20px;
-  width: contain-content;
-  width: fit-content;
-}
-
-.success-box {
-  color: green
-}
-
-.error-box {
-  color: red
+.request-id {
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  position: absolute;
+  top: -35px;
 }
