@@ -7,7 +7,7 @@ router.post("/add", addWashroomRequest);
 //This end point is used to add user-requested washrooms into the data base for user requested washrooms.
 // It needs a body. The body should have the following format:
 //USER_ADD_WASHROOM_REQUEST {
-//  id: uuid,
+//  id: uuid, (provided automatically by mongodb)
 //  address: string,
 //  city: string,
 //  province: string,

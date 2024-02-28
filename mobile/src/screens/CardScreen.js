@@ -21,7 +21,7 @@ export default function CardScreen() {
   const textTranslations = {
     titleWashroom: {
       en: "Washroom",
-      fr: "Toilettes",
+      fr: "Toilette",
     },
     accessCard: {
       en: "Access Card",
@@ -33,7 +33,7 @@ export default function CardScreen() {
     },
     helpText: {
       en: "Please help. I require urgent access to a washroom.",
-      fr: "S'il vous plaît aidez. J'ai besoin d'un accès urgent à des toilettes.",
+      fr: "Veuillez m'aider. Je nécessite un accés urgent aux toilettes.",
     },
     crohnsAndColitisCanada: {
       en: "CROHN'S AND COLITIS CANADA",
@@ -41,11 +41,11 @@ export default function CardScreen() {
     },
     goHereProgram: {
       en: "GoHere Washroom Access Program",
-      fr: "Programme d'accès aux toilettes GoHere",
+      fr: "Programme accès aux toilettes GoHere",
     },
     bottomText: {
       en: "I live with Crohn's, a medical condition requiring urgent use of the washroom. Thank you for your understanding and cooperation.",
-      fr: "Je vis avec la maladie de Crohn, une maladie qui nécessite une utilisation urgente des toilettes. Merci de votre compréhension et de votre coopération.",
+      fr: "J'ai la maladie de Crohn, une maladie qui nécessite un accès urgent aux toilettes. Merci de votre compréhension et de votre coopération.",
     },
   };
 
