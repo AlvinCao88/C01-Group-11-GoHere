@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, Button, TextInput, Alert } from 'react-native';
 import { useStripe } from "@stripe/stripe-react-native";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "http://localhost:8000"; //NOTE: if testing, change "localhost" to whatever IP to connect to
 
 const Checkout = () => {
     const [amount, setAmount] = useState("1");
@@ -14,9 +14,7 @@ const Checkout = () => {
             if (finalAmount <= 0) {
                 return Alert.alert("You cannot donate less than 0 dollars.");
             }
-            console.log("a");
-            //the response below is failing, likely because my phone isn't hosting it...
-            //TODO: test the donate button to see how it works.
+
             const response = await fetch(`${API_URL}/donate`, {
                 method: "POST",
                 headers: {
@@ -26,6 +24,7 @@ const Checkout = () => {
             });
 
             const data = await response.json();
+
             if (!response.ok) {
                 return Alert.alert(data.message);
             }
@@ -33,6 +32,8 @@ const Checkout = () => {
             // PaymentSheet will handle the process of entering card details and such
             const initSheet = await stripe.initPaymentSheet({
                 paymentIntentClientSecret: data.clientSecret,
+                merchantDisplayName: "GoHere donation" //this is a piece of required info for initPayment
+                                                       //TODO: may need to change this
             });
 
             if (initSheet.error) {

@@ -6,6 +6,7 @@ import {StripeProvider} from "@stripe/stripe-react-native";
 import TestScreen from "./src/screens/TestScreen";
 import Checkout from "./src/components/Checkout";
 
+//TODO: put the donation page into another screen
 const STRIPE_PUBLBISHABLE_KEY = "pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm";
 export default function App() {
   return (

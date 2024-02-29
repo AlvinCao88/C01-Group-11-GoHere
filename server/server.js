@@ -10,7 +10,9 @@ import Stripe from "stripe";
 // public key
 const stripePublicKey = "pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm";
 
-require("dotenv").config(); //to use secret api key without having it in the file
+import dotenv from 'dotenv';
+dotenv.config(); //used to get secret key
+
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Import Middleware
@@ -25,17 +27,18 @@ app.use("/admin", adminRouter);
 app.listen(8000);
 
 // Managing card payments
-// amount is in CENTS!
+// amount is same as amount customer sees
+// amount == 1.23 means they'll be charged 1.23 CAD
 app.post("/donate", async (req, res) => {
     try {
-        let amount = req.body;
+        let amount = req.body.amount;
+
         // Simple validation
-        if (!amount) {
+        if (isNaN(amount)) {
             return res.status(400).json({ message: "Need to enter an amount" });
         }
-        amount = Math.round(amount * 100); //amount was a float with 2 decimal places
-                                           //amount in paymentIntents is in cents so * 100
-                                           //brings it to the correct amount
+
+        amount = Math.round(amount * 100) / 100;
         
         // Initiate payment
         const paymentIntent = await stripe.paymentIntents.create({
