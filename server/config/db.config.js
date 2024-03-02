@@ -1,7 +1,9 @@
 import { MongoClient } from "mongodb";
-import "dotenv/config";
 
-const connectionString = process.env.MONGODB_URL;
+let connectionString;
+if (process.env.ENV === "Docker")
+  connectionString = process.env.MONGDB_URL || "mongodb://mongodb:27017";
+else connectionString = process.env.MONGDB_URL || "mongodb://localhost:27017";
 
 const client = new MongoClient(connectionString);
 
