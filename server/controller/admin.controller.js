@@ -202,7 +202,7 @@ export async function getManyWashroomRequests(_, res) {
     const data = collection.find({});
 
     if ((await collection.countDocuments({})) === 0) {
-      return res.json({ response: "There are no requests." });
+      return res.status(404).json({ error: "There are no requests." });
     }
 
     res.json({ response: await data.toArray() });
