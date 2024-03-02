@@ -10,9 +10,12 @@ const NewWashroomRequests = () => {
   useEffect(() => {
     async function getWashroomRequests() {
       try {
-        const res = await fetch(
-          `http://localhost:8000/admin/addWashroom/getManyRequests`,
-        );
+        const res = await fetch(`/api/v1/admin/addWashroom/getManyRequests`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
         const data = await res.json();
         console.log(data);
@@ -33,9 +36,9 @@ const NewWashroomRequests = () => {
         <Col xs={3}>Location</Col>
         <Col>Description</Col>
         <Col xs={2}>Controls</Col>
-        <hr className="my-3"/>
+        <hr className="my-3" />
       </Row>
-      {requests &&
+      {requests && requests.length != 0 ? (
         requests.map((e) => (
           <Row direction="horizontal" gap={3} key={e._id}>
             <Col xs={3}>
@@ -49,9 +52,12 @@ const NewWashroomRequests = () => {
                 </Link>
               </Button>
             </Col>
-            <hr className="my-3"/>
+            <hr className="my-3" />
           </Row>
-        ))}
+        ))
+      ) : (
+        <h3 className="text-center mt-5">No Requests</h3>
+      )}
     </Container>
   );
 };

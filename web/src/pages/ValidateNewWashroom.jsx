@@ -15,12 +15,13 @@ const ValidateNewWashroom = () => {
   useEffect(() => {
     async function fetchWashroomReqeust() {
       try {
-        const res = await fetch(
-          `http://localhost:8000/admin/addWashroom/getRequest/${id}`,
-          {
-            method: "GET",
+        const res = await fetch(`/api/v1/admin/addWashroom/getRequest/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        );
+        });
 
         const data = await res.json();
         if (!data || !data.response) {
@@ -46,11 +47,12 @@ const ValidateNewWashroom = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:8000/admin/addWashroom/validateRequest/${id}`,
+        `/api/v1/admin/addWashroom/validateRequest/${id}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
           body: JSON.stringify({
             name: nameRef.current.value,
