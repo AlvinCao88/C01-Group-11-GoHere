@@ -1,6 +1,7 @@
 import dbConfig from "../config/db.config.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import validator from "email-validator";
 
 const userCollection = dbConfig.instance.collection(
   dbConfig.collections.ADMINS,
@@ -29,6 +30,12 @@ export async function registerUser(req,res){
         .json({ error: "Email and password both needed to register." });
     }
 
+    if(!validator.validate(email)){
+      return res
+        .status(400)
+        .json({ error: "Invalid email format." });
+    }
+
     const existingUser = await getUser(email);
     if (existingUser) {
       return res.status(401).json({ error: "Email already exists." });
@@ -52,7 +59,6 @@ export async function loginUser(req, res){
         .json({ error: "Email and password both needed to login." });
     }
 
-    const user = await getUser(email);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ email }, "secret-key", { expiresIn: "1h" });
