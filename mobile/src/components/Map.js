@@ -190,6 +190,7 @@
     import React, { useEffect, useState } from 'react';
     import MapView, { Marker } from 'react-native-maps';
     import { StyleSheet, Dimensions , Alert} from 'react-native';
+import WashroomBottomSheet from './WashroomBottomSheet';
     
 
     export default function Map() {
@@ -224,13 +225,15 @@
         const styles = StyleSheet.create({
             map: {
                 width: Dimensions.get('window').width,
-                height: Dimensions.get('window').height * .50
+                height: Dimensions.get('window').height 
             },
         });
         
 
         return (
+            // <View>
             <MapView
+            
                 style={styles.map}
                 initialRegion={{
                     latitude: center.latitude,
@@ -257,7 +260,13 @@
                     image={require('../../assets/here.png')} //./assets/navigation.png
                     // Attribute: "https://www.flaticon.com/free-icons/my-location" title="my location icons">My location icons created by zero_wing - Flaticon</a>
                 />
+
+
             </MapView>
+            // <WashroomBottomSheet/>
+            // </View>
+  
+             
         );
     }
     
