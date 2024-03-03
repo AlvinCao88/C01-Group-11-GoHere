@@ -40,6 +40,9 @@ router.get("/addWashroom/getRequest/:id", getSingleAddWashroomRequest);
  */
 router.post("/addWashroom/validateRequest/:id", validateAddWashroomRequest);
 
+/**
+ * Returns a list of washroom requests from the database. TODO: Pagination
+ */
 router.get("/addWashroom/getManyRequests", getManyWashroomRequests);
 
 export default router;
