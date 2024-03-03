@@ -9,11 +9,15 @@ import {
 } from "../controller/admin.controller.js";
 
 const router = Router();
-router.use(verifyToken)
+router.use(verifyToken);
 
-router.post("/registerUser", registerUser)
+router.post("/registerUser", registerUser);
 
 router.post("/loginUser", loginUser);
+
+router.get("/isAdmin", (req, res) => {
+  res.json({ response: "Valid User" });
+});
 
 router.get("/testRestrictedGetRequest", verifyToken, async (req, res) => {
   try {
