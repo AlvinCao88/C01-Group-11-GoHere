@@ -41,7 +41,7 @@ export async function registerUser(req,res){
       return res.status(401).json({ error: "Email already exists." });
     }
 
-    createUser(email, password);
+    await createUser(email, password);
 
     const token = jwt.sign({ email }, "secret-key", { expiresIn: "1h" });
     return res.status(200).json({ response: "User registered successfully.", token });
@@ -59,12 +59,17 @@ export async function loginUser(req, res){
         .json({ error: "Email and password both needed to login." });
     }
 
+    const user = await getUser(email)
+
+    if (!user){
+      return res.status(401).json({error: "Email is not registered."})
+    }
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const token = jwt.sign({ email }, "secret-key", { expiresIn: "1h" });
       return res.json({ response: "User logged in succesfully.", token: token });
     } else {
-      res.status(401).json({ error: "Authentication failed." });
+      res.status(401).json({ error: "Password was incorrect." });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

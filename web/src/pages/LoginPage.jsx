@@ -6,6 +6,7 @@ function LoginPage({ mode }) {
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState("‎")
 
 
   const handleSubmit = (e) => {
@@ -30,14 +31,18 @@ function LoginPage({ mode }) {
         })
       })
 
+      const responseBody = await response.json()
+
       if(response.ok){
-        const responseBody = await response.json()
         localStorage.setItem("token", responseBody.token)
         window.location.href = '/admin'
       }
+    console.log(responseBody)
+      
+      setErrorMessage(responseBody.error);
 
   } catch (error){
-    console.log(error)
+    setErrorMessage(error.message);
   }
   }
 
@@ -54,14 +59,18 @@ function LoginPage({ mode }) {
         })
       })
 
+      const responseBody = await response.json()
+
       if(response.ok){
-        const responseBody = await response.json()
         localStorage.setItem("token", responseBody.token)
         window.location.href = '/admin'
+        return;
       }
 
+      setErrorMessage(responseBody.error);
+
   } catch (error){
-    console.log(error)
+    setErrorMessage(error.message);
   }
   }
 
@@ -97,6 +106,9 @@ function LoginPage({ mode }) {
             >
               <u>{mode === "signup" ? `LOG IN` : `SIGN UP`}</u>
             </a>
+          </div>
+          <div className="m-3 text-danger">
+              {errorMessage}
           </div>
         </Form>
       </div>
