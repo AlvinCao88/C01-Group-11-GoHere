@@ -28,7 +28,7 @@ function Map() {
     // }, []);
 
     // if (isLoading) return <></>;
-    // if (washrooms.length === 0) return <></>;
+
 
     const [isClient, setIsClient] = useState(false);
 
@@ -45,13 +45,23 @@ function Map() {
         iconSize: [38, 38] // size of the icon
     });
 
+    //Attribute: (probably will need to be added to readme)
+    // <a href="https://www.flaticon.com/free-icons/you-are-here" title="you are here icons">You are here icons created by srip - Flaticon</a>
+    const hereIcon = new Icon({
+        iconUrl: '/navigation.png',
+        iconSize: [38, 38] // size of the icon
+    });
+
+    
+
+    //test markers
     const markers = [
         {
             id: '1',
             name: 'Restaurant A',
             fullAddress: '123 Main St, City, Country',
             latitude: 51.505,
-            longitude: -0.09,
+            longitude: -0.07,
             hours: {
                 open: ['10:00 AM', '10:00 AM', '10:00 AM', '10:00 AM', '10:00 AM', '10:00 AM', '10:00 AM'],
                 close: ['8:00 PM', '8:00 PM', '8:00 PM', '8:00 PM', '8:00 PM', '8:00 PM', '8:00 PM']
@@ -140,7 +150,7 @@ function Map() {
             id: '7',
             name: 'Park G',
             fullAddress: '345 Pine St, City, Country',
-            latitude: 51.51,
+            latitude: 51.503,
             longitude: -0.09,
             hours: {
                 open: ['6:00 AM', '6:00 AM', '6:00 AM', '6:00 AM', '6:00 AM', '6:00 AM', '6:00 AM'],
@@ -184,14 +194,15 @@ function Map() {
     
     // L.control.zoom({ position: 'topright' }).addTo(map);
     
+    let center = [51.505, -0.09]
 
     return (
-        <MapContainer center={[51.505, -0.09]} zoom={5} style={{ height: '1000px', width: '80%' }}>
+        <MapContainer center={center} zoom={15} style={{ height: '1000px', width: '80%' }}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-
+            
 
             {markers.map((marker) => (
                 <Marker key={marker.id} position={[marker.latitude, marker.longitude]} icon={customIcon}>
@@ -205,7 +216,16 @@ function Map() {
                     </Popup>
                 </Marker>
             ))}
+            <Marker key={'you are here'} position={center} icon={hereIcon}>
+                    <Popup>
+                        <div>
+                            <h2>You are here</h2>
+                        </div>
+                    </Popup>
+                </Marker>
         </MapContainer>
+
+        
     );
 }
 
