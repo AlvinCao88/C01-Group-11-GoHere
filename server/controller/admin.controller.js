@@ -175,10 +175,9 @@ export async function validateAddWashroomRequest(req, res) {
     });
 
     // After successful validation, delete the request
-    // TODO: Commit out for easier testing
-    // await requestCollection.deleteOne({
-    //   _id: new ObjectId(id),
-    // });
+    await requestCollection.deleteOne({
+      _id: new ObjectId(id),
+    });
 
     res.json({
       response: "Sucessfully added washroom.",

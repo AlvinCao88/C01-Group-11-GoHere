@@ -7,7 +7,7 @@ export const verifyToken = async (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, "secret-key", async (err) => {
       if (err) {
-        return res.status(401).send("Unauthorized");
+        return res.status(401).json({ error: "Unauthorized" });
       }
       next();
     });
@@ -15,4 +15,3 @@ export const verifyToken = async (req, res, next) => {
     res.status(500).json({ error: error.message });
   }
 };
-

@@ -6,7 +6,7 @@ function LoginPage({ mode }) {
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("‎")
+  const [errorMessage, setErrorMessage] = useState("")
 
 
   const handleSubmit = (e) => {
@@ -33,9 +33,9 @@ function LoginPage({ mode }) {
 
       const responseBody = await response.json()
 
-      if(response.ok){
+      if (response.ok){
         localStorage.setItem("token", responseBody.token)
-        window.location.href = '/admin'
+        window.location.href = '/validate/washrooms'
       }
     console.log(responseBody)
       
