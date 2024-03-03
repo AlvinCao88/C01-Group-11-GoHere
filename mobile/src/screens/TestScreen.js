@@ -1,11 +1,24 @@
-import { View } from "react-native";
-
+import { View, StyleSheet} from "react-native";
 import TestComponent from "../components/TestComponent";
+import WashroomBottomSheet from "../components/WashroomBottomSheet";
+import "react-native-gesture-handler";
 
 export default function TestScreen() {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={styles.container}>
       <TestComponent />
+      <WashroomBottomSheet/>
     </View>
+    
   );
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
