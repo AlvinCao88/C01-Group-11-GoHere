@@ -12,7 +12,7 @@ const Checkout = () => {
         try {
             const finalAmount = parseFloat(amount).toFixed(2); //limit to 2 decimal places
             if (finalAmount <= 0) {
-                return Alert.alert("You cannot donate less than 0 dollars.");
+                return Alert.alert("You cannot donate 0 or negative dollars.");
             }
 
             const response = await fetch(`${API_URL}/donate`, {
