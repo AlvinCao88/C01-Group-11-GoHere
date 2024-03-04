@@ -189,15 +189,17 @@
 
     import React, { useEffect, useState } from 'react';
     import MapView, { Marker } from 'react-native-maps';
-    import { StyleSheet, Dimensions } from 'react-native';
+    import { StyleSheet, Dimensions , Alert} from 'react-native';
     
+
     export default function Map() {
         const [markers, setMarkers] = useState([]);
         const [loading, setLoading] = useState(true);
+        // const [current_center, setCenter] = useState(center) pass in through arguments
         const API_URL = "http://localhost:8000";
     
         useEffect(() => {
-            fetch(`${API_URL}/user/query/washrooms`)
+            fetch(`${API_URL}/api/allWashrooms`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.response) {
@@ -213,6 +215,7 @@
                     setLoading(false);
                 });
         }, []);
+
     
         let center = { latitude: 51.505, longitude: -0.09 };
         const styles = StyleSheet.create({
@@ -222,6 +225,7 @@
             },
         });
         
+
         return (
             <MapView
                 style={styles.map}
@@ -232,6 +236,7 @@
                     longitudeDelta: 0.0421,
                 }}
             >
+                
                 {loading ? null : markers.map((marker) => (
                     <Marker
                         key={marker.id}
@@ -241,12 +246,13 @@
                     />
                 ))}
     
+
                 <Marker
                     key={"You are here"}
                     coordinate={center}
                     title={"You are here!"}
                     image={require('../../assets/here.png')} //./assets/navigation.png
-                    
+                    // Attribute: "https://www.flaticon.com/free-icons/my-location" title="my location icons">My location icons created by zero_wing - Flaticon</a>
                 />
             </MapView>
         );
