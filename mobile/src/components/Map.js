@@ -199,7 +199,7 @@
         const API_URL = "http://localhost:8000";
     
         useEffect(() => {
-            fetch(`${API_URL}/api/allWashrooms`)
+            fetch(`${API_URL}/user/query/washrooms`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.response) {
