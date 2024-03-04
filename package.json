@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "-": "^0.0.1",
+    "expo": "^48.0.0",
+    "metro": "^0.80.6",
+    "save-dev": "^0.0.1-security",
+    "stripe": "^14.17.0"
+  },
+  "devDependencies": {
+    "expo-cli": "^6.3.10"
+  }
+}
