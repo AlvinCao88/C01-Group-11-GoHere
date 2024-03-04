@@ -85,16 +85,16 @@ function findClosestWashrooms(userLatitude, userLongitude) {
   return closestWashrooms;
 }
 
-function findClosestWashroomsController(req, res) {
+export async function findClosestWashroomsController(req, res) {
   const { userLatitude, userLongitude } = req.body;
   const closestWashrooms = findClosestWashrooms(userLatitude, userLongitude);
 
   res.status(200).json({ closestWashrooms });
 }
 
-module.exports = {
-  findClosestWashroomsController,
-};
+// module.exports = {
+//   findClosestWashroomsController,
+// };
 
 // Test use
 // const userLatitude = 37.7749; // User's latitude
