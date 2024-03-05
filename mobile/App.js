@@ -1,17 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import {StripeProvider} from "@stripe/stripe-react-native";
 
 import TestScreen from "./src/screens/TestScreen";
-import Checkout from "./src/components/Checkout";
 import DonationScreen from "./src/screens/DonationScreen";
+import RateApp from "./src/components/RateApp";
 
 const STRIPE_PUBLBISHABLE_KEY = "pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm";
 export default function App() {
   return (
     <View style={styles.container}>
-      <DonationScreen></DonationScreen>
+      <RateApp></RateApp>
     </View> 
   );
   
