@@ -190,7 +190,6 @@
     import React, { useEffect, useState } from 'react';
     import MapView, { Marker } from 'react-native-maps';
     import { StyleSheet, Dimensions , Alert} from 'react-native';
-import WashroomBottomSheet from './WashroomBottomSheet';
     
 
     export default function Map() {
@@ -198,11 +197,9 @@ import WashroomBottomSheet from './WashroomBottomSheet';
         const [loading, setLoading] = useState(true);
 
         // const [center, setCenter] = useState(null);
-
-        const API_URL = "http://localhost:8000";
     
         useEffect(() => {
-            fetch(`${API_URL}/user/query/washrooms`)
+            fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.response) {
@@ -221,7 +218,7 @@ import WashroomBottomSheet from './WashroomBottomSheet';
 
         
     
-        let center = { latitude: 51.505, longitude: -0.09 };
+        let center = { latitude: 43.78309609, longitude: -79.1873263 };
         const styles = StyleSheet.create({
             map: {
                 width: Dimensions.get('window').width,
@@ -235,6 +232,7 @@ import WashroomBottomSheet from './WashroomBottomSheet';
             <MapView
             
                 style={styles.map}
+          showsUserLocation={true}
                 initialRegion={{
                     latitude: center.latitude,
                     longitude: center.longitude,
@@ -245,7 +243,7 @@ import WashroomBottomSheet from './WashroomBottomSheet';
                 
                 {loading ? null : markers.map((marker) => (
                     <Marker
-                        key={marker.id}
+                        key={marker._id}
                         coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
                         title={marker.name}
                         description={marker.fullAddress}
