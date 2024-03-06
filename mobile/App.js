@@ -1,27 +1,43 @@
-import React from "react";
-import TestScreen from "./src/screens/TestScreen";
-import AddWashroomScreen from "./src/screens/AddWashroomScreen";
-import Card from "./src/screens/CardScreen";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import DonationScreen from "./src/screens/DonationScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import MapScreen from "./src/screens/MapScreen";
+import TestScreen from "./src/screens/TestScreen";
+import WashroomBottomSheet from "./src/components/WashroomBottomSheet";
+import WashroomInfoScreen from "./src/screens/WashroomInfoScreen";
 
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
+
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="TestScreen" component={TestScreen} />
-        <Stack.Screen name="Card" component={Card} />
-        <Stack.Screen name="AddWashroomScreen" component={AddWashroomScreen} />
-        <Stack.Screen name="DonationScreen" component={DonationScreen}/>
-      </Stack.Navigator>
+      <Tab.Navigator initialRouteName="Map">
+        <Tab.Screen
+          name = "Map"
+          component={MapScreen}
+          options={{headerShown: false}}
+        />
+        <Tab.Screen
+          name = "Test"
+          component={TestScreen}
+          options={{headerShown: false}}
+        />
+         <Tab.Screen
+          name = "Washroom Info Screen"
+          component={WashroomInfoScreen}
+          options={{headerShown: false}}
+        />
+        <Tab.Screen
+          name = "bottom Sheet screen"
+          component={WashroomBottomSheet}
+          options={{headerShown: false}}
+        />
+
+      </Tab.Navigator>
+
     </NavigationContainer>
   );
 }

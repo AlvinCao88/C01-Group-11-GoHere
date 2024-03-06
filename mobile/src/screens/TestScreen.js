@@ -9,22 +9,15 @@ import {
 export default function TestScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.headerText}>Hello World</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("AddWashroomScreen")}
+        onPress={() => navigation.navigate("AddWashroom")}
       >
         <Text style={styles.buttonText}>Add New Washroom</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Card")}
-      >
-        <Text style={styles.buttonText}>Card</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("DonationScreen")}
+        onPress={() => navigation.navigate("Donate")}
       >
         <Text style={styles.buttonText}>Donate</Text>
       </TouchableOpacity>

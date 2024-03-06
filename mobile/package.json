@@ -29,10 +29,13 @@
     "@stripe/stripe-react-native": "^0.35.1",
     "react-dom": "18.2.0",
     "react-native-stripe-checkout-webview": "^0.0.13",
-    "react-native-web": "~0.19.6",
     "react-native-webview": "^13.8.1",
     "stripe": "^14.18.0",
-    "@expo/webpack-config": "~19.0.1"
+    "@gorhom/bottom-sheet": "^4.6.1",
+    "@react-navigation/bottom-tabs": "^6.5.14",
+    "expo-location": "~16.5.5",
+    "react-native-web": "~0.19.6",
+    "react-native-maps": "^1.10.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
