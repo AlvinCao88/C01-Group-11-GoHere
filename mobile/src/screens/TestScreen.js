@@ -2,7 +2,6 @@ import React from "react";
 import {
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
@@ -22,6 +21,12 @@ export default function TestScreen({ navigation }) {
         onPress={() => navigation.navigate("Card")}
       >
         <Text style={styles.buttonText}>Card</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("DonationScreen")}
+      >
+        <Text style={styles.buttonText}>Donate</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
