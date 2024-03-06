@@ -28,7 +28,7 @@ export const addWashroomRequest = async (req, res) => {
     await collection.insertOne(newRequest);
     res
       .status(200)
-      .json({ message: "Washroom request added successfully", id });
+      .json({ message: "Washroom request added successfully" });
   } catch (error) {
     console.error("Failed to add washroom request:", error);
     res.status(500).json({ message: "Failed to add washroom request" });

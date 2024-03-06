@@ -162,7 +162,7 @@ export async function validateAddWashroomRequest(req, res) {
     const result = await washroomCollection.insertOne({
       name: name,
       fullAddress: fullAddress,
-      latittude: geocodeBody[0].geometry.location.lat,
+      latitude: geocodeBody[0].geometry.location.lat,
       longitude: geocodeBody[0].geometry.location.lng,
       hours:
         placesBody && placesBody.opening_hours
