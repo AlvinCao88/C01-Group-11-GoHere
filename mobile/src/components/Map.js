@@ -195,7 +195,9 @@
     export default function Map() {
         const [markers, setMarkers] = useState([]);
         const [loading, setLoading] = useState(true);
-        // const [current_center, setCenter] = useState(center) pass in through arguments
+
+        // const [center, setCenter] = useState(null);
+
         const API_URL = "http://localhost:8000";
     
         useEffect(() => {
@@ -216,6 +218,7 @@
                 });
         }, []);
 
+        
     
         let center = { latitude: 51.505, longitude: -0.09 };
         const styles = StyleSheet.create({
