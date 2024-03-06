@@ -92,14 +92,107 @@ export async function findClosestWashroomsController(req, res) {
   res.status(200).json({ closestWashrooms });
 }
 
-// module.exports = {
-//   findClosestWashroomsController,
-// };
+module.exports = {
+  findClosestWashroomsController,
+};
 
-// Test use
-// const userLatitude = 37.7749; // User's latitude
-// const userLongitude = -122.4194; // User's longitude
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+export async function getSingleReport(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
 
-// const closestWashrooms = findClosestWashrooms(userLatitude, userLongitude);
+    const collection = db.instance.collection(
+      db.collections.USER_REPORT,
+    );
+    const data = await collection.findOne({
+      _id: new ObjectId(id),
+    });
 
-// Now `closestWashrooms` contains the list of washrooms sorted by distance from the user
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find report with given ID." });
+    }
+    res.json({ response: data });
+  } catch (e) {
+    console.error("Error in getSingleReport:", e);
+    res.status(500).json({ error: `${e.message || e}` });
+  }
+}
+
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+export async function getAllUserReports(_, res) {
+  try {
+    const collection = db.instance.collection(
+      db.collections.USER_REPORT,
+    );
+
+    const data = collection.find({});
+
+    if ((await collection.countDocuments({})) === 0) {
+      return res.status(404).json({ error: "There are no reports." });
+    }
+
+    res.json({ response: await data.toArray() });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}
+
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+
+export async function verifyUserReport(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    if (!data)
+      return res
+        .status(404)
+        .json({ error: "Unable to find report with given ID." });
+
+    const userReportCollection = db.instance.collection(db.collections.USER_REPORT);
+
+    // Step 1: Check if the washroom (in report) actually exists in washroom collection
+    const report = await userReportCollection.findOne({ _id: new ObjectId(id) });
+    if (!report) {
+      return res.status(404).json({ error: "Unable to find report with given ID." });
+    }
+    const washroom = await washroomCollection.findOne({ fullAddress: report.washroomFullAddress });
+    if (!washroom) {
+      return res.status(404).json({ error: "Washroom not found for the given report." });
+    }
+    
+    // Step 2: Verify whether the report should be approved by an admin
+    const adminApproval = true; // Replace with actual logic (from frontend button) to check admin approval
+    if (!adminApproval) {
+      // Step 3: Delete the report that is not verified
+      await userReportCollection.deleteOne({ _id: new ObjectId(id) });
+      res.json({ message: "User report not verified, deleted successfully." });
+    } else {
+      const updatedReport = await userReportCollection.findOneAndUpdate(
+        { _id: new ObjectId(id) },
+        { $set: { status: true } },
+        { returnDocument: 'after' }
+      );
+      res.json({ message: "User report successfully verified by admin.", report: updatedReport });
+    }
+    } catch (e) {
+      console.error("Error in verifyUserReport:", e);
+      res.status(500).json({ error: `${e.message || e}` });
+    }
+}
