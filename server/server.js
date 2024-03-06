@@ -3,7 +3,6 @@ import dotenv from "dotenv"
 import cors from "cors"
 import Stripe from "stripe";
 
-// Import API Routes
 import queriesRouter from "./routes/query.route.js";
 import additionsRouter from "./routes/addition.route.js";
 import adminRouter from "./routes/admin.route.js";

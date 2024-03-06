@@ -1,32 +1,27 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import {StripeProvider} from "@stripe/stripe-react-native";
-
 import TestScreen from "./src/screens/TestScreen";
-import Checkout from "./src/components/Checkout";
+import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import Card from "./src/screens/CardScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
 import DonationScreen from "./src/screens/DonationScreen";
 
-const STRIPE_PUBLBISHABLE_KEY = "pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm";
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <DonationScreen></DonationScreen>
-    </View> 
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="TestScreen" component={TestScreen} />
+        <Stack.Screen name="Card" component={Card} />
+        <Stack.Screen name="AddWashroomScreen" component={AddWashroomScreen} />
+        <Stack.Screen name="DonationScreen" component={DonationScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-  
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black'
-  },
-});
+}

@@ -5,7 +5,6 @@ import {StripeProvider} from "@stripe/stripe-react-native";
 
 import Checkout from "../components/Checkout";
 
-const STRIPE_PUBLBISHABLE_KEY = "pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm";
 export default function DonationScreen() {
   return (
     <View style={styles.container}>
