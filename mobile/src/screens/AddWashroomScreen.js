@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    paddingTop: 500,
+    paddingTop: 50,
     justifyContent: "flex-start",
   },
   inputContainer: {
