@@ -72,7 +72,6 @@ export default function AddWashroomScreen({ navigation }) {
   const [city, setCity] = useState("");
   const [description, setDescription] = useState("");
   const [province, setProvince] = useState("");
-  const API_URL = "http://10.0.0.66:8000"; //This will need to be changed later
   const [popupVisible, setPopupVisible] = useState(false);
 
   const isFormComplete =
@@ -92,7 +91,7 @@ export default function AddWashroomScreen({ navigation }) {
       };
 
       try {
-        const response = await fetch(`http://10.0.0.66:8000/user/request/add`, {
+        const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

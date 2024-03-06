@@ -9,12 +9,7 @@ import adminRouter from "./routes/admin.route.js";
 
 dotenv.config(); //used to get secret key
 
-// public key
-const stripePublicKey = "pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm";
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
-// Import Middleware
-
 const app = express();
 app.use(express.json());
 app.use(cors())

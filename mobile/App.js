@@ -1,27 +1,63 @@
-import React from "react";
-import TestScreen from "./src/screens/TestScreen";
-import AddWashroomScreen from "./src/screens/AddWashroomScreen";
-import Card from "./src/screens/CardScreen";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import DonationScreen from "./src/screens/DonationScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import MapScreen from "./src/screens/MapScreen";
+import CardScreen from "./src/screens/CardScreen";
+import TestScreen from "./src/screens/TestScreen";
+import DonateScreen from "./src/screens/DonationScreen";
+import AddWashroomsScreen from "./src/screens/AddWashroomScreen";
+import DonationScreen from "./src/screens/DonationScreen";
+import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="TestScreen" component={TestScreen} />
-        <Stack.Screen name="Card" component={Card} />
-        <Stack.Screen name="AddWashroomScreen" component={AddWashroomScreen} />
-        <Stack.Screen name="DonationScreen" component={DonationScreen}/>
-      </Stack.Navigator>
+      <StatusBar/>
+      <Tab.Navigator initialRouteName="Map">
+        <Tab.Screen
+          name="Map"
+          component={MapScreen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Card"
+          component={CardScreen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Info"
+          component={InfoNavigator}
+          options={{ headerShown: false }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
+  );
+}
+
+function InfoNavigator() {
+  return (
+    <Stack.Navigator initialRouteName="Test">
+      <Stack.Screen
+        name="Test"
+        component={TestScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Donate"
+        component={DonationScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddWashroom"
+        component={AddWashroomScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 }

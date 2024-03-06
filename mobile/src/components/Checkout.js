@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import { View, Text, Button, TextInput, Alert } from 'react-native';
 import { useStripe } from "@stripe/stripe-react-native";
 
-const API_URL = "http://localhost:8000"; //NOTE: if testing, change "localhost" to whatever IP to connect to
-
 const Checkout = () => {
     const [amount, setAmount] = useState("1");
     const stripe = useStripe();
@@ -15,7 +13,7 @@ const Checkout = () => {
                 return Alert.alert("You cannot donate 0 or negative dollars.");
             }
 
-            const response = await fetch(`${API_URL}/donate`, {
+            const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/donate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
