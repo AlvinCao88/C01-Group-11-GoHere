@@ -1,9 +1,20 @@
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView
+} from "react-native";
+
+
 export default function ReportIssueScreen (washroomId) {
     const [name, setName] = useState("");
     const [phoneNum, setPhoneNum] = useState(0);
     const [email, setEmail] = useState("");
     const [issue, setIssue] = useState("");
-    const [address, setAddress] = useState("");
 
     const submit = async () => {
         if (issue) {
@@ -13,15 +24,30 @@ export default function ReportIssueScreen (washroomId) {
                 phoneNum,
                 email,
                 issue,
-                address,
                 status,
                 washroomId
             };
 
             try {
                 //TODO: setup connection to DB and add in the new issue
-            } catch (e) {
+                //TODO: change url to test
+                const response = await fetch (`${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/issue`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type" : "application/json"
+                  },
+                  body: JSON.stringify(info)
+                });
 
+                if (response.ok) {
+                  Alert.alert("Issue successfully reported");
+                }
+                else {
+                  Alert.alert("Issue couldn't be reported, please try again");
+                }
+            } catch (error) {
+                console.error("Error occured: ", error);
+                Alert.alert("An error occured, please try again");
             }
         }
     }
@@ -72,7 +98,7 @@ export default function ReportIssueScreen (washroomId) {
                 />
                 </View>
                 <TouchableOpacity
-                onPress={handleSubmit}
+                onPress={submit}
                 disabled={!issue}
                 style={[
                     styles.submitButton,
