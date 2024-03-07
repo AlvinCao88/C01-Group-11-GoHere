@@ -7,12 +7,14 @@ export default function ReportIssueScreen (washroomId) {
 
     const submit = async () => {
         if (issue) {
+            const status = false; //Initially, the issue is not verified
             const info = {
                 name,
                 phoneNum,
                 email,
                 issue,
                 address,
+                status,
                 washroomId
             };
 
