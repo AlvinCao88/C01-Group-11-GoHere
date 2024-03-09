@@ -63,7 +63,7 @@ function LoginPage({ mode }) {
 
       if(response.ok){
         localStorage.setItem("token", responseBody.token)
-        window.location.href = '/admin'
+        window.location.href = '/validate/washrooms'
         return;
       }
 
