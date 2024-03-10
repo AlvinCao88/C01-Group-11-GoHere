@@ -8,6 +8,7 @@ import { client } from "./prismic";
 
 import MapScreen from "./src/screens/MapScreen";
 import NewsScreen from "./src/screens/NewsScreen";
+import DetailedNewsScreen from "./src/screens/DetailedNewsScreen";
 import CardScreen from "./src/screens/CardScreen";
 import TestScreen from "./src/screens/TestScreen";
 import DonationScreen from "./src/screens/DonationScreen";
@@ -29,7 +30,7 @@ export default function App() {
           />
           <Tab.Screen
             name="News"
-            component={NewsScreen}
+            component={NewsNavigator}
             options={{ headerShown: false }}
           />
           <Tab.Screen
@@ -45,6 +46,23 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
     </PrismicProvider>
+  );
+}
+
+function NewsNavigator() {
+  return (
+    <Stack.Navigator initialRouteName="News List">
+      <Stack.Screen
+        name="News List"
+        component={NewsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Detailed News"
+        component={DetailedNewsScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
   );
 }
 
