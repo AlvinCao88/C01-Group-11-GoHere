@@ -27,5 +27,7 @@ export default {
     WASHROOMS: "Washrooms",
     ADD_WASHROOM_REQUESTS: "AddWashroomRequests",
     ADMINS: "Admins",
+    BUSINESSES: "Businesses",
+    ADD_BUSINESS_REQUESTS: "AddBusinessRequests",
   },
 };

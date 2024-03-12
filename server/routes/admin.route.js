@@ -53,7 +53,7 @@ router.get("/addWashroom/getManyRequests", verifyToken, getManyWashroomRequests)
 
 
 /**
- * Returns a single business washroom from the database.
+ * Returns a single business from the database.
  * ":id" represents the id of the business getting fetched
  */
 router.get("/addBusiness/getRequest/:id", verifyToken, getSingleAddBusinessRequest);
@@ -63,7 +63,8 @@ router.get("/addBusiness/getRequest/:id", verifyToken, getSingleAddBusinessReque
  * the corresponding business request.
  * Requires a nonempty body containing
  * {
- *   name: "name of washroom to be added"
+ *   name: "name of business to be added"
+ *   contactDetails: "Name, Email, Phone Number"
  *   fullAddress: "Address, City, Province PostalCode, Country"
  * }
  */
