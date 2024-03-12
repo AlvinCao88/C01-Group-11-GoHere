@@ -209,3 +209,16 @@ export async function getManyWashroomRequests(_, res) {
     res.status(500).json({ error: `${e}` });
   }
 }
+
+
+export async function getSingleAddBusinessRequest(req, res){
+  //TO DO
+}
+
+export async function validateAddBusinessRequest(req, res){
+  //TO DO
+}
+
+export async function getManyBusinessRequests(req, res){
+  //TO DO
+}
