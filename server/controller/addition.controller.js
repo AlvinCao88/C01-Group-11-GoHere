@@ -37,9 +37,13 @@ export const addWashroomRequest = async (req, res) => {
 };
 
 export const addBusinessRequest = async (req, res) => {
-  const { address, city, province, description } = req.body;
+  const { businessName, contactName, email, phoneNumber, address, city, province, description } = req.body;
 
   const newRequest = {
+    businessName,
+    contactName,
+    email,
+    phoneNumber,
     address,
     city,
     province,
@@ -48,7 +52,7 @@ export const addBusinessRequest = async (req, res) => {
 
   try {
     const collection = dbConfig.instance.collection(
-      dbConfig.collections.ADD_WASHROOM_REQUESTS
+      dbConfig.collections.ADD_BUSINESS_REQUESTS
     );
     await collection.insertOne(newRequest);
     res
