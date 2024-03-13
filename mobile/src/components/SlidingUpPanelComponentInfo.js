@@ -36,6 +36,7 @@ const SlidingUpPanelComponentInfo = ({
             <Text style={styles.supportDescription}>
               Make a donation to support the GoHere program.
             </Text>
+            <View style={styles.dividingLine}></View>
           </>
         )}
         <TouchableOpacity
@@ -50,6 +51,12 @@ const SlidingUpPanelComponentInfo = ({
 };
 
 const styles = StyleSheet.create({
+  dividingLine: {
+    height: 1,
+    backgroundColor: "#d7d7d7",
+    width: "90%",
+    marginVertical: 20,
+  },
   panelHandle: {
     width: 40,
     height: 8,
@@ -63,8 +70,8 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 60,
     borderRadius: 5,
-    marginTop: 20,
-    width: "80%",
+    marginTop: 30,
+    width: "85%",
     alignItems: "center",
   },
   panel: {
@@ -74,10 +81,11 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -3 },
+    elevation: 4,
     shadowOpacity: 0.1,
     shadowRadius: 3,
     paddingTop: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
     alignItems: "center",
   },
   supportTitle: {
@@ -92,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "left",
     marginTop: 10,
-    marginBottom: 50,
+    marginBottom: 0,
     width: "90%",
   },
   donateButtonText: {
