@@ -1,5 +1,5 @@
 import express from "express";
-import { addWashroomRequest } from "../controller/addition.controller.js";
+import { addWashroomRequest, addIssue } from "../controller/addition.controller.js";
 
 const router = express.Router();
 

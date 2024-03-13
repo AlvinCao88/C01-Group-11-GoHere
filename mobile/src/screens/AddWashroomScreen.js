@@ -89,9 +89,9 @@ export default function AddWashroomScreen({ navigation }) {
         province,
         description,
       };
-
+      //TODO: change url
       try {
-        const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/add`, {
+        const response = await fetch(`http://10.0.0.245:8000/user/request/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

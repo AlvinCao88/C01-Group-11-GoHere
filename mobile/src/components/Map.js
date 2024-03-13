@@ -197,9 +197,9 @@
         const [loading, setLoading] = useState(true);
 
         // const [center, setCenter] = useState(null);
-    
+        //TODO: change url
         useEffect(() => {
-            fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`)
+            fetch(`http://10.0.0.245:8000/user/query/washrooms`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.response) {

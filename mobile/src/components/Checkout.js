@@ -13,7 +13,7 @@ const Checkout = () => {
                 return Alert.alert("You cannot donate 0 or negative dollars.");
             }
 
-            const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/donate`, {
+            const response = await fetch(`http://10.0.0.245:8000/donate`, { //TODO: change URL
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

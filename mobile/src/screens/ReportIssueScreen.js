@@ -33,7 +33,7 @@ export default function ReportIssueScreen ({route, navigation}) {
             try {
                 //TODO: setup connection to DB and add in the new issue
                 //TODO: change url to test
-                const response = await fetch (`${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/issue`, {
+                const response = await fetch (`http://10.0.0.245:8000/user/request/issue`, { //TODO: change url
                   method: "POST",
                   headers: {
                     "Content-Type" : "application/json"
