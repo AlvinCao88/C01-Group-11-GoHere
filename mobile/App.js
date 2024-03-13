@@ -10,7 +10,9 @@ import DonateScreen from "./src/screens/DonationScreen";
 import AddWashroomsScreen from "./src/screens/AddWashroomScreen";
 import DonationScreen from "./src/screens/DonationScreen";
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import WashroomBottomSheet from "./src/components/WashroomBottomSheet"
 import { StatusBar } from "expo-status-bar";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,9 +22,14 @@ export default function App() {
     <NavigationContainer>
       <StatusBar/>
       <Tab.Navigator initialRouteName="Map">
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Map"
           component={MapScreen}
+          options={{ headerShown: false }}
+        /> */}
+         <Tab.Screen
+          name="placeholder"
+          component={WashroomBottomSheet}
           options={{ headerShown: false }}
         />
         <Tab.Screen
@@ -35,6 +42,8 @@ export default function App() {
           component={InfoNavigator}
           options={{ headerShown: false }}
         />
+        
+
       </Tab.Navigator>
     </NavigationContainer>
   );
