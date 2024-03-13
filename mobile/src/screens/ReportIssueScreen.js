@@ -10,7 +10,9 @@ import {
 } from "react-native";
 
 
-export default function ReportIssueScreen (washroomId) {
+export default function ReportIssueScreen ({route, navigation}) {
+    const {washroomId} = route.params;
+  
     const [name, setName] = useState("");
     const [phoneNum, setPhoneNum] = useState(0);
     const [email, setEmail] = useState("");
