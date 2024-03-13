@@ -21,7 +21,7 @@ const WashroomInfo = ( {route, navigation}) => {
   useEffect(() => {
     const getWashroom = async () => {
       try {
-        const response = await fetch(`http://10.0.0.245:8000/user/query//washrooms/${id}`);
+        const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query//washrooms/${id}`);
         if (!response.ok) {
           // console.log("Server failed:", response.status);
         } else {

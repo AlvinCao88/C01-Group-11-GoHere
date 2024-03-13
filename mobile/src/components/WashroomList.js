@@ -18,7 +18,7 @@ export default WashroomList = ( {navigation}) => {
     useEffect(() => {
       const getWashrooms = async () => {
         try {
-          const response = await fetch(`http://10.0.0.245:8000/user/query/washrooms`);
+          const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`);
           if (!response.ok) {
             console.log("Server failed:", response.status);
           } else {
