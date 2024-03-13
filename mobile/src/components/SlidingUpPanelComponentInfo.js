@@ -69,9 +69,9 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     paddingVertical: 15,
     paddingHorizontal: 60,
-    borderRadius: 5,
+    borderRadius: 8,
     marginTop: 30,
-    width: "85%",
+    width: "90%",
     alignItems: "center",
   },
   panel: {
