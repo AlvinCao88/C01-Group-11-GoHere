@@ -21,9 +21,6 @@ const CardComponent = ({ isEnglish, textTranslations }) => {
                 ? textTranslations.accessCard.en
                 : textTranslations.accessCard.fr}
             </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
             <View style={styles.subtitleBox}>
               <Text style={styles.cardSubtitle}>
                 {isEnglish
@@ -31,21 +28,7 @@ const CardComponent = ({ isEnglish, textTranslations }) => {
                   : textTranslations.crohnsDisease.fr}
               </Text>
             </View>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
+            
             <Text style={styles.cardContent}>
               {isEnglish
                 ? textTranslations.helpText.en
@@ -64,9 +47,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    // elevation: 5,
+    shadowOpacity: 0.35,
+    shadowRadius: 6,
+    elevation: 8,
     width: "95%",
     alignSelf: "center",
     borderRadius: 5,
@@ -132,6 +115,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     backgroundColor: "transparent",
     marginLeft: -60,
+    marginTop: 15,
   },
   cardSubtitle: {
     color: "#fff",
@@ -142,6 +126,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     textAlign: "left",
+    marginTop: 40,
   },
 });
 

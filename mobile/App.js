@@ -10,25 +10,30 @@ import DonateScreen from "./src/screens/DonationScreen";
 import AddWashroomsScreen from "./src/screens/AddWashroomScreen";
 import DonationScreen from "./src/screens/DonationScreen";
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
-import WashroomBottomSheet from "./src/components/WashroomBottomSheet"
+import WashroomBottomSheet from "./src/components/WashroomBottomSheet";
+import InfoScreen from "./src/screens/InfoScreen";
 import { StatusBar } from "expo-status-bar";
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+function InfoStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="InfoScreen" component={InfoScreen} />
+      <Stack.Screen name="Donate" component={DonateScreen} />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer>
       <StatusBar/>
       <Tab.Navigator initialRouteName="Map">
-        {/* <Tab.Screen
+        <Tab.Screen
           name="Map"
-          component={MapScreen}
-          options={{ headerShown: false }}
-        /> */}
-         <Tab.Screen
-          name="placeholder"
           component={WashroomBottomSheet}
           options={{ headerShown: false }}
         />
@@ -39,34 +44,10 @@ export default function App() {
         />
         <Tab.Screen
           name="Info"
-          component={InfoNavigator}
+          component={InfoStack}
           options={{ headerShown: false }}
         />
-        
-
       </Tab.Navigator>
     </NavigationContainer>
-  );
-}
-
-function InfoNavigator() {
-  return (
-    <Stack.Navigator initialRouteName="Test">
-      <Stack.Screen
-        name="Test"
-        component={TestScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Donate"
-        component={DonationScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="AddWashroom"
-        component={AddWashroomScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
   );
 }
