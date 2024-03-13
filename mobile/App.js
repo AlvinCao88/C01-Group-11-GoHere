@@ -8,56 +8,30 @@ import CardScreen from "./src/screens/CardScreen";
 import TestScreen from "./src/screens/TestScreen";
 import DonateScreen from "./src/screens/DonationScreen";
 import AddWashroomsScreen from "./src/screens/AddWashroomScreen";
-import DonationScreen from "./src/screens/DonationScreen";
-import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import InfoScreen from "./src/screens/InfoScreen";
 import { StatusBar } from "expo-status-bar";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+function InfoStack() {
   return (
-    <NavigationContainer>
-      <StatusBar/>
-      <Tab.Navigator initialRouteName="Map">
-        <Tab.Screen
-          name="Map"
-          component={MapScreen}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Card"
-          component={CardScreen}
-          options={{ headerShown: false }}
-        />
-        <Tab.Screen
-          name="Info"
-          component={InfoNavigator}
-          options={{ headerShown: false }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="InfoScreen" component={InfoScreen} />
+      <Stack.Screen name="Donate" component={DonateScreen} />
+    </Stack.Navigator>
   );
 }
 
-function InfoNavigator() {
+export default function App() {
   return (
-    <Stack.Navigator initialRouteName="Test">
-      <Stack.Screen
-        name="Test"
-        component={TestScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Donate"
-        component={DonationScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="AddWashroom"
-        component={AddWashroomScreen}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <NavigationContainer>
+      <StatusBar />
+      <Tab.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Card" component={CardScreen} />
+        <Tab.Screen name="Info" component={InfoStack} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
