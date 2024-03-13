@@ -49,4 +49,8 @@ router.post("/addWashroom/validateRequest/:id", validateAddWashroomRequest);
  */
 router.get("/addWashroom/getManyRequests", getManyWashroomRequests);
 
+router.get('/getReports/:id', getSingleReport);
+router.get('/getAllReports', getAllUserReports);
+router.put('/verifyReports/:id', verifyUserReport);
+
 export default router;

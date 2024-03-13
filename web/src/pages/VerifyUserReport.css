@@ -1,2 +1,22 @@
-
+label {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
+  .textarea {
+    resize: none;
+  }
+  
+  .all-container {
+    max-width: 800px;
+  }
+  
+  .request-id {
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    position: absolute;
+    top: -35px;
+  }
   
