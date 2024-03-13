@@ -60,6 +60,7 @@ export const addIssue = async (req, res) => {
   
   const fullRequest = {name, phoneNum, email, issue, status, washroomId};
 
+  console.log("in backend");
   try {
     const collection = dbConfig.instance.collection(dbConfig.collections.USER_REPORT);
     await collection.insertOne(fullRequest);
@@ -68,4 +69,9 @@ export const addIssue = async (req, res) => {
     console.error("Couldn't report issue: ", error);
     res.status(500).json({message: "Couldn't report issue issue"});
   }
+  // let cursor = dbConfig.instance.collection(dbConfig.collections.USER_REPORT).find();
+  // for await (const doc of cursor)
+  // {
+  //   console.log(doc);
+  // }
 };

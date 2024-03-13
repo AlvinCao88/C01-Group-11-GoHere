@@ -6,7 +6,8 @@ import {
   View,
   TouchableOpacity,
   Text,
-  ScrollView
+  ScrollView,
+  Alert
 } from "react-native";
 
 
@@ -56,12 +57,6 @@ export default function ReportIssueScreen ({route, navigation}) {
     
     return(
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity
-                onPress={() => navigation.goBack()}
-                style={styles.backButton}
-            >
-            <Text style={{ fontSize: 24, color: "black" }}>&lt;</Text>
-            </TouchableOpacity>
             <View style={styles.dividingLine}></View>
             <ScrollView contentContainerStyle={styles.scrollViewContent}>
                 <View style={styles.inputContainer}>
@@ -76,7 +71,7 @@ export default function ReportIssueScreen ({route, navigation}) {
                 <Text style={styles.solidText}>Phone number (optional)</Text>
                 <TextInput
                     placeholder="Enter your phone number"
-                    value={phoneNum}
+                    value={String(phoneNum)}
                     onChangeText={setPhoneNum}
                     style={styles.textInput}
                     keyboardType='phone-pad'
