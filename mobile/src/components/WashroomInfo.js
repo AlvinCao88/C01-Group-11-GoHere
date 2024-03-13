@@ -89,16 +89,22 @@ const WashroomInfo = ( {route, nativation}) => {
                   <Text style={styles.sectionTitle}>Contact</Text>
                   <View style={styles.contactView}>
                     <TouchableOpacity style={styles.websiteButton} >
-                      <Text style={styles.contactText}>Website</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.callButton}>
-                      <Text style={styles.contactText}>Call</Text>
-                    </TouchableOpacity>
-                  </View>
+                        <Text style={styles.contactText}>Website</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.callButton}>
+                        <Text style={styles.contactText}>Call</Text>
+                      </TouchableOpacity>
+                    </View>
                   
                   <Text style={styles.sectionTitle}>Photos</Text>
                   <View style={styles.contactView}>
                     
+                  </View>
+                  <Text style={styles.sectionTitle}>Report</Text>
+                  <View style={styles.contactView}>
+                    <TouchableOpacity style={styles.saveButton}>
+                      <Text style={styles.saveText}>Report a Washroom</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
                 
