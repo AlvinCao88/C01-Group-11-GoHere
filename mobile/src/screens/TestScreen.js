@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, SafeAreaView } from "react-native";
 
 export default function TestScreen({ navigation }) {
   return (

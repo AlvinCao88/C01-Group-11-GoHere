@@ -91,13 +91,16 @@ export default function AddWashroomScreen({ navigation }) {
       };
 
       try {
-        const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/add`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        const response = await fetch(
+          `${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/add`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(washroomRequest),
           },
-          body: JSON.stringify(washroomRequest),
-        });
+        );
 
         if (response.ok) {
           console.log("Washroom request submitted successfully");

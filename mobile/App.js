@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar/>
+      <StatusBar />
       <Tab.Navigator initialRouteName="Map">
         <Tab.Screen
           name="Map"

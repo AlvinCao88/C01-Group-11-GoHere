@@ -93,7 +93,13 @@ const ValidateNewBusiness = () => {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Contact Details</Form.Label>
-          <Form.Control value={`${requestDetails.contactName}, ${requestDetails.email}, ${requestDetails.phoneNumber}` || ""} disabled />
+          <Form.Control
+            value={
+              `${requestDetails.contactName}, ${requestDetails.email}, ${requestDetails.phoneNumber}` ||
+              ""
+            }
+            disabled
+          />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Address</Form.Label>

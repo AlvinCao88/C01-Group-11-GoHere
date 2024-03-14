@@ -6,11 +6,13 @@ import { StripeProvider } from "@stripe/stripe-react-native";
 import Checkout from "../components/Checkout";
 
 export default function DonationScreen() {
-  console.log(process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY)
+  console.log(process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY);
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY}>
+      <StripeProvider
+        publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY}
+      >
         <Checkout />
       </StripeProvider>
     </View>
@@ -30,4 +32,3 @@ const styles = StyleSheet.create({
     color: "black",
   },
 });
-

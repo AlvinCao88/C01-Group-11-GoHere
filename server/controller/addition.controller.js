@@ -24,12 +24,10 @@ export const addWashroomRequest = async (req, res) => {
 
   try {
     const collection = dbConfig.instance.collection(
-      dbConfig.collections.ADD_WASHROOM_REQUESTS
+      dbConfig.collections.ADD_WASHROOM_REQUESTS,
     );
     await collection.insertOne(newRequest);
-    res
-      .status(200)
-      .json({ message: "Washroom request added successfully" });
+    res.status(200).json({ message: "Washroom request added successfully" });
   } catch (error) {
     console.error("Failed to add washroom request:", error);
     res.status(500).json({ message: "Failed to add washroom request" });
@@ -37,7 +35,16 @@ export const addWashroomRequest = async (req, res) => {
 };
 
 export const addBusinessRequest = async (req, res) => {
-  const { businessName, contactName, email, phoneNumber, address, city, province, description } = req.body;
+  const {
+    businessName,
+    contactName,
+    email,
+    phoneNumber,
+    address,
+    city,
+    province,
+    description,
+  } = req.body;
 
   const newRequest = {
     businessName,
@@ -52,12 +59,10 @@ export const addBusinessRequest = async (req, res) => {
 
   try {
     const collection = dbConfig.instance.collection(
-      dbConfig.collections.ADD_BUSINESS_REQUESTS
+      dbConfig.collections.ADD_BUSINESS_REQUESTS,
     );
     await collection.insertOne(newRequest);
-    res
-      .status(200)
-      .json({ message: "Business request added successfully" });
+    res.status(200).json({ message: "Business request added successfully" });
   } catch (error) {
     console.error("Failed to add business request:", error);
     res.status(500).json({ message: "Failed to add business request" });

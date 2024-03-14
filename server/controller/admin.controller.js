@@ -210,7 +210,7 @@ export async function getManyWashroomRequests(_, res) {
   }
 }
 
-export async function removeSingleWashroomRequest(req, res){
+export async function removeSingleWashroomRequest(req, res) {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
@@ -235,7 +235,7 @@ export async function removeSingleWashroomRequest(req, res){
   }
 }
 
-export async function getSingleAddBusinessRequest(req, res){
+export async function getSingleAddBusinessRequest(req, res) {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
@@ -260,7 +260,7 @@ export async function getSingleAddBusinessRequest(req, res){
   }
 }
 
-export async function validateAddBusinessRequest(req, res){
+export async function validateAddBusinessRequest(req, res) {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {
@@ -337,8 +337,7 @@ export async function validateAddBusinessRequest(req, res){
   }
 }
 
-
-export async function getManyBusinessRequests(req, res){
+export async function getManyBusinessRequests(req, res) {
   try {
     const collection = db.instance.collection(
       db.collections.ADD_BUSINESS_REQUESTS,
@@ -356,7 +355,7 @@ export async function getManyBusinessRequests(req, res){
   }
 }
 
-export async function removeSingleBusinessRequest(req, res){
+export async function removeSingleBusinessRequest(req, res) {
   try {
     const { id } = req.params;
     if (!ObjectId.isValid(id)) {

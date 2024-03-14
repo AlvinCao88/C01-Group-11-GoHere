@@ -18,8 +18,8 @@
 //         <View>
 //             <Text> Contact</Text>
 //         </View>
-//         
-//         
+//
+//
 //         </View>
 //         <View style={styles.container2}>
 //             <Text> Get Direction</Text>

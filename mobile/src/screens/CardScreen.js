@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import CardComponent from "../components/CardComponent";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from "react-native-safe-area-context";
 import SlidingUpPanelComponent from "../components/SlidingUpPanelComponent";
 
 const CARD_HEIGHT = 400;

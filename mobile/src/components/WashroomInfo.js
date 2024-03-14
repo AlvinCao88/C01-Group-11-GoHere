@@ -1,8 +1,8 @@
 // WashroomInfo.js
 
-import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { useBottomSheet } from '@gorhom/bottom-sheet';
+import React from "react";
+import { View, Text, StyleSheet, Button } from "react-native";
+import { useBottomSheet } from "@gorhom/bottom-sheet";
 
 const WashroomInfo = () => {
   const { dismiss } = useBottomSheet();
@@ -25,23 +25,23 @@ const WashroomInfo = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 16,
   },
   header: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: 'lightgray',
+    borderBottomColor: "lightgray",
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   footer: {
     marginTop: 8,
@@ -88,4 +88,3 @@ export default WashroomInfo;
 //     fontSize: 20,
 //   }
 // });
-

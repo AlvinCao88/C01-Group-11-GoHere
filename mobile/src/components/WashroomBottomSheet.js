@@ -13,7 +13,7 @@
 //   const sheetRef = useRef(null);
 //   // variables
 //   const snapPoints = useMemo(() => ['10%', '30%', '80%'], []);
-//   //callback 
+//   //callback
 //   const handleWashroomInfoPress = useCallback(() => {
 //     sheetRef.current.snapToIndex(1); // Snap to the second sheet (30%)
 //   }, []);
@@ -34,7 +34,7 @@
 //           <Text style={styles.text}>WASHROOMS NEARBY</Text>
 //         </View>
 //         <View style={styles.washroomNearby}>
-//           <Button 
+//           <Button
 //             onPress={handleWashroomInfoPress}
 //             title="Washroom one"
 //             color="red"

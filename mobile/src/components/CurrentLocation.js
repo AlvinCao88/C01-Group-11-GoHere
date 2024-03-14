@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
-import * as Location from 'expo-location';
+import React, { useState, useEffect } from "react";
+import { Text, View } from "react-native";
+import * as Location from "expo-location";
 
 export default function CurrentLocation() {
   const [location, setLocation] = useState(null);
@@ -9,8 +9,8 @@ export default function CurrentLocation() {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
@@ -18,7 +18,7 @@ export default function CurrentLocation() {
     })();
   }, []);
 
-  let text = 'Waiting..';
+  let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -26,7 +26,7 @@ export default function CurrentLocation() {
   }
 
   return (
-    <View style={{justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ justifyContent: "center", alignItems: "center" }}>
       <Text>{text}</Text>
     </View>
   );
