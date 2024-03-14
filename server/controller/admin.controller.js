@@ -212,13 +212,122 @@ export async function getManyWashroomRequests(_, res) {
 
 
 export async function getSingleAddBusinessRequest(req, res){
-  //TO DO
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const collection = db.instance.collection(
+      db.collections.ADD_BUSINESS_REQUESTS,
+    );
+    const data = await collection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+    }
+    res.json({ response: data });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
 }
 
 export async function validateAddBusinessRequest(req, res){
-  //TO DO
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    // First check that the washroom request actually exists
+    const requestCollection = db.instance.collection(
+      db.collections.ADD_BUSINESS_REQUESTS,
+    );
+    const data = await requestCollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data)
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+
+    const { name, fullAddress } = await req.body;
+    // Validate the information sent
+    if (!name || !fullAddress)
+      return res.status(400).json({ error: "Missing fields in body." });
+    if (fullAddress.split(",").length != 4)
+      return res.status(400).json({ error: "Address not of correct format." });
+
+    // Get long/lat information from google Geocode API
+    const geocodeRes = await fetch(
+      "https://maps.googleapis.com/maps/api/geocode/json" +
+        `?address=${name},${fullAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    );
+
+    // There may be multiple results, we select the first one for simplicity
+    const { results: geocodeBody, status } = await geocodeRes.json();
+    if (status !== "OK")
+      return res.status(400).json({ error: "Failed to find location." });
+
+    // Get open/close hours and contact information from google Places API
+    const placesRes = await fetch(
+      "https://maps.googleapis.com/maps/api/place/details/json" +
+        `?place_id=${geocodeBody[0].place_id}` +
+        `&fields=opening_hours,formatted_phone_number,website` +
+        `&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    );
+    const { result: placesBody } = await placesRes.json();
+
+    const washroomCollection = db.instance.collection(db.collections.WASHROOMS);
+    const result = await washroomCollection.insertOne({
+      name: name,
+      fullAddress: fullAddress,
+      latitude: geocodeBody[0].geometry.location.lat,
+      longitude: geocodeBody[0].geometry.location.lng,
+      hours:
+        placesBody && placesBody.opening_hours
+          ? placesBody.opening_hours.weekday_text
+          : [],
+      contact: {
+        number: placesBody ? placesBody.formatted_phone_number : "",
+        website: placesBody ? placesBody.website : "",
+      },
+    });
+
+    // After successful validation, delete the request
+    await requestCollection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    res.json({
+      response: "Sucessfully added washroom.",
+      insertedId: result.insertedId,
+    });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
 }
 
+
 export async function getManyBusinessRequests(req, res){
-  //TO DO
+  try {
+    const collection = db.instance.collection(
+      db.collections.ADD_BUSINESS_REQUESTS,
+    );
+
+    const data = collection.find({});
+
+    if ((await collection.countDocuments({})) === 0) {
+      return res.status(404).json({ error: "There are no requests." });
+    }
+
+    res.json({ response: await data.toArray() });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
 }
