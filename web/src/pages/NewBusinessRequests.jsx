@@ -4,13 +4,13 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import "./NewRequests.css";
 import { Link } from "react-router-dom";
 
-const NewWashroomRequests = () => {
+const NewBusinessRequests = () => {
   const [requests, setRequests] = useState([]);
 
   useEffect(() => {
-    async function getWashroomRequests() {
+    async function getBusinessRequests() {
       try {
-        const res = await fetch(`/api/v1/admin/addWashroom/getManyRequests`, {
+        const res = await fetch(`/api/v1/admin/addBusiness/getManyRequests`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -26,12 +26,12 @@ const NewWashroomRequests = () => {
       }
     }
 
-    getWashroomRequests();
+    getBusinessRequests();
   }, []);
 
   return (
     <Container className="mt-5">
-      <h3 className="mb-5">Washroom Requests Sent by Users</h3>
+      <h3 className="mb-5">Business Requests Sent by Users</h3>
       <Row className="list-header">
         <Col xs={3}>Location</Col>
         <Col>Description</Col>
@@ -47,7 +47,7 @@ const NewWashroomRequests = () => {
             <Col>{e.description}</Col>
             <Col xs={2}>
               <Button variant="primary">
-                <Link className="link" to={`/validate/washroom/${e._id}`}>
+                <Link className="link" to={`/validate/business/${e._id}`}>
                   Validate
                 </Link>
               </Button>
@@ -62,4 +62,4 @@ const NewWashroomRequests = () => {
   );
 };
 
-export default NewWashroomRequests;
+export default NewBusinessRequests;

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Form, Spinner, Stack } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import "./ValidateNewWashroom.css";
+import "./ValidateRequests.css";
 
 const ValidateNewBusiness = () => {
   const { id } = useParams();
@@ -13,9 +13,9 @@ const ValidateNewBusiness = () => {
   const fullAddressRef = useRef(null);
 
   useEffect(() => {
-    async function fetchWashroomReqeust() {
+    async function fetchBusinessRequest() {
       try {
-        const res = await fetch(`/api/v1/admin/addWashroom/getRequest/${id}`, {
+        const res = await fetch(`/api/v1/admin/addBusiness/getRequest/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -25,7 +25,7 @@ const ValidateNewBusiness = () => {
 
         const data = await res.json();
         if (!data || !data.response) {
-          navigate("/validate/washrooms");
+          navigate("/validate/businesses");
         }
 
         console.log(data);
@@ -33,21 +33,21 @@ const ValidateNewBusiness = () => {
         setRequestDetails(data.response);
       } catch (e) {
         console.log(e);
-        navigate("/validate/washrooms");
+        navigate("/validate/businesses");
       }
     }
 
-    fetchWashroomReqeust();
+    fetchBusinessRequest();
   }, [id, navigate]);
 
-  async function validateWashroom(e) {
+  async function validateBusiness(e) {
     setLoading(true);
 
     e.preventDefault();
 
     try {
       const res = await fetch(
-        `/api/v1/admin/addWashroom/validateRequest/${id}`,
+        `/api/v1/admin/addBusiness/validateRequest/${id}`,
         {
           method: "POST",
           headers: {
@@ -111,7 +111,7 @@ const ValidateNewBusiness = () => {
         </Form.Group>
       </div>
 
-      <Form onSubmit={validateWashroom}>
+      <Form onSubmit={validateBusiness}>
         <Form.Group className="mb-3">
           <Form.Label>Name on Google Maps</Form.Label>
           <Form.Control type="text" placeholder="Tim Hortons" ref={nameRef} />

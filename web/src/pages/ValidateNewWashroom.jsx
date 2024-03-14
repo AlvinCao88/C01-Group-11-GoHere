@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Form, Spinner, Stack } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import "./ValidateNewWashroom.css";
+import "./ValidateRequests.css";
 
 const ValidateNewWashroom = () => {
   const { id } = useParams();

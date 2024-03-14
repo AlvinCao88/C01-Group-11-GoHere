@@ -3,76 +3,72 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 function LoginPage({ mode }) {
-
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [errorMessage, setErrorMessage] = useState("")
-
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    if(mode === "signup"){
+    e.preventDefault();
+    if (mode === "signup") {
       processSignUp(email, password);
       return;
     }
     processLogin(email, password);
-  }
+  };
 
   const processLogin = async (email, password) => {
-    try{
+    try {
       const response = await fetch("/api/v1/admin/loginUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "email": email,
-          "password": password
-        })
-      })
+          email: email,
+          password: password,
+        }),
+      });
 
-      const responseBody = await response.json()
+      const responseBody = await response.json();
 
-      if (response.ok){
-        localStorage.setItem("token", responseBody.token)
-        window.location.href = '/validate/washrooms'
+      if (response.ok) {
+        localStorage.setItem("token", responseBody.token);
+        window.location.href = "/validate/washrooms";
       }
-    console.log(responseBody)
-      
-      setErrorMessage(responseBody.error);
+      console.log(responseBody);
 
-  } catch (error){
-    setErrorMessage(error.message);
-  }
-  }
+      setErrorMessage(responseBody.error);
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
 
   const processSignUp = async (email, password) => {
-    try{
+    try {
       const response = await fetch("/api/v1/admin/registerUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "email": email,
-          "password": password
-        })
-      })
+          email: email,
+          password: password,
+        }),
+      });
 
-      const responseBody = await response.json()
+      const responseBody = await response.json();
 
-      if(response.ok){
-        localStorage.setItem("token", responseBody.token)
-        window.location.href = '/validate/washrooms'
+      if (response.ok) {
+        localStorage.setItem("token", responseBody.token);
+        window.location.href = "/validate/washrooms";
         return;
       }
 
       setErrorMessage(responseBody.error);
-
-  } catch (error){
-    setErrorMessage(error.message);
-  }
-  }
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
 
   return (
     <div
@@ -86,14 +82,32 @@ function LoginPage({ mode }) {
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control onChange={(e) => {setEmail(e.target.value)}} type="email" placeholder="Enter email" />
+            <Form.Control
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              type="email"
+              placeholder="Enter email"
+            />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control onChange={(e) => {setPassword(e.target.value)}} type="password" placeholder="Password" />
+            <Form.Control
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              type="password"
+              placeholder="Password"
+            />
           </Form.Group>
-          <Button onClick={(e) => {handleSubmit(e)}} variant="primary" type="submit">
+          <Button
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
+            variant="primary"
+            type="submit"
+          >
             {mode === "signup" ? "Sign Up" : "Log In"}
           </Button>
           <div className="m-3">
@@ -107,9 +121,7 @@ function LoginPage({ mode }) {
               <u>{mode === "signup" ? `LOG IN` : `SIGN UP`}</u>
             </a>
           </div>
-          <div className="m-3 text-danger">
-              {errorMessage}
-          </div>
+          <div className="m-3 text-danger">{errorMessage}</div>
         </Form>
       </div>
     </div>
