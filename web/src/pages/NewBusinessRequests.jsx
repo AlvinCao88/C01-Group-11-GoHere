@@ -33,6 +33,8 @@ const NewBusinessRequests = () => {
     <Container className="mt-5">
       <h3 className="mb-5">Business Requests Sent by Users</h3>
       <Row className="list-header">
+        <Col xs={2}>Business Name</Col>
+        <Col xs={3}>Contact Details</Col>
         <Col xs={3}>Location</Col>
         <Col>Description</Col>
         <Col xs={2}>Controls</Col>
@@ -41,6 +43,10 @@ const NewBusinessRequests = () => {
       {requests && requests.length != 0 ? (
         requests.map((e) => (
           <Row direction="horizontal" gap={3} key={e._id}>
+            <Col xs={2}>
+                {e.businessName}
+            </Col>
+            <Col xs={3}>{`${e.contactName}, ${e.email}, ${e.phoneNumber}`}</Col>
             <Col xs={3}>
               {e.address}, {e.city}, {e.province}
             </Col>

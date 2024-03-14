@@ -88,6 +88,14 @@ const ValidateNewBusiness = () => {
           Request ID: {requestDetails._id}
         </p>
         <Form.Group className="mb-3">
+          <Form.Label>Business Name</Form.Label>
+          <Form.Control value={requestDetails.address || ""} disabled />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Contact Details</Form.Label>
+          <Form.Control value={`${requestDetails.contactName}, ${requestDetails.email}, ${requestDetails.phoneNumber}` || ""} disabled />
+        </Form.Group>
+        <Form.Group className="mb-3">
           <Form.Label>Address</Form.Label>
           <Form.Control value={requestDetails.address || ""} disabled />
         </Form.Group>
