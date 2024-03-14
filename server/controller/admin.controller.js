@@ -210,6 +210,30 @@ export async function getManyWashroomRequests(_, res) {
   }
 }
 
+export async function removeSingleWashroomRequest(req, res){
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const collection = db.instance.collection(
+      db.collections.ADD_WASHROOM_REQUESTS,
+    );
+    const data = await collection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+    }
+    res.json({ response: `Deleted Washroom Request with id: ${id}` });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}
 
 export async function getSingleAddBusinessRequest(req, res){
   try {
@@ -327,6 +351,31 @@ export async function getManyBusinessRequests(req, res){
     }
 
     res.json({ response: await data.toArray() });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}
+
+export async function removeSingleBusinessRequest(req, res){
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const collection = db.instance.collection(
+      db.collections.ADD_BUSINESS_REQUESTS,
+    );
+    const data = await collection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+    }
+    res.json({ response: `Deleted Business Request with id: ${id}` });
   } catch (e) {
     res.status(500).json({ error: `${e}` });
   }

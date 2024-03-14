@@ -6,9 +6,11 @@ import {
   getManyWashroomRequests,
   getSingleAddWashroomRequest,
   validateAddWashroomRequest,
+  removeSingleWashroomRequest,
   validateAddBusinessRequest,
   getManyBusinessRequests,
   getSingleAddBusinessRequest,
+  removeSingleBusinessRequest,
 } from "../controller/admin.controller.js";
 
 const router = Router();
@@ -53,6 +55,11 @@ router.get("/addWashroom/getManyRequests", verifyToken, getManyWashroomRequests)
 
 
 /**
+ *  Removes a washroom from the ADD_BUSINESS_REQUESTS collection
+ */
+router.delete("/removeWashroom/:id")
+
+/**
  * Returns a single business from the database.
  * ":id" represents the id of the business getting fetched
  */
@@ -64,7 +71,7 @@ router.get("/addBusiness/getRequest/:id", verifyToken, getSingleAddBusinessReque
  * Requires a nonempty body containing
  * {
  *   name: "name of business to be added"
- *   contactDetails: "Name, Email, Phone Number"
+ *   contactDetails: "Business Name, Contact Name, Email, Phone Number"
  *   fullAddress: "Address, City, Province PostalCode, Country"
  * }
  */
@@ -74,5 +81,11 @@ router.post("/addBusiness/validateRequest/:id", verifyToken, validateAddBusiness
  * Returns a list of business requests from the database.
  */
 router.get("/addBusiness/getManyRequests", verifyToken, getManyBusinessRequests);
+
+/**
+ *  Removes a business from the ADD_BUSINESS_REQUESTS collection
+ */
+router.delete("/removeBusiness/:id", verifyToken, )
+
 
 export default router;
