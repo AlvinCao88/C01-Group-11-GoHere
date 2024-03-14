@@ -65,7 +65,7 @@ const NewBusinessRequests = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleRemoveRequest}>
+          <Button className="text-white" variant="primary" onClick={handleRemoveRequest}>
             Delete Request
           </Button>
         </Modal.Footer>
@@ -76,9 +76,8 @@ const NewBusinessRequests = () => {
         <h3 className="mb-5">Business Requests Sent by Users</h3>
         <Row className="list-header">
           <Col xs={2}>Business Name</Col>
-          <Col xs={3}>Contact Details</Col>
+          <Col xs={5}>Contact Details</Col>
           <Col xs={3}>Location</Col>
-          <Col>Description</Col>
           <Col xs={2}>Controls</Col>
           <hr className="my-3" />
         </Row>
@@ -87,12 +86,11 @@ const NewBusinessRequests = () => {
             <Row direction="horizontal" gap={3} key={e._id}>
               <Col xs={2}>{e.businessName}</Col>
               <Col
-                xs={3}
+                xs={5}
               >{`${e.contactName}, ${e.email}, ${e.phoneNumber}`}</Col>
               <Col xs={3}>
                 {e.address}, {e.city}, {e.province}
               </Col>
-              <Col>{e.description}</Col>
               <Col xs={2}>
                 <Button className="m-2" variant="primary">
                   <Link className="link" to={`/validate/business/${e._id}`}>
