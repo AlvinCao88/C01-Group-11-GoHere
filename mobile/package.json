@@ -19,6 +19,7 @@
     "@react-navigation/native-stack": "^6.9.20",
     "@react-navigation/stack": "^6.3.25",
     "@stripe/stripe-react-native": "^0.35.1",
+    "dotenv": "^16.4.5",
     "expo": "~50.0.3",
     "expo-location": "~16.5.5",
     "expo-status-bar": "~1.11.1",
@@ -35,6 +36,7 @@
     "react-native-stripe-checkout-webview": "^0.0.13",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
+    "react-navigation": "^5.0.0",
     "rn-sliding-up-panel": "^2.4.6",
     "stripe": "^14.18.0",
     "uuid": "^9.0.1"
