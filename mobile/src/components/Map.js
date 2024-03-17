@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, Dimensions } from 'react-native';
 import * as Location from 'expo-location';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function Map() {
     const [markers, setMarkers] = useState([]);
@@ -9,9 +11,12 @@ export default function Map() {
     const [center, setCenter] = useState({ latitude: 43.78309609, longitude: -79.1873263 });
     const [errorMsg, setErrorMsg] = useState(null);
 
+    const navigation = useNavigation();
+
+
     const handleMarkerPress = (markerId) => {
         // Navigate to another screen when a marker is pressed
-        navigation.navigate('WashroomList', { markerId });
+        navigation.navigate('WashroomInfo', { id: markerId })
     };
 
     useEffect(() => {

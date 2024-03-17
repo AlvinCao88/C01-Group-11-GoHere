@@ -30,11 +30,6 @@ const NavigateBottomSheets = () => {
             component={WashroomSearch} 
             options={{headerShown:false}}
         />
-        <Stack.Screen 
-            name="MapScreen" 
-            component={WashroomSearch} 
-            options={{headerShown:false}}
-        />
         
       </Stack.Navigator>
     </NavigationContainer>
