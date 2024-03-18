@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import { Animated } from "react-native";
+import RateApp from "./RateApp";
 
 const SlidingUpPanelComponentInfo = ({
   panelOpen,
@@ -45,6 +46,7 @@ const SlidingUpPanelComponentInfo = ({
         >
           <Text style={styles.donateButtonText}>Donate</Text>
         </TouchableOpacity>
+        <RateApp></RateApp>
       </View>
     </SlidingUpPanel>
   );
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 60,
     borderRadius: 8,
-    marginTop: 30,
+    marginTop: 0,
     width: "90%",
     alignItems: "center",
   },

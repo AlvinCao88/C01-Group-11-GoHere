@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SlidingUpPanelComponent from "../components/SlidingUpPanelComponentInfo";
 
-const CARD_HEIGHT = 250;
+const CARD_HEIGHT = 300;
 
 export default function InfoScreen({ navigation }) {
   const [panelOpen, setPanelOpen] = useState(true);
