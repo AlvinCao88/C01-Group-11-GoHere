@@ -9,7 +9,10 @@ import TestScreen from "./src/screens/TestScreen";
 import DonateScreen from "./src/screens/DonationScreen";
 import AddWashroomsScreen from "./src/screens/AddWashroomScreen";
 import InfoScreen from "./src/screens/InfoScreen";
+import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import WashroomBottomSheet from "./src/components/WashroomBottomSheet"
 import { StatusBar } from "expo-status-bar";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
