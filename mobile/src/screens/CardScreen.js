@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import CardComponent from "../components/CardComponent";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import SlidingUpPanelComponent from "../components/SlidingUpPanelComponent";
+import SlidingUpPanelComponent from "../components/SlidingUpPanelComponentCard";
 
 const CARD_HEIGHT = 400;
 
