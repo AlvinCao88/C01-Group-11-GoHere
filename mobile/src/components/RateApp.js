@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Button, Platform  } from "react-native";
+import { View, Button, Platform, StyleSheet, TouchableOpacity, Text  } from "react-native";
 import { Linking } from "react-native";
 
-const RateApp = () => {
+export default function RateApp () {
     const gotoAppStore = () => {
         if (Platform.OS === "ios") {
             Linking.openURL("https://apps.apple.com/ca/app/gohere-washroom-locator/id1011069090");
@@ -14,13 +14,31 @@ const RateApp = () => {
 
     return (
         <View>
-            <Button
-                title='Rate us'
-                color='#e84338'
+            
+            <TouchableOpacity
+                style={styles.rateButton}
                 onPress={gotoAppStore}
-            />
+            >
+                <Text style={styles.rateButtonText}>Rate Us</Text>
+            </TouchableOpacity>
         </View>
     );
 };
 
-export default RateApp;
+const styles = StyleSheet.create({
+    rateButton: {
+        backgroundColor: "#e84338",
+        paddingVertical: 15,
+        paddingHorizontal: 130,
+        borderRadius: 8,
+        marginTop: 10,
+        width: "100%",
+        alignItems: "center"
+    },
+    rateButtonText: {
+        color: "white",
+        fontSize: 18,
+        fontWeight: "bold",
+        textAlign: "center",
+      }
+})
