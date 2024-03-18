@@ -27,5 +27,6 @@ export default {
     WASHROOMS: "Washrooms",
     ADD_WASHROOM_REQUESTS: "AddWashroomRequests",
     ADMINS: "Admins",
+    USER_REPORT: "UserReport"
   },
 };
