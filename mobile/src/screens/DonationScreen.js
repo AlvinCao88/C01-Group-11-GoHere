@@ -1,33 +1,41 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import {StripeProvider} from "@stripe/stripe-react-native";
+import React from 'react';
+import { StyleSheet, View, TouchableOpacity, Text, StatusBar } from 'react-native';
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import Checkout from "../components/Checkout";
+import Checkout from '../components/Checkout';
 
-const STRIPE_PUBLBISHABLE_KEY = "pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm";
 export default function DonationScreen() {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />
-      <StripeProvider publishableKey="pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm">
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
+      <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY}>
         <Checkout />
       </StripeProvider>
-    </View> 
+    </View>
   );
-  
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black'
+  backButton: {
+    position: 'absolute',
+    top: 60,
+    left: 20,
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 24,
+    color: '#000',
   },
 });

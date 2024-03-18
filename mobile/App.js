@@ -1,31 +1,40 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import MapScreen from "./src/screens/MapScreen";
+import CardScreen from "./src/screens/CardScreen";
 import TestScreen from "./src/screens/TestScreen";
-import DonationScreen from "./src/screens/DonationScreen";
-import RateApp from "./src/components/RateApp";
+import DonateScreen from "./src/screens/DonationScreen";
+import AddWashroomsScreen from "./src/screens/AddWashroomScreen";
+import InfoScreen from "./src/screens/InfoScreen";
+import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import WashroomBottomSheet from "./src/components/WashroomBottomSheet"
+import { StatusBar } from "expo-status-bar";
 
-const STRIPE_PUBLBISHABLE_KEY = "pk_test_51Omh0XD4UdDQFwxRIjqyccC4UN8VXKH40AZkVufSYAKJIPaVqPMJbDatDAnMfATvniF1JB98uS71ahxwqTRnHB0s00wjzaO9Jm";
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function InfoStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="InfoScreen" component={InfoScreen} />
+      <Stack.Screen name="Donate" component={DonateScreen} />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <RateApp></RateApp>
-    </View> 
+    <NavigationContainer>
+      <StatusBar />
+      <Tab.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
+        <Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Card" component={CardScreen} />
+        <Tab.Screen name="Info" component={InfoStack} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-  
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  titleText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black'
-  },
-});
+}
