@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import WashroomList from './WashroomList';
 import WashroomInfo from './WashroomInfo';
 import WashroomSearch from './WashroomSearch';
+import MapScreen from '../screens/MapScreen';
 
 const Stack = createStackNavigator();
 const NavigateBottomSheets = () => {
@@ -28,6 +29,11 @@ const NavigateBottomSheets = () => {
         <Stack.Screen 
             name="WashroomSearch" 
             component={WashroomSearch} 
+            options={{headerShown:false}}
+        />
+        <Stack.Screen 
+            name="MapScreen" 
+            component={MapScreen} 
             options={{headerShown:false}}
         />
         
