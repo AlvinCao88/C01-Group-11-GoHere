@@ -103,7 +103,7 @@ export default function Map() {
           if (!cluster) return null;
 
           // Check if the cluster represents a single marker
-          console.log(cluster.properties.point_count)
+        //   console.log(cluster.properties.point_count)
           if (cluster.properties.point_count === undefined) {
             return (
               <Marker
