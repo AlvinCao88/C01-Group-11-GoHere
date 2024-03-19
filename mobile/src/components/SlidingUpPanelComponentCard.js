@@ -17,7 +17,7 @@ const SlidingUpPanelComponent = ({
 
   return (
     <SlidingUpPanel
-      draggableRange={{ top: CARD_HEIGHT, bottom: 200 }}
+      draggableRange={{ top: CARD_HEIGHT, bottom: 190 }}
       animatedValue={new Animated.Value(0)}
       snappingPoints={[CARD_HEIGHT]}
       height={300}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // elevation: 4,
+    elevation: 4,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -3 },
     shadowOpacity: 0.1,
@@ -93,20 +93,22 @@ const styles = StyleSheet.create({
   },
   panelTitle: {
     color: "#000",
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 25,
+    marginTop: 15,
   },
   spacingText: {
     fontSize: 2,
     fontWeight: "bold",
   },
   panelContent: {
-    fontSize: 16,
+    fontSize: 13,
     color: "#000",
     lineHeight: 24,
     textAlign: "left",
     marginBottom: 20,
+    lineHeight: 28,
   },
   dividingLine: {
     height: 1,
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 8,
     marginVertical: 10,
     width: "95%",
     alignSelf: "center",
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 8,
     marginVertical: 10,
     width: "95%",
     alignSelf: "center",

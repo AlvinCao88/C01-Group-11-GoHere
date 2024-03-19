@@ -61,7 +61,7 @@ export default function Map() {
         setZoom(Math.round(Math.log2(360 / (maxX - minX)) + 1));
     }, [markers]);
 
-    
+
 
     const onRegionChangeComplete = (region) => {
         // Update bounds and zoom level
