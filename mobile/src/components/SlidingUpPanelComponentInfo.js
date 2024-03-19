@@ -1,7 +1,13 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+  Animated,
+} from "react-native";
 import SlidingUpPanel from "rn-sliding-up-panel";
-import { Animated } from "react-native";
 import RateApp from "./RateApp";
 
 const SlidingUpPanelComponentInfo = ({
@@ -24,10 +30,10 @@ const SlidingUpPanelComponentInfo = ({
 
   return (
     <SlidingUpPanel
-      draggableRange={{ top: CARD_HEIGHT, bottom: CARD_HEIGHT * 0.6 }}
+      draggableRange={{ top: CARD_HEIGHT, bottom: 175 }}
       animatedValue={animatedValue}
       backdropOpacity={0}
-      friction={50}
+      springTension={300}
     >
       <View style={styles.panel}>
         <View style={styles.panelHandle}></View>
@@ -57,10 +63,24 @@ const SlidingUpPanelComponentInfo = ({
 };
 
 const styles = StyleSheet.create({
+  panel: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    elevation: Platform.select({ ios: 4, android: 15 }),
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    alignItems: "flex-start",
+  },
   buttonsContainer: {
     marginTop: 15,
     width: "100%",
-
   },
   rateAppContainer: {
     width: "90%",
@@ -90,20 +110,6 @@ const styles = StyleSheet.create({
     width: "90%",
     alignItems: "center",
     alignSelf: "center",
-  },
-  panel: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -3 },
-    elevation: 4,
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    paddingTop: 10,
-    paddingHorizontal: 0,
-    alignItems: "center",
   },
   supportTitle: {
     fontSize: 20,

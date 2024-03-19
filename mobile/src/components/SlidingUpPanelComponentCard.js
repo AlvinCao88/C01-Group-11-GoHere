@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import { Linking } from "react-native";
 import { Animated } from "react-native";
@@ -20,7 +26,7 @@ const SlidingUpPanelComponent = ({
       draggableRange={{ top: CARD_HEIGHT, bottom: 190 }}
       animatedValue={new Animated.Value(0)}
       snappingPoints={[CARD_HEIGHT]}
-      height={300}
+      height={400}
       backdropOpacity={0}
     >
       <View style={styles.panel}>
@@ -74,13 +80,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    elevation: 4,
-    shadowColor: "#000",
+    elevation: Platform.select({ ios: 4, android: 15 }),
+    shadowColor: "rgba(0,0,0,1)",
     shadowOffset: { width: 0, height: -3 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     paddingTop: 10,
     paddingHorizontal: 20,
+    paddingBottom: 40,
     alignItems: "flex-start",
   },
   panelHandle: {
