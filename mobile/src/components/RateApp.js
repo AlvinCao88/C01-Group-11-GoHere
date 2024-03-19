@@ -27,9 +27,9 @@ export default function RateApp () {
 
 const styles = StyleSheet.create({
     rateButton: {
-        backgroundColor: "#e84338",
+        backgroundColor: "#d64c49",
         paddingVertical: 15,
-        paddingHorizontal: 130,
+        paddingHorizontal: 0,
         borderRadius: 8,
         marginTop: 10,
         width: "100%",
