@@ -6,8 +6,7 @@ import TierList from "../components/TierList";
 import { useAllPrismicDocumentsByType } from "@prismicio/react";
 
 
-const screenHeight = Dimensions.get('window').height;
-const CARD_HEIGHT = screenHeight * 0.33;
+const CARD_HEIGHT = 300;
 
 export default function InfoScreen({ navigation }) {
   const [panelOpen, setPanelOpen] = useState(true);

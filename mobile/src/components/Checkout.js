@@ -67,7 +67,7 @@ const Checkout = () => {
                 value={amount}
                 onChangeText={(e) => setAmount(e)}
             />
-            <Button title="Donate" onPress={donate} color='#e84338' />
+            <Button title="Donate" onPress={donate} color='#d64c49' />
         </View>
     )
 }
