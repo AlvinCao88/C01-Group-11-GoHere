@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import { Animated } from "react-native";
+import RateApp from "./RateApp";
 
 const SlidingUpPanelComponentInfo = ({
   panelOpen,
@@ -12,7 +13,7 @@ const SlidingUpPanelComponentInfo = ({
   const animatedValue = useRef(new Animated.Value(CARD_HEIGHT)).current;
   useEffect(() => {
     const listenerId = animatedValue.addListener(({ value }) => {
-      const isOpen = value > CARD_HEIGHT * 0.5;
+      const isOpen = value > CARD_HEIGHT * 0.8;
       setPanelOpen(isOpen);
     });
 
@@ -23,7 +24,7 @@ const SlidingUpPanelComponentInfo = ({
 
   return (
     <SlidingUpPanel
-      draggableRange={{ top: CARD_HEIGHT, bottom: 120 }}
+      draggableRange={{ top: CARD_HEIGHT, bottom: CARD_HEIGHT * 0.6 }}
       animatedValue={animatedValue}
       backdropOpacity={0}
       friction={50}
@@ -39,23 +40,38 @@ const SlidingUpPanelComponentInfo = ({
             <View style={styles.dividingLine}></View>
           </>
         )}
-        <TouchableOpacity
-          style={styles.donateButton}
-          onPress={() => navigation.navigate("Donate")}
-        >
-          <Text style={styles.donateButtonText}>Donate</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.donateButton}
+            onPress={() => navigation.navigate("Donate")}
+          >
+            <Text style={styles.donateButtonText}>Donate</Text>
+          </TouchableOpacity>
+          <View style={styles.rateAppContainer}>
+            <RateApp></RateApp>
+          </View>
+        </View>
       </View>
     </SlidingUpPanel>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonsContainer: {
+    marginTop: 15,
+    width: "100%",
+
+  },
+  rateAppContainer: {
+    width: "90%",
+    alignSelf: "center",
+  },
   dividingLine: {
     height: 1,
     backgroundColor: "#d7d7d7",
     width: "90%",
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 5,
   },
   panelHandle: {
     width: 40,
@@ -70,9 +86,10 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 60,
     borderRadius: 8,
-    marginTop: 30,
+    marginTop: 0,
     width: "90%",
     alignItems: "center",
+    alignSelf: "center",
   },
   panel: {
     flex: 1,

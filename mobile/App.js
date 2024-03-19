@@ -29,7 +29,6 @@ export default function App() {
             name="Map"
             component={WashroomBottomSheet}
             options={{ headerShown: false }}
-            
           />
           <Tab.Screen
             name="News"
@@ -74,7 +73,6 @@ function InfoStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="InfoScreen" component={InfoScreen} />
       <Stack.Screen name="Donate" component={DonateScreen} />
-      
     </Stack.Navigator>
   );
 }

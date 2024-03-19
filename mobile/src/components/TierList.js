@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   bronzeContainer: {
     alignContent: 'center',
     backgroundColor: "#fff",
-    paddingBottom: '30%',
+    paddingBottom: '40%',
     paddingTop: 50,
     borderBottomWidth: 10,
     borderColor:'black',

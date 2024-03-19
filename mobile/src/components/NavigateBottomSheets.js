@@ -8,6 +8,9 @@ import WashroomList from './WashroomList';
 import WashroomInfo from './WashroomInfo';
 import WashroomSearch from './WashroomSearch';
 
+
+import ReportIssueScreen from '../screens/ReportIssueScreen';
+
 const Stack = createStackNavigator();
 const NavigateBottomSheets = () => {
 
@@ -29,6 +32,11 @@ const NavigateBottomSheets = () => {
             name="WashroomSearch" 
             component={WashroomSearch} 
             options={{headerShown:false}}
+        />
+
+        <Stack.Screen
+          name="ReportIssueScreen"
+          component={ReportIssueScreen}
         />
         
       </Stack.Navigator>

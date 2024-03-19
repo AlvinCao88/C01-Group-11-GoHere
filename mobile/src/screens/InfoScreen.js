@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SlidingUpPanelComponent from "../components/SlidingUpPanelComponentInfo";
 import TierList from "../components/TierList";
 import { useAllPrismicDocumentsByType } from "@prismicio/react";
 
 
-const CARD_HEIGHT = 250;
+const screenHeight = Dimensions.get('window').height;
+const CARD_HEIGHT = screenHeight * 0.33;
 
 export default function InfoScreen({ navigation }) {
   const [panelOpen, setPanelOpen] = useState(true);
