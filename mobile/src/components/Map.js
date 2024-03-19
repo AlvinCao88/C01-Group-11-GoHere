@@ -197,7 +197,6 @@
         const [loading, setLoading] = useState(true);
 
         // const [center, setCenter] = useState(null);
-    
         useEffect(() => {
             fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`)
                 .then(response => response.json())

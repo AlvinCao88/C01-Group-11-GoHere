@@ -8,7 +8,7 @@ import {
   ActivityIndicator } from 'react-native';
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
-const WashroomInfo = ( {route, nativation}) => {
+const WashroomInfo = ( {route, navigation}) => {
   const {id} = route.params;
   const [washroom, setWashroom] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -102,7 +102,10 @@ const WashroomInfo = ( {route, nativation}) => {
                   </View>
                   <Text style={styles.sectionTitle}>Report</Text>
                   <View style={styles.contactView}>
-                    <TouchableOpacity style={styles.saveButton}>
+                    <TouchableOpacity 
+                      style={styles.saveButton}
+                      onPress={() => navigation.navigate("ReportIssueScreen", {washroomId: id})}
+                    >
                       <Text style={styles.saveText}>Report a Washroom</Text>
                     </TouchableOpacity>
                   </View>
