@@ -5,7 +5,9 @@ import {
   StyleSheet, 
   Pressable,
   TouchableOpacity, 
-  ActivityIndicator } from 'react-native';
+  ActivityIndicator, 
+  Linking, 
+  Alert, } from 'react-native';
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
 const WashroomInfo = ( {route, navigation}) => {
@@ -38,6 +40,35 @@ const WashroomInfo = ( {route, navigation}) => {
   
     getWashroom();
   }, []);
+
+const handleWebsitePress = useCallback(async () => {
+  const url = washroom?.contact?.website;
+  if (!url) {
+    Alert.alert('This washroom does not have a website.');
+    return;
+  }
+  const canOpen = await Linking.canOpenURL(url);
+  if (canOpen) {
+    await Linking.openURL(url);
+  } else {
+    Alert.alert('Error. Unable to open the URL.');
+  }
+}, [washroom]);
+
+const handleCallPress = useCallback(async () => {
+  const phoneNumber = washroom?.contact?.number;
+  if (!phoneNumber) {
+    Alert.alert('This washroom does not have a phone number listed.');
+    return;
+  }
+  
+  const canOpen = await Linking.canOpenURL(`tel:${phoneNumber}`);
+  if (canOpen) {
+    await Linking.openURL(`tel:${phoneNumber}`);
+  } else {
+    Alert.alert('Error. Unable to call the phone number.');
+  }
+}, [washroom]);
 
   
   // const handleWebsitePress = useCallback(async () => {
@@ -88,10 +119,10 @@ const WashroomInfo = ( {route, navigation}) => {
                   
                   <Text style={styles.sectionTitle}>Contact</Text>
                   <View style={styles.contactView}>
-                    <TouchableOpacity style={styles.websiteButton} >
+                    <TouchableOpacity style={styles.websiteButton} onPress={handleWebsitePress}>
                         <Text style={styles.contactText}>Website</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.callButton}>
+                      <TouchableOpacity style={styles.callButton} onPress={handleCallPress}>
                         <Text style={styles.contactText}>Call</Text>
                       </TouchableOpacity>
                     </View>
@@ -103,10 +134,10 @@ const WashroomInfo = ( {route, navigation}) => {
                   <Text style={styles.sectionTitle}>Report</Text>
                   <View style={styles.contactView}>
                     <TouchableOpacity 
-                      style={styles.saveButton}
+                      style={styles.reportButton}
                       onPress={() => navigation.navigate("ReportIssueScreen", {washroomId: id})}
                     >
-                      <Text style={styles.saveText}>Report a Washroom</Text>
+                      <Text style={styles.reportText}>Report a Washroom</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -223,6 +254,19 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 14,
+  },
+  reportButton: {
+    backgroundColor: '#d64c49',
+    width: '95%',
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  reportText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 
