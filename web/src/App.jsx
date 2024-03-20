@@ -12,8 +12,10 @@ import "./custom.scss";
 import LoginPage from "./pages/LoginPage";
 import NewWashroomRequest from "./pages/NewWashroomRequests";
 import ValidateNewWashroom from "./pages/ValidateNewWashroom";
+import UserReportList from "./pages/UserReportList";
 import NewBusinessRequests from "./pages/NewBusinessRequests";
 import ValidateNewBusiness from "./pages/ValidateNewBusiness";
+import VerifyUserReport from "./pages/VerifyUserReport"
 
 async function checkIsAdmin() {
   try {
@@ -76,6 +78,14 @@ function App() {
             <Route
               path="/validate/washroom/:id"
               element={<ValidateNewWashroom />}
+            />
+            <Route
+              path="/verify/reports"
+              element={<UserReportList />}
+            />
+             <Route
+              path="/verify/report/:id"
+              element={<VerifyUserReport />}
             />
 
             <Route

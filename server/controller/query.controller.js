@@ -96,11 +96,3 @@ export async function findClosestWashroomsController(req, res) {
 // module.exports = {
 //   findClosestWashroomsController,
 // };
-
-// Test use
-// const userLatitude = 37.7749; // User's latitude
-// const userLongitude = -122.4194; // User's longitude
-
-// const closestWashrooms = findClosestWashrooms(userLatitude, userLongitude);
-
-// Now `closestWashrooms` contains the list of washrooms sorted by distance from the user

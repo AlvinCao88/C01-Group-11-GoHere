@@ -11,6 +11,9 @@ import {
   getManyBusinessRequests,
   getSingleAddBusinessRequest,
   removeSingleBusinessRequest,
+  verifyUserReport,
+  getAllUserReports,
+  getSingleReport,
 } from "../controller/admin.controller.js";
 
 const router = Router();
@@ -109,5 +112,9 @@ router.get(
  *  Removes a business from the ADD_BUSINESS_REQUESTS collection
  */
 router.delete("/removeBusiness/:id", verifyToken, removeSingleBusinessRequest);
+
+router.get('/getReports/:id', verifyToken, getSingleReport);
+router.get('/getAllReports', verifyToken, getAllUserReports);
+router.put('/verifyReports/:id', verifyToken, verifyUserReport);
 
 export default router;
