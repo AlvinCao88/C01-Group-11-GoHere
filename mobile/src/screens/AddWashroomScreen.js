@@ -89,7 +89,7 @@ export default function AddWashroomScreen({ navigation }) {
         province,
         description,
       };
-
+      
       try {
         const response = await fetch(
           `${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/add`,

@@ -34,6 +34,7 @@ export const addWashroomRequest = async (req, res) => {
   }
 };
 
+
 export const addBusinessRequest = async (req, res) => {
   const {
     businessName,
@@ -67,4 +68,41 @@ export const addBusinessRequest = async (req, res) => {
     console.error("Failed to add business request:", error);
     res.status(500).json({ message: "Failed to add business request" });
   }
+};
+
+/*
+This is called when the /issue endpoint is called, it handles adding issues into the issues collection
+of the db.
+
+Takes in request with format:
+USER_REPORT_WASHROOM_ISSUE {
+    id: uuid, (automatically from mongodb)
+    name: string,
+    phoneNum: int,
+    email: string,
+    issue: string,
+    status: boolean,
+    washroomId: uuid (given by the report button, links to the washroom database)
+}
+*/
+export const addIssue = async (req, res) => {
+  const {name,
+    phoneNum,
+    email,
+    issue,
+    status,
+    washroomId} = req.body;
+  
+  const fullRequest = {name, phoneNum, email, issue, status, washroomId};
+
+  console.log("in backend");
+  try {
+    const collection = dbConfig.instance.collection(dbConfig.collections.USER_REPORT);
+    await collection.insertOne(fullRequest);
+    res.status(200).json({message: "Request submitted"});
+  } catch (error) {
+    console.error("Couldn't report issue: ", error);
+    res.status(500).json({message: "Couldn't report issue issue"});
+  }
+
 };

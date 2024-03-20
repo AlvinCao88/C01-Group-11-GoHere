@@ -29,5 +29,6 @@ export default {
     ADMINS: "Admins",
     BUSINESSES: "Businesses",
     ADD_BUSINESS_REQUESTS: "AddBusinessRequests",
+    USER_REPORT: "UserReport"
   },
 };

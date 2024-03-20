@@ -1,261 +1,179 @@
-// import React from 'react';
-// import MapView, { Marker } from 'react-native-maps';
-// import { StyleSheet, Dimensions, Image } from 'react-native';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
+import useSupercluster from 'use-supercluster';
 
-// export default function Map() {
-//     const API_URL = "http://localhost:8000"
 
-//     const markers = [
-//         {
-//             id: '1',
-//             name: 'Restaurant A',
-//             fullAddress: '123 Main St, City, Country',
-//             latitude: 51.505,
-//             longitude: -0.07,
-//             hours: {
-//                 open: ['10:00 AM', '10:00 AM', '10:00 AM', '10:00 AM', '10:00 AM', '10:00 AM', '10:00 AM'],
-//                 close: ['8:00 PM', '8:00 PM', '8:00 PM', '8:00 PM', '8:00 PM', '8:00 PM', '8:00 PM']
-//             },
-//             contact: {
-//                 website: 'www.restaurantA.com',
-//                 number: '123-456-7890'
-//             }
-//         },
-//         {
-//             id: '2',
-//             name: 'Pharmacy B',
-//             fullAddress: '456 Elm St, City, Country',
-//             latitude: 51.52,
-//             longitude: -0.1,
-//             hours: {
-//                 open: ['9:00 AM', '9:00 AM', '9:00 AM', '9:00 AM', '9:00 AM', '9:00 AM', 'Closed'],
-//                 close: ['6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', 'Closed']
-//             },
-//             contact: {
-//                 website: 'www.pharmacyB.com',
-//                 number: '987-654-3210'
-//             }
-//         },
-//         {
-//             id: '3',
-//             name: 'Gas Station C',
-//             fullAddress: '789 Oak St, City, Country',
-//             latitude: 51.51,
-//             longitude: -0.08,
-//             hours: {
-//                 open: ['24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours'],
-//                 close: ['24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours']
-//             },
-//             contact: {
-//                 website: 'www.gasstationC.com',
-//                 number: '555-123-4567'
-//             }
-//         },
-//         {
-//             id: '4',
-//             name: 'Cafe D',
-//             fullAddress: '789 Maple St, City, Country',
-//             latitude: 51.51,
-//             longitude: -0.11,
-//             hours: {
-//                 open: ['8:00 AM', '8:00 AM', '8:00 AM', '8:00 AM', '8:00 AM', '8:00 AM', '9:00 AM'],
-//                 close: ['6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', '5:00 PM']
-//             },
-//             contact: {
-//                 website: 'www.cafeD.com',
-//                 number: '333-555-7777'
-//             }
-//         },
-//         {
-//             id: '5',
-//             name: 'Supermarket E',
-//             fullAddress: '456 Walnut St, City, Country',
-//             latitude: 51.52,
-//             longitude: -0.1,
-//             hours: {
-//                 open: ['7:00 AM', '7:00 AM', '7:00 AM', '7:00 AM', '7:00 AM', '7:00 AM', '8:00 AM'],
-//                 close: ['10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM', '9:00 PM']
-//             },
-//             contact: {
-//                 website: 'www.supermarketE.com',
-//                 number: '888-999-0000'
-//             }
-//         },
-//         {
-//             id: '6',
-//             name: 'Hotel F',
-//             fullAddress: '123 Oak St, City, Country',
-//             latitude: 51.50,
-//             longitude: -0.1,
-//             hours: {
-//                 open: ['24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours'],
-//                 close: ['24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours', '24 Hours']
-//             },
-//             contact: {
-//                 website: 'www.hotelF.com',
-//                 number: '111-222-3333'
-//             }
-//         },
-//         {
-//             id: '7',
-//             name: 'Park G',
-//             fullAddress: '345 Pine St, City, Country',
-//             latitude: 51.501,
-//             longitude: -0.09,
-//             hours: {
-//                 open: ['6:00 AM', '6:00 AM', '6:00 AM', '6:00 AM', '6:00 AM', '6:00 AM', '6:00 AM'],
-//                 close: ['10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM']
-//             },
-//             contact: {
-//                 website: 'www.parkG.com',
-//                 number: '777-888-9999'
-//             }
-//         },
-//         {
-//             id: '8',
-//             name: 'Library H',
-//             fullAddress: '678 Elm St, City, Country',
-//             latitude: 51.52,
-//             longitude: -0.12,
-//             hours: {
-//                 open: ['9:00 AM', '9:00 AM', '9:00 AM', '9:00 AM', '9:00 AM', '9:00 AM', 'Closed'],
-//                 close: ['6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', '6:00 PM', 'Closed']
-//             },
-//             contact: {
-//                 website: 'www.libraryH.com',
-//                 number: '555-111-7777'
-//             }
-//         },
-//         {
-//             id: '9',
-//             name: 'Gym I',
-//             fullAddress: '910 Maple St, City, Country',
-//             latitude: 51.53,
-//             longitude: -0.08,
-//             hours: {
-//                 open: ['5:00 AM', '5:00 AM', '5:00 AM', '5:00 AM', '5:00 AM', '6:00 AM', '8:00 AM'],
-//                 close: ['10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM', '10:00 PM', '9:00 PM', '6:00 PM']
-//             },
-//             contact: {
-//                 website: 'www.gymI.com',
-//                 number: '444-666-2222'
-//             }
-//         }]
-
-//     let center = { latitude: 51.505, longitude: -0.09 };
-//     const styles = StyleSheet.create({
-//         map:{
-//             width: Dimensions.get('window').width,
-//             height: Dimensions.get('window').height * .50
-//         },
-//         markerImage: {
-//             width: 20, // Adjust width as needed
-//             height: 20, // Adjust height as needed
-//         },
-//     });
-
-//     return (
-//         <MapView
-//             style={styles.map}
-//             initialRegion={{
-//                 latitude: center.latitude,
-//                 longitude: center.longitude,
-//                 latitudeDelta: 0.0922,
-//                 longitudeDelta: 0.0421,
-//             }}
-//         >
-//             {markers.map((marker) => (
-//                 <Marker
-//                     key={marker.id}
-//                     coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-//                     title={marker.name}
-//                     description={marker.fullAddress}
-//                 />
-//             ))}
-
-//             <Marker
-//                 key={"You are here"}
-//                 coordinate={center}
-//                 title={"You are here!"}
-//                 image={require('../../assets/here.png')} //./assets/navigation.png
-//                 style={styles.markerImage}
-//             />
-
-//         </MapView>
-//     );
-// }
-
-import React, { useEffect, useState } from "react";
-import MapView, { Marker } from "react-native-maps";
-import { StyleSheet, Dimensions, Alert } from "react-native";
 
 export default function Map() {
-  const [markers, setMarkers] = useState([]);
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
+    const [center, setCenter] = useState({ latitude: 43.78309609, longitude: -79.1873263 });
+    // const mapRef = useRef(null);
+    const [markers, setMarkers] = useState([]);
+    const bounds = useRef(null);
+    const [zoom, setZoom] = useState(12);
 
-  // const [center, setCenter] = useState(null);
+    useEffect(() => {
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                console.error('Permission to access location was denied');
+                return;
+            }
+            try {
+                let location = await Location.getCurrentPositionAsync({});
+                setCenter({ latitude: location.coords.latitude, longitude: location.coords.longitude });
+            } catch (error) {
+                console.error('Error getting current location:', error);
+            }
+        })();
+    }, []);
 
-  useEffect(() => {
-    fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.response) {
-          setMarkers(data.response);
-          setLoading(false);
-        } else {
-          console.error("Error fetching washrooms:", data.error);
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching washrooms:", error);
-        setLoading(false);
+    useEffect(() => {
+        fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.response) {
+                    setMarkers(data.response);
+                    setLoading(false);
+                } else {
+                    throw new Error(`Error fetching washrooms: ${data.error}`);
+                }
+            })
+            .catch(error => {
+                console.error(error.message);
+                setLoading(false);
+            });
+    }, []);
+
+    useEffect(() => {
+        // Fetch markers data and setMarkers
+
+        // Calculate bounds dynamically
+        const minX = Math.min(...markers.map(marker => marker.longitude));
+        const minY = Math.min(...markers.map(marker => marker.latitude));
+        const maxX = Math.max(...markers.map(marker => marker.longitude));
+        const maxY = Math.max(...markers.map(marker => marker.latitude));
+
+        // Update bounds and zoom level
+        bounds.current = [minX, minY, maxX, maxY];
+        setZoom(Math.round(Math.log2(360 / (maxX - minX)) + 1));
+    }, [markers]);
+
+
+
+    const onRegionChangeComplete = (region) => {
+        // Update bounds and zoom level
+        bounds.current = [
+          region.longitude - region.longitudeDelta / 2,
+          region.latitude - region.latitudeDelta / 2,
+          region.longitude + region.longitudeDelta / 2,
+          region.latitude + region.latitudeDelta / 2,
+        ];
+        setZoom(Math.round(Math.log2(360 / region.longitudeDelta) + 1));
+      };
+    
+      const { clusters } = useSupercluster({
+        points: markers.map(marker => ({
+          type: 'Feature',
+          properties: { cluster: false, id: marker._id, title: marker.name, description: marker.fullAddress},
+          geometry: { type: 'Point', coordinates: [marker.longitude, marker.latitude] },
+        })),
+        //need to not harcode bounds
+        // bounds: [-180, -85, 180, 85],
+        bounds: bounds.current,
+        zoom,
+        options: { radius: 75, maxZoom: 20 }
       });
-  }, []);
+    return (
+        <MapView
+        style={styles.map}
+        region={{
+          latitude: center.latitude, //change this to center.latittude
+          longitude: center.longitude,//change this to center.longitutde
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
+        }}
+        onRegionChangeComplete={onRegionChangeComplete}
+      >
+        {/* Render clustered markers */}
+        {loading ? null: clusters.map(cluster => {
+          // Check if the cluster is null or undefined
+          if (!cluster) return null;
 
-  let center = { latitude: 43.78309609, longitude: -79.1873263 };
-  const styles = StyleSheet.create({
-    map: {
-      width: Dimensions.get("window").width,
-      height: Dimensions.get("window").height,
-    },
-  });
+          // Check if the cluster represents a single marker
+        //   console.log(cluster.properties.point_count)
+          if (cluster.properties.point_count === undefined) {
+            return (
+              <Marker
+                key={cluster.properties.id}
+                coordinate={{
+                  latitude: cluster.geometry.coordinates[1],
+                  longitude: cluster.geometry.coordinates[0],
+                }}
+                title={cluster.properties.title}
+                description={cluster.properties.description}
 
-  return (
-    // <View>
-    <MapView
-      style={styles.map}
-      showsUserLocation={true}
-      initialRegion={{
-        latitude: center.latitude,
-        longitude: center.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
-    >
-      {loading
-        ? null
-        : markers.map((marker) => (
-            <Marker
-              key={marker._id}
+
+              />
+            );
+          } else {
+            // Render clustered markers
+            return (
+              <Marker
+              key={cluster.id}
+              title={`${cluster.properties.point_count} markers`}
               coordinate={{
-                latitude: marker.latitude,
-                longitude: marker.longitude,
+                latitude: cluster.geometry.coordinates[1],
+                longitude: cluster.geometry.coordinates[0],
               }}
-              title={marker.name}
-              description={marker.fullAddress}
-            />
-          ))}
+            >
+              {/* Custom view for clusters */}
+              <View style={[styles.cluster, { width: 30, height: 30 }]}>
+                <Text style={styles.clusterCount}>{cluster.properties.point_count}</Text>
+              </View>
+            </Marker>
+            
+            );
+            
+          }
+        }
+           
+        
+        )}
+        <Marker
+            key={"You are here"}
+            coordinate={{
+            latitude: center.latitude,
+            longitude: center.longitude
+            }}
+            title={"You are here!"}
+            // description={cluster.properties.description}
+            // image={require('../AwesomeProject/assets/favicon.png')}
+            image={require('../../assets/here.png')}
 
-      <Marker
-        key={"You are here"}
-        coordinate={center}
-        title={"You are here!"}
-        image={require("../../assets/here.png")} //./assets/navigation.png
-        // Attribute: "https://www.flaticon.com/free-icons/my-location" title="my location icons">My location icons created by zero_wing - Flaticon</a>
-      />
-    </MapView>
-    // <WashroomBottomSheet/>
-    // </View>
-  );
+        />
+      </MapView>
+    );
 }
+
+const styles = StyleSheet.create({
+    map: {
+        position: 'absolute',
+        top: 0,
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height - 140,
+    },
+    cluster: {
+        borderRadius: 100,
+        backgroundColor: '#334155',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    clusterCount: {
+        color: '#FFF',
+        fontWeight: 'bold',
+    }
+});

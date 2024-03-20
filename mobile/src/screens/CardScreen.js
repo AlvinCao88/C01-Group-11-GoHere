@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import CardComponent from "../components/CardComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SlidingUpPanelComponent from "../components/SlidingUpPanelComponent";
+import SlidingUpPanelComponent from "../components/SlidingUpPanelComponentCard";
 
 const CARD_HEIGHT = 400;
 
@@ -11,6 +11,9 @@ export default function CardScreen() {
 
   const toggleLanguage = () => {
     setIsEnglish(!isEnglish);
+  };
+  const toggleLanguage2 = (value) => {
+    setIsEnglish(value);
   };
 
   const textTranslations = {
@@ -56,37 +59,27 @@ export default function CardScreen() {
           style={styles.languageToggle}
           onPress={toggleLanguage}
         >
-          <View style={styles.toggleButtonContainer}>
-            <View
-              style={[
-                styles.toggleButton,
-                isEnglish ? styles.toggleButtonActive : null,
-              ]}
+          <View style={styles.switchContainer}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={toggleLanguage}
+              style={[styles.switchButton, isEnglish && styles.activeButton]}
             >
-              <Text
-                style={[
-                  styles.toggleButtonText,
-                  isEnglish ? null : styles.toggleButtonTextInactive,
-                ]}
-              >
+              <Text style={[styles.switchText, isEnglish && styles.activeText]}>
                 en
               </Text>
-            </View>
-            <View
-              style={[
-                styles.toggleButton,
-                !isEnglish ? styles.toggleButtonActive : null,
-              ]}
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={toggleLanguage}
+              style={[styles.switchButton, !isEnglish && styles.activeButton]}
             >
               <Text
-                style={[
-                  styles.toggleButtonText,
-                  !isEnglish ? null : styles.toggleButtonTextInactive,
-                ]}
+                style={[styles.switchText, !isEnglish && styles.activeText]}
               >
                 fr
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </TouchableOpacity>
       </View>
@@ -135,29 +128,32 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "bold",
   },
-  languageToggle: {
+  switchContainer: {
     flexDirection: "row",
-    backgroundColor: "#767577",
-    borderRadius: 20,
-  },
-  toggleButtonContainer: {
-    flexDirection: "row",
-    borderRadius: 20,
+    backgroundColor: "#CCCCCC",
+    borderRadius: 6,
     overflow: "hidden",
+    alignSelf: "center",
+    marginVertical: 10,
   },
-  toggleButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    backgroundColor: "#767577",
+  switchButton: {
+    width: 42,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 3,
   },
-  toggleButtonActive: {
+  activeButton: {
     backgroundColor: "#d64c49",
+    borderRadius: 6,
   },
-  toggleButtonText: {
-    color: "#ffffff",
-    fontWeight: "bold",
+  switchText: {
+    fontWeight: "normal",
+    fontSize: 14,
+    color: "#000",
+    textAlign: "center",
   },
-  toggleButtonTextInactive: {
-    color: "#000000",
+  activeText: {
+    color: "#fff",
   },
 });

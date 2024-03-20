@@ -50,28 +50,29 @@ const Checkout = () => {
         return Alert.alert(presentSheet.error.message);
       }
 
-      // letting the user know it was successful
-      Alert.alert("Thank you for the donation.");
-    } catch (err) {
-      console.error(err);
-      Alert.alert("Payment failed.");
-    }
-  };
+            // letting the user know it was successful
+            Alert.alert("Thank you for the donation.");
 
-  return (
-    <View>
-      <Text>Enter donation amount below</Text>
-      <TextInput
-        textAlign="center"
-        placeholder="Amount"
-        keyboardType="decimal-pad"
-        style={{ padding: 10, borderColor: "black", borderWidth: 1 }}
-        value={amount}
-        onChangeText={(e) => setAmount(e)}
-      />
-      <Button title="Donate" onPress={donate} color="#e84338" />
-    </View>
-  );
-};
+        } catch (err) {
+            console.error(err);
+            Alert.alert("Payment failed.");
+        }
+    };
+    
+    return (
+        <View>
+            <Text>Enter donation amount below</Text>
+            <TextInput
+                textAlign='center'
+                placeholder="Amount"
+                keyboardType="decimal-pad"
+                style={{ padding: 10, borderColor: "black", borderWidth: 1 }}
+                value={amount}
+                onChangeText={(e) => setAmount(e)}
+            />
+            <Button title="Donate" onPress={donate} color='#d64c49' />
+        </View>
+    )
+}
 
 export default Checkout;
