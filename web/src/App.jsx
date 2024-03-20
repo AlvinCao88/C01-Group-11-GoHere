@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import MainPageLayout from "./components/MainPageLayout";
 import Loading from "./components/Loading";
 import "./custom.scss";
 import LoginPage from "./pages/LoginPage";
 import NewWashroomRequest from "./pages/NewWashroomRequests";
 import ValidateNewWashroom from "./pages/ValidateNewWashroom";
+import NewBusinessRequests from "./pages/NewBusinessRequests";
+import ValidateNewBusiness from "./pages/ValidateNewBusiness";
 
 async function checkIsAdmin() {
   try {
@@ -42,7 +50,7 @@ function App() {
 
   // This screen is here so we don't see a sudden "flash" of the login page
   if (isLoading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (
@@ -50,7 +58,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            element={!isAdmin ? <Outlet/> : <Navigate to="/validate/washrooms" />}
+            element={
+              !isAdmin ? <Outlet /> : <Navigate to="/validate/washrooms" />
+            }
           >
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<LoginPage mode={"signup"} />} />
@@ -66,6 +76,15 @@ function App() {
             <Route
               path="/validate/washroom/:id"
               element={<ValidateNewWashroom />}
+            />
+
+            <Route
+              path="/validate/businesses"
+              element={<NewBusinessRequests />}
+            />
+            <Route
+              path="/validate/business/:id"
+              element={<ValidateNewBusiness />}
             />
           </Route>
         </Routes>

@@ -10,10 +10,8 @@ export default function PlaceHolder() {
       {/* <TestComponent /> */}
       <WashroomBottomSheet/>
     </View>
-    
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {

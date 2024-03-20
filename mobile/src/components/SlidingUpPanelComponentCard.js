@@ -17,7 +17,7 @@ const SlidingUpPanelComponent = ({
 }) => {
   const openURL = (url) => {
     Linking.openURL(url).catch((err) =>
-      console.error("Couldn't load page", err)
+      console.error("Couldn't load page", err),
     );
   };
 

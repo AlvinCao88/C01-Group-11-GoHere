@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -27,6 +27,8 @@ export default {
     WASHROOMS: "Washrooms",
     ADD_WASHROOM_REQUESTS: "AddWashroomRequests",
     ADMINS: "Admins",
+    BUSINESSES: "Businesses",
+    ADD_BUSINESS_REQUESTS: "AddBusinessRequests",
     USER_REPORT: "UserReport"
   },
 };
