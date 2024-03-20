@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import SlidingUpPanel from "rn-sliding-up-panel";
 import { Linking } from "react-native";
 import { Animated } from "react-native";
@@ -11,16 +17,16 @@ const SlidingUpPanelComponent = ({
 }) => {
   const openURL = (url) => {
     Linking.openURL(url).catch((err) =>
-      console.error("Couldn't load page", err)
+      console.error("Couldn't load page", err),
     );
   };
 
   return (
     <SlidingUpPanel
-      draggableRange={{ top: CARD_HEIGHT, bottom: 200 }}
+      draggableRange={{ top: CARD_HEIGHT, bottom: 190 }}
       animatedValue={new Animated.Value(0)}
       snappingPoints={[CARD_HEIGHT]}
-      height={300}
+      height={400}
       backdropOpacity={0}
     >
       <View style={styles.panel}>
@@ -74,13 +80,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // elevation: 4,
-    shadowColor: "#000",
+    elevation: Platform.select({ ios: 4, android: 15 }),
+    shadowColor: "rgba(0,0,0,1)",
     shadowOffset: { width: 0, height: -3 },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     paddingTop: 10,
     paddingHorizontal: 20,
+    paddingBottom: 40,
     alignItems: "flex-start",
   },
   panelHandle: {
@@ -93,20 +100,22 @@ const styles = StyleSheet.create({
   },
   panelTitle: {
     color: "#000",
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 25,
+    marginTop: 15,
   },
   spacingText: {
     fontSize: 2,
     fontWeight: "bold",
   },
   panelContent: {
-    fontSize: 16,
+    fontSize: 13,
     color: "#000",
     lineHeight: 24,
     textAlign: "left",
     marginBottom: 20,
+    lineHeight: 28,
   },
   dividingLine: {
     height: 1,
@@ -119,7 +128,7 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 8,
     marginVertical: 10,
     width: "95%",
     alignSelf: "center",
@@ -129,7 +138,7 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 8,
     marginVertical: 10,
     width: "95%",
     alignSelf: "center",

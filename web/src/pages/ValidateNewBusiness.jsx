@@ -3,7 +3,7 @@ import { Button, Form, Spinner, Stack } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import "./ValidateRequests.css";
 
-const ValidateNewWashroom = () => {
+const ValidateNewBusiness = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [requestDetails, setRequestDetails] = useState({});
@@ -13,9 +13,9 @@ const ValidateNewWashroom = () => {
   const fullAddressRef = useRef(null);
 
   useEffect(() => {
-    async function fetchWashroomReqeust() {
+    async function fetchBusinessRequest() {
       try {
-        const res = await fetch(`/api/v1/admin/addWashroom/getRequest/${id}`, {
+        const res = await fetch(`/api/v1/admin/addBusiness/getRequest/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -25,7 +25,7 @@ const ValidateNewWashroom = () => {
 
         const data = await res.json();
         if (!data || !data.response) {
-          navigate("/validate/washrooms");
+          navigate("/validate/businesses");
         }
 
         console.log(data);
@@ -33,21 +33,21 @@ const ValidateNewWashroom = () => {
         setRequestDetails(data.response);
       } catch (e) {
         console.log(e);
-        navigate("/validate/washrooms");
+        navigate("/validate/businesses");
       }
     }
 
-    fetchWashroomReqeust();
+    fetchBusinessRequest();
   }, [id, navigate]);
 
-  async function validateWashroom(e) {
+  async function validateBusiness(e) {
     setLoading(true);
 
     e.preventDefault();
 
     try {
       const res = await fetch(
-        `/api/v1/admin/addWashroom/validateRequest/${id}`,
+        `/api/v1/admin/addBusiness/validateRequest/${id}`,
         {
           method: "POST",
           headers: {
@@ -73,7 +73,7 @@ const ValidateNewWashroom = () => {
       setIsError(false);
       setLoading(false);
 
-      navigate("/validate/washrooms");
+      navigate("/validate/businesses");
     } catch (e) {
       console.log(e);
       setLoading(false);
@@ -87,6 +87,20 @@ const ValidateNewWashroom = () => {
         <p className="request-id bg-primary text-white">
           Request ID: {requestDetails._id}
         </p>
+        <Form.Group className="mb-3">
+          <Form.Label>Business Name</Form.Label>
+          <Form.Control value={requestDetails.address || ""} disabled />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Contact Details</Form.Label>
+          <Form.Control
+            value={
+              `${requestDetails.contactName}, ${requestDetails.email}, ${requestDetails.phoneNumber}` ||
+              ""
+            }
+            disabled
+          />
+        </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Address</Form.Label>
           <Form.Control value={requestDetails.address || ""} disabled />
@@ -111,7 +125,7 @@ const ValidateNewWashroom = () => {
         </Form.Group>
       </div>
 
-      <Form onSubmit={validateWashroom}>
+      <Form onSubmit={validateBusiness}>
         <Form.Group className="mb-3">
           <Form.Label>Name on Google Maps</Form.Label>
           <Form.Control type="text" placeholder="Tim Hortons" ref={nameRef} />
@@ -137,4 +151,4 @@ const ValidateNewWashroom = () => {
   );
 };
 
-export default ValidateNewWashroom;
+export default ValidateNewBusiness;

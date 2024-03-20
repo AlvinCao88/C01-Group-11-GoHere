@@ -9,7 +9,7 @@ const NewUserReports = () => {
   useEffect(() => {
     async function getUserReports() {
       try {
-        const res = await fetch("/api/v1/admin/getAllUserReports", {
+        const res = await fetch("/api/v1/admin/getAllReports", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -31,19 +31,19 @@ const NewUserReports = () => {
     <Container className="mt-5">
       <h3 className="mb-5">User Update Reports Sent by Users</h3>
       <Row className="list-header">
-        <Col xs={3}>Location</Col>
-        <Col>Description</Col>
+        <Col xs={3}>Name</Col>
+        <Col>Issue</Col>
         <Col xs={2}>Controls</Col>
         <hr className="my-3" />
       </Row>
       {userReports && userReports.length !== 0 ? (
         userReports.map((report) => (
           <Row direction="horizontal" gap={3} key={report._id}>
-            <Col>{report.address}</Col>
-            <Col>{report.description}</Col>
+            <Col>{report.name  || "Anonymous"}</Col>
+            <Col>{report.issue}</Col>
             <Col xs={2}>
               <Button variant="primary">
-                <Link className="link" to={`/verifyReports/${report._id}`}>
+                <Link className="link" to={"#"}>
                   Verify
                 </Link>
               </Button>

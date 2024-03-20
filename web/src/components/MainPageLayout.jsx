@@ -19,7 +19,7 @@ const MainPageLayout = () => {
           <Nav>
             <Nav.Link href="/validate/washrooms">New Washrooms</Nav.Link>
             <Nav.Link href="/verify/reports">Washroom Updates</Nav.Link>
-            <Nav.Link href="#">New Businesses</Nav.Link>
+            <Nav.Link href="/validate/businesses">New Businesses</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

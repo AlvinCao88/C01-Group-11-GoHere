@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
-import "./NewWashroomRequests.css";
+import "./NewRequests.css";
 import { Link } from "react-router-dom";
 
 const NewWashroomRequests = () => {
