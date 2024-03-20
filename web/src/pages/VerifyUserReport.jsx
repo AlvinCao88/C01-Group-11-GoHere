@@ -137,4 +137,4 @@ const VerifyUserReport = () => {
   );
 };
 
-export default ValidateNewWashroom;
+export default VerifyUserReport;
