@@ -16,6 +16,7 @@ import DonateScreen from "./src/screens/DonationScreen"
 import WashroomBottomSheet from "./src/components/WashroomBottomSheet";
 import InfoScreen from "./src/screens/InfoScreen";
 import SettingScreen from "./src/screens/SettingScreen";
+import { NavigationStateProvider } from "./src/components/NavigationStateContext"
 
 
 
@@ -24,6 +25,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
+    <NavigationStateProvider>
     <PrismicProvider client={client}>
       <NavigationContainer>
         <StatusBar />
@@ -79,6 +81,7 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
     </PrismicProvider>
+    </NavigationStateProvider>
   );
 }
 

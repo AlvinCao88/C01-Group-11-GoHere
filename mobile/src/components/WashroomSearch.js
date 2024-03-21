@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useCallback, useRef, useMemo, useState, useEffect} from 'react';
-import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
 
@@ -54,8 +54,8 @@ export default WashroomBottomSheet = ( {navigation}) => {
     //   );
     // }, []);
 
-    
     return(
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{height: 500}}>
             <View style={styles.search}>
                 <TextInput
@@ -65,9 +65,14 @@ export default WashroomBottomSheet = ( {navigation}) => {
                 placeholder="Search for a place or address"
                 />
             </View>
-            <View style={styles.washroomNearby}>
-                <Text style={styles.text}>RECENT SEARCH</Text>
-            </View>
+            <View style={styles.header}>
+        <Text style={styles.text}>RECENT SEARCH</Text>
+        {/* Back Button */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+      </View>
+            
             <BottomSheetScrollView>
                 {/* {loading ? (
                 <ActivityIndicator color={"red"} size='large'/>
@@ -76,8 +81,8 @@ export default WashroomBottomSheet = ( {navigation}) => {
                 )} */}
         </BottomSheetScrollView>
       </View>
-    )
-
+      </TouchableWithoutFeedback>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -87,6 +92,16 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignContent:'center',
       alignItems:'center',
+      backgroundColor: 'white',
+    },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: '#D3D3D3',
+      paddingBottom: 10,
+      paddingTop: 10,
       backgroundColor: 'white',
     },
     contentContainer: {
@@ -99,8 +114,9 @@ const styles = StyleSheet.create({
       },
     search: {
       height:'10%',
-      alignItems: 'left',
-      backgroundColor: 'white'
+      alignItems: 'center',
+      backgroundColor: 'white',
+      width: '100%',
     },
     washroomNearby: {
       // flex: 1,
@@ -133,8 +149,8 @@ const styles = StyleSheet.create({
       margin: 12,
       padding: 10,
       backgroundColor:'#efefef',
-      borderRadius:5
-      
+      borderRadius:5,
+      width: '90%',
     },
     washroomList: {
       flex: 1,
@@ -142,7 +158,18 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       padding: 10,
     },
-    
+    backButton: {
+      marginTop: 0,
+      marginRight: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      backgroundColor: '#ddd',
+      borderRadius: 5,
+      alignSelf: 'right',
+    },
+    backButtonText: {
+      fontSize: 16,
+    },
   });
   
   

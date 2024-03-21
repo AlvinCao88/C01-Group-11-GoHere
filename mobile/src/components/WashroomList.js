@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React, { useCallback, useRef, useMemo, useState, useEffect} from 'react';
-import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
 
@@ -38,7 +38,6 @@ export default WashroomList = ( {navigation}) => {
     // const handleWashroomInfoPress = useCallback(() => {
     //     sheetRef.current?.expand(); // Snap to the second sheet (30%)
     //   }, []);
-
   
     const renderItem = useCallback((washroom) => {
       return (
@@ -54,23 +53,20 @@ export default WashroomList = ( {navigation}) => {
       );
     }, []);
 
-    
     return(
-        <View style={{height: 500}}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.fullSize}>
             <View style={styles.search}>
-            <TouchableOpacity >
                 <TextInput
                     style={styles.input}
                     placeholder="Search for a place or address"
                     onPressIn={() => navigation.navigate('WashroomSearch')}
                 />
-                <Text style={styles.text}> hello </Text>
-            </TouchableOpacity>
             </View>
             <View style={styles.washroomNearby}>
                 <Text style={styles.text}>WASHROOMS NEARBY</Text>
             </View>
-            <BottomSheetScrollView>
+            <BottomSheetScrollView style={styles.test}>
                 {/* <View style={styles.contentContainer}> */}
                 {loading ? (
                 <ActivityIndicator color={"red"} size='large'/>
@@ -80,11 +76,14 @@ export default WashroomList = ( {navigation}) => {
             {/* </View> */}
         </BottomSheetScrollView>
       </View>
-    )
-
+      </TouchableWithoutFeedback>
+    );
 }
 
 const styles = StyleSheet.create({
+    fullSize: {
+      flex: 1,
+    },
     container: {
       flex: 1,
       padding: 24,
@@ -103,8 +102,9 @@ const styles = StyleSheet.create({
       },
     search: {
       height:'10%',
-      alignItems: 'left',
-      backgroundColor: 'white'
+      alignItems: 'center',
+      backgroundColor: 'white',
+      width: '100%',
     },
     washroomNearby: {
       // flex: 1,
@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
       margin: 12,
       padding: 10,
       backgroundColor:'#efefef',
-      borderRadius:5
-      
+      borderRadius:5,
+      width: '90%',
     },
     washroomList: {
       flex: 1,

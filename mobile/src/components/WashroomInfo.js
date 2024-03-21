@@ -9,8 +9,17 @@ import {
   Linking, 
   Alert, } from 'react-native';
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { useIsFocused } from '@react-navigation/native';
+import { useNavigationState } from '../components/NavigationStateContext';
 
 const WashroomInfo = ( {route, navigation}) => {
+  const isFocused = useIsFocused();
+  const { setIsWashroomInfoFocused } = useNavigationState();
+
+  useEffect(() => {
+    setIsWashroomInfoFocused(isFocused);
+  }, [isFocused, setIsWashroomInfoFocused]);
+  
   const {id} = route.params;
   const [washroom, setWashroom] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -91,6 +100,9 @@ const handleCallPress = useCallback(async () => {
     
   return (
     <BottomSheetScrollView style={styles.container}  >
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
       {loading  ? (
             <ActivityIndicator color={"red"} size='large'/>
             ) : ( washroom ? 
@@ -230,13 +242,9 @@ const styles = StyleSheet.create({
     padding: 10
   },
   directionButton:{
-    backgroundColor:'black',
-    borderColor: '#efefef',
-    borderWidth: 1,
-    padding:15,
+    backgroundColor:'white',
+    padding:20,
     width: "90%",
-    // alignItems: 'center',
-    borderRadius: 10,
   },
   directionText:{
     color: 'white',
@@ -267,6 +275,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  backButton: {
+    marginTop: 20,
+    marginLeft: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10, // Reduced padding
+    backgroundColor: '#ddd', // Example background color
+    borderRadius: 5,
+    alignSelf: 'flex-start', // Align to the left
+  },
+  backButtonText: {
+    fontSize: 16,
   },
 });
 
