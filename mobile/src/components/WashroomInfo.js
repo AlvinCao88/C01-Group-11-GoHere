@@ -52,7 +52,8 @@ const WashroomInfo = ( {route, navigation}) => {
     const checkInBookmarks = async () => {
       try {
         const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
-        if (!bookmarks || !bookmarks.includes(id))
+        // Check whether washroom is in list
+        if (!bookmarks || !bookmarks.some((e) => e._id === id))
           setInBookmarks(false)
         console.log(bookmarks)
       }
@@ -98,10 +99,20 @@ const handleCallPress = useCallback(async () => {
     try {
       const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
       if (!bookmarks) {
-        await AsyncStorage.setItem("bookmarks", JSON.stringify([value]))
+        await AsyncStorage.setItem("bookmarks", JSON.stringify([{
+          _id: value._id,
+          name: value.name,
+          fullAddress: value.fullAddress,
+          province: value.province
+        }]))
       }
       else {
-        await AsyncStorage.setItem("bookmarks", JSON.stringify([...bookmarks, value]))
+        await AsyncStorage.setItem("bookmarks", JSON.stringify([...bookmarks, {
+          _id: value._id,
+          name: value.name,
+          fullAddress: value.fullAddress,
+          province: value.province
+        }]))
       }
       setInBookmarks(true);
     }
@@ -114,7 +125,8 @@ const handleCallPress = useCallback(async () => {
     try {
       const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
       if (bookmarks) {
-        await AsyncStorage.setItem("bookmarks", JSON.stringify(bookmarks.filter((id) => value != id)))
+        // remove washroom from bookmarks
+        await AsyncStorage.setItem("bookmarks", JSON.stringify(bookmarks.filter((e) => e._id !== value)))
       }
       setInBookmarks(false);
     }
@@ -160,7 +172,7 @@ const handleCallPress = useCallback(async () => {
                       <Text style={styles.saveText}>Unsave</Text>
                     </TouchableOpacity>
                       :
-                    <TouchableOpacity style={styles.saveButton} onPress={() => handleSaveWashroom(id)}>
+                    <TouchableOpacity style={styles.saveButton} onPress={() => handleSaveWashroom(washroom)}>
                       <Text style={styles.saveText}>Save</Text>
                     </TouchableOpacity>
                     }
