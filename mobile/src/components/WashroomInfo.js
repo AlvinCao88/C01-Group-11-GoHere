@@ -11,6 +11,7 @@ import {
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useIsFocused } from '@react-navigation/native';
 import { useNavigationState } from '../components/NavigationStateContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WashroomInfo = ( {route, navigation}) => {
   const isFocused = useIsFocused();
@@ -23,6 +24,7 @@ const WashroomInfo = ( {route, navigation}) => {
   const {id} = route.params;
   const [washroom, setWashroom] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [inBookmarks, setInBookmarks] = useState(true); // check if washroom already in bookmarks
 
   const sheetRef = useRef(null);
   // variables
@@ -46,8 +48,21 @@ const WashroomInfo = ( {route, navigation}) => {
         setLoading(false);
       }
     };
+
+    const checkInBookmarks = async () => {
+      try {
+        const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
+        if (!bookmarks || !bookmarks.includes(id))
+          setInBookmarks(false)
+        console.log(bookmarks)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
   
     getWashroom();
+    checkInBookmarks();
   }, []);
 
 const handleWebsitePress = useCallback(async () => {
@@ -78,6 +93,35 @@ const handleCallPress = useCallback(async () => {
     Alert.alert('Error. Unable to call the phone number.');
   }
 }, [washroom]);
+
+  const handleSaveWashroom = async (value) => {
+    try {
+      const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
+      if (!bookmarks) {
+        await AsyncStorage.setItem("bookmarks", JSON.stringify([value]))
+      }
+      else {
+        await AsyncStorage.setItem("bookmarks", JSON.stringify([...bookmarks, value]))
+      }
+      setInBookmarks(true);
+    }
+    catch (e) {
+      console.error(e)
+    }
+  }
+  
+  const handleUnsaveWashroom = async (value) => {
+    try {
+      const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
+      if (bookmarks) {
+        await AsyncStorage.setItem("bookmarks", JSON.stringify(bookmarks.filter((id) => value != id)))
+      }
+      setInBookmarks(false);
+    }
+    catch (e) {
+      console.error(e)
+    }
+  }
 
   
   // const handleWebsitePress = useCallback(async () => {
@@ -111,9 +155,15 @@ const handleCallPress = useCallback(async () => {
                   <Text style={styles.name}>{washroom.name}</Text> 
                   <Text style={styles.washroomContent}>{washroom.fullAddress}</Text> 
                   <View >
-                    <TouchableOpacity style={styles.saveButton}>
+                    {inBookmarks ?
+                    <TouchableOpacity style={styles.saveButton} onPress={() => handleUnsaveWashroom(id)}>
+                      <Text style={styles.saveText}>Unsave</Text>
+                    </TouchableOpacity>
+                      :
+                    <TouchableOpacity style={styles.saveButton} onPress={() => handleSaveWashroom(id)}>
                       <Text style={styles.saveText}>Save</Text>
                     </TouchableOpacity>
+                    }
                   </View>
                   <Text style={styles.sectionTitle}>Open hours</Text>
                   <View>

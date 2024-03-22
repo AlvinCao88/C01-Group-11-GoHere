@@ -14,7 +14,7 @@ const SearchComponent = ({navigation, text, onChangeText}) => {
       <TouchableOpacity
         style={styles.saved}
         onPress={() => {
-          navigation.navigate("Washroom");
+          navigation.navigate("WashroomBookmarks");
         }}
       >
         <MaterialIcons name="bookmark-outline" size={24} color={"#DA5C59"} />

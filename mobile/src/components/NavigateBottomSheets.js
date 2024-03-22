@@ -1,5 +1,4 @@
 import React  from 'react';
-import { View, StyleSheet } from 'react-native';
 import {
   createStackNavigator,
 } from '@react-navigation/stack';
@@ -7,9 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import WashroomList from './WashroomList';
 import WashroomInfo from './WashroomInfo';
 import WashroomSearch from './WashroomSearch';
-
-
 import ReportIssueScreen from '../screens/ReportIssueScreen';
+import WashroomBookmarksList from '../screens/WashroomBookmarksList';
 
 const Stack = createStackNavigator();
 const NavigateBottomSheets = () => {
@@ -39,18 +37,16 @@ const NavigateBottomSheets = () => {
           component={ReportIssueScreen}
         />
         
+        <Stack.Screen
+          name="WashroomBookmarks"
+          component={WashroomBookmarksList}
+          options={{headerShown:false}}
+        />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-  },
-});
 
 export default NavigateBottomSheets;
