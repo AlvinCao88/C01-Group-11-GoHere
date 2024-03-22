@@ -12,6 +12,7 @@ import InfoScreen from "./src/screens/InfoScreen";
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 import WashroomBottomSheet from "./src/components/WashroomBottomSheet"
 import { StatusBar } from "expo-status-bar";
+import SettingScreen from "./src/screens/SettingScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ export default function App() {
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Card" component={CardScreen} />
         <Tab.Screen name="Info" component={InfoStack} />
+        <Tab.Screen name="Settings" component={SettingScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
