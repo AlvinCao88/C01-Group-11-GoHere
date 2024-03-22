@@ -54,13 +54,14 @@ const VerifyUserReport = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
+          
           body: JSON.stringify({
             name: nameRef.current.value,
             fullAddress: fullAddressRef.current.value,
           }),
         },
       );
-
+      
       if (!res.ok) {
         console.log(await res.json());
         setIsError(true);

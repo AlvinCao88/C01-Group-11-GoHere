@@ -42,11 +42,16 @@ const NewUserReports = () => {
             <Col>{report.name  || "Anonymous"}</Col>
             <Col>{report.issue}</Col>
             <Col xs={2}>
+              
+              {!report.status ? 
               <Button variant="primary">
-                <Link className="link" to={"#"}>
+                <Link className="link" to={`/verify/report/${report._id}`}>
                   Verify
                 </Link>
-              </Button>
+              </Button> : <div>Verified</div>
+              
+              
+              } 
             </Col>
             <hr className="my-3" />
           </Row>
