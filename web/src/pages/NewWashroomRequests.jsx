@@ -1,11 +1,36 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Modal } from "react-bootstrap";
 import "./NewRequests.css";
 import { Link } from "react-router-dom";
 
 const NewWashroomRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [deleteId, setDeleteId] = useState("");
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const handleRemoveRequest = (id) => {
+     removeWashroomRequest(id);
+  }
+
+  async function removeWashroomRequest() {
+    try {
+      const res = await fetch(`/api/v1/admin/removeWashroom/${deleteId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      window.location.href = '/validate/washrooms'
+
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   useEffect(() => {
     async function getWashroomRequests() {
@@ -29,7 +54,22 @@ const NewWashroomRequests = () => {
     getWashroomRequests();
   }, []);
 
-  return (
+  return (<>
+    <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Business Request</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this request?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button className="text-white" variant="primary" onClick={handleRemoveRequest}>
+            Delete Request
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     <Container className="mt-5">
       <h3 className="mb-5">Washroom Requests Sent by Users</h3>
       <Row className="list-header">
@@ -51,6 +91,16 @@ const NewWashroomRequests = () => {
                   Validate
                 </Link>
               </Button>
+              <Button
+                  className="m-2"
+                  variant="danger"
+                  onClick={() => {
+                    setDeleteId(e._id);
+                    setShow(true);
+                  }}
+                >
+                  Reject
+                </Button>
             </Col>
             <hr className="my-3" />
           </Row>
@@ -59,7 +109,7 @@ const NewWashroomRequests = () => {
         <h3 className="text-center mt-5">No Requests</h3>
       )}
     </Container>
-  );
+    </>);
 };
 
 export default NewWashroomRequests;

@@ -64,6 +64,7 @@ function App() {
               !isAdmin ? <Outlet /> : <Navigate to="/validate/washrooms" />
             }
           >
+            <Route path="/" element={<LoginPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<LoginPage mode={"signup"} />} />
           </Route>

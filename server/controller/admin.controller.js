@@ -21,12 +21,16 @@ async function getUser(email) {
 
 export async function registerUser(req, res) {
   try {
-    const { email, password } = req.body;
+    const { email, password, registrationId } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !registrationId) {
       return res
         .status(400)
-        .json({ error: "Email and password both needed to register." });
+        .json({ error: "Email, Password, and Registration Id both needed to register." });
+    }
+
+    if(registrationId !== "super secret 123"){
+      return res.status(401).json({error: "Registration Id invalid."});
     }
 
     if (!validator.validate(email)) {
