@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import React, { useCallback, useRef, useMemo, useState, useEffect} from 'react';
 import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import BackButton from '../components/BackButton'
 
 
 export default WashroomBottomSheet = ( {navigation}) => {
@@ -68,9 +69,7 @@ export default WashroomBottomSheet = ( {navigation}) => {
             <View style={styles.header}>
         <Text style={styles.text}>RECENT SEARCH</Text>
         {/* Back Button */}
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
+        <BackButton text="Back" styleButton={styles.backButton} styleText={styles.backButtonText} />
       </View>
             
             <BottomSheetScrollView>

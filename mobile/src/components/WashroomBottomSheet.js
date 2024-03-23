@@ -13,7 +13,7 @@ export default WashroomBottomSheet = () => {
   // ref
   const sheetRef = useRef(null);
   // variables
-  const snapPoints = useMemo(() => ['12%', '30%', '90%'], []);
+  const snapPoints = useMemo(() => ['30%', '90%'], []);
   //callback 
 
   const { isWashroomInfoFocused } = useNavigationState();
