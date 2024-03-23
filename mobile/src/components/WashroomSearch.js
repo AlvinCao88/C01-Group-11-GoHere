@@ -1,8 +1,11 @@
 import "react-native-gesture-handler";
 import React, { useCallback, useRef, useMemo, useState, useEffect} from 'react';
-import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator, Keyboard, TouchableWithoutFeedback,  } from 'react-native';
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import BackButton from '../components/BackButton'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 
 export default WashroomBottomSheet = ( {navigation}) => {
@@ -15,6 +18,47 @@ export default WashroomBottomSheet = ( {navigation}) => {
     const [text, onChangeText] = React.useState('');
     const [loading, setLoading] = useState(true);
     const [washrooms, setWashrooms] = useState([]);
+    const [searchTerms, setSearchTerms] = useState([]);
+
+    const handleTextChange = async (textValue) => {
+      if (textValue.trim()) {
+        try {
+          const existingTerms = await AsyncStorage.getItem('searchTerms');
+          const terms = existingTerms ? JSON.parse(existingTerms) : [];
+          if (!terms.includes(textValue)) { 
+            const updatedTerms = [textValue, ...terms];
+            await AsyncStorage.setItem('searchTerms', JSON.stringify(updatedTerms));
+            setSearchTerms(updatedTerms);
+          }
+          onChangeText('');
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    };
+    const removeTerm = async (termToRemove) => {
+      const updatedTerms = searchTerms.filter(term => term !== termToRemove);
+      setSearchTerms(updatedTerms);
+      await AsyncStorage.setItem('searchTerms', JSON.stringify(updatedTerms));
+    };
+    useEffect(() => {
+      const loadSearchTerms = async () => {
+        try {
+          const terms = await AsyncStorage.getItem('searchTerms');
+          if(terms !== null) {
+            setSearchTerms(JSON.parse(terms));
+          }
+        } catch(e) {
+          console.log(e);
+        }
+      };
+    
+      loadSearchTerms();
+    }, []);
+    
+    
+
+
   
     // useEffect(() => {
     //   const getWashrooms = async () => {
@@ -57,11 +101,12 @@ export default WashroomBottomSheet = ( {navigation}) => {
 
     return(
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{height: 500}}>
+        <View style={styles.mainContainer}>
             <View style={styles.search}>
                 <TextInput
                 style={styles.input}
                 onChangeText={onChangeText}
+                onSubmitEditing={() => handleTextChange(text)}
                 value={text}
                 placeholder="Search for a place or address"
                 />
@@ -78,6 +123,19 @@ export default WashroomBottomSheet = ( {navigation}) => {
                 ) : (
                 washrooms.map(renderItem)
                 )} */}
+                <View style={styles.searchContainer}>
+                {searchTerms.slice().map((term, index) => (
+  <View key={index} style={styles.searchTermContainer}>
+    <Text style={styles.searchTerm}>
+      {term}
+    </Text>
+    <TouchableOpacity onPress={() => removeTerm(term)}>
+  <Ionicons name="close-outline" size={24} color="black" />
+</TouchableOpacity>
+  </View>
+))}
+</View>
+
         </BottomSheetScrollView>
       </View>
       </TouchableWithoutFeedback>
@@ -85,6 +143,10 @@ export default WashroomBottomSheet = ( {navigation}) => {
 }
 
 const styles = StyleSheet.create({
+    mainContainer: {
+      flex: 1,
+      backgroundColor: 'white',
+    },
     container: {
       flex: 1,
       padding: 24,
@@ -132,7 +194,7 @@ const styles = StyleSheet.create({
       },
     text: {
       fontSize: 14,
-      color:'red',
+      color:'#DA5C59',
       fontWeight:'500',
       padding: 10,
       
@@ -168,6 +230,22 @@ const styles = StyleSheet.create({
     },
     backButtonText: {
       fontSize: 16,
+    },
+    searchTerm: {
+      fontSize: 14,
+      color: '#000',
+    },
+    searchContainer: {
+      flex: 1,
+      backgroundColor: 'white',
+    },
+    searchTermContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginLeft: 25,
+      marginVertical: 10,
+      paddingRight: 25,
     },
   });
   
