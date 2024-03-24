@@ -17,6 +17,7 @@ import WashroomBottomSheet from "./src/components/WashroomBottomSheet";
 import InfoScreen from "./src/screens/InfoScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import { NavigationStateProvider } from "./src/components/NavigationStateContext"
+import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 
 
 
@@ -75,7 +76,7 @@ export default function App() {
           />
           <Tab.Screen
             name="Setting"
-            component={SettingScreen}
+            component={SettingsStack}
             options={{ headerShown: false }}
           />
         </Tab.Navigator>
@@ -107,6 +108,15 @@ function InfoStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="InfoScreen" component={InfoScreen} />
       <Stack.Screen name="Donate" component={DonateScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function SettingsStack() {
+  return (
+    <Stack.Navigator initialRouteName="Settings" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Settings" component={SettingScreen} />
+      <Stack.Screen name="AddWashroom" component={AddWashroomScreen} />
     </Stack.Navigator>
   );
 }
