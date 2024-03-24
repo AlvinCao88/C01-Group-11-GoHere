@@ -40,17 +40,14 @@ const NewUserReports = () => {
         userReports.map((report) => (
           <Row direction="horizontal" gap={3} key={report._id}>
             <Col>{report.name  || "Anonymous"}</Col>
-            <Col>{report.issue}</Col>
+            <Col xs = {7}>{report.issue}</Col>
             <Col xs={2}>
-              
               {!report.status ? 
               <Button variant="primary">
                 <Link className="link" to={`/verify/report/${report._id}`}>
                   Verify
                 </Link>
               </Button> : <div>Verified</div>
-              
-              
               } 
             </Col>
             <hr className="my-3" />

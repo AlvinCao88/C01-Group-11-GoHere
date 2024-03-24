@@ -300,38 +300,24 @@ export async function verifyUserReport(req, res) {
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({ error: "Invalid ID." });
     }
-
     const userReportCollection = db.instance.collection(db.collections.USER_REPORT);
-    const washroomCollection = db.instance.collection(db.collections.WASHROOMS);
 
-    // Step 1: Check if the washroom (in report) actually exists in washroom collection
-    const report = await userReportCollection.findOne({ _id: new ObjectId(id) });
-    if (!report) {
+    // Step 1: Update the status of the report to true
+    const updatedReport = await userReportCollection.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: { status: true } },
+    );
+
+    if (!updatedReport) {
       return res.status(404).json({ error: "Unable to find report with given ID." });
     }
-    const washroom = await washroomCollection.findOne({ _id: new ObjectId(report.washroomID) });
-    if (!washroom) {
-      return res.status(404).json({ error: "Washroom not found for the given report." });
-    }
-    
-    // Step 2: Verify whether the report should be approved by an admin
-    const adminApproval = true; // Replace with actual logic (from frontend button) to check admin approval
-    if (!adminApproval) {
-      // Step 3: Delete the report that is not verified
-      await userReportCollection.deleteOne({ _id: new ObjectId(id) });
-      res.json({ message: "User report not verified, deleted successfully." });
-    } else {
-      const updatedReport = await userReportCollection.findOneAndUpdate(
-        { _id: new ObjectId(id) },
-        { $set: { status: true } },
-        { returnDocument: 'after' }
-      );
-      res.json({ message: "User report successfully verified by admin.", report: updatedReport });
-    }
-    } catch (e) {
-      console.error("Error in verifyUserReport:", e);
-      res.status(500).json({ error: `${e.message || e}` });
-    }
+
+    res.json({ message: "User report successfully verified by admin.", report: updatedReport });
+
+  } catch (e) {
+    console.error("Error in verifyUserReport:", e);
+    res.status(500).json({ error: `${e.message || e}` });
+  }
 }
 
 
