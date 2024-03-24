@@ -13,6 +13,7 @@ import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 import WashroomBottomSheet from "./src/components/WashroomBottomSheet"
 import { StatusBar } from "expo-status-bar";
 import SettingScreen from "./src/screens/SettingScreen";
+import { createStackNavigator } from "@react-navigation/stack";
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,15 @@ function InfoStack() {
   );
 }
 
+function SettingStack() {
+  return (
+    <Stack.Navigator initialRouteName="SettingsPage" screenOptions={{headerShown: false}}>
+      <Stack.Screen name="SettingsPage" component={SettingScreen} />
+      <Stack.Screen name="AddWashrooms" component={AddWashroomScreen} />
+    </Stack.Navigator>
+  )
+}
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -35,7 +45,7 @@ export default function App() {
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Card" component={CardScreen} />
         <Tab.Screen name="Info" component={InfoStack} />
-        <Tab.Screen name="Settings" component={SettingScreen} />
+        <Tab.Screen name="Settings" component={SettingStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );

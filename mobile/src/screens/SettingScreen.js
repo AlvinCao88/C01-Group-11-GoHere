@@ -5,7 +5,8 @@ import {Ionicons} from '@expo/vector-icons';
 
 //TODO: add in navigation to other screens
 //TODO: test
-export default function SettingScreen (navigation) {
+//NOTE: the profile button doesn't do anything since we don't actually have profiles, same with analytics, doesn't do anything
+export default function SettingScreen ({navigation}) {
     const [analytics, setAnalytics] = useState(false); // the state used to keep track of analytics on or off
 
     return (
@@ -19,7 +20,6 @@ export default function SettingScreen (navigation) {
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.3}
-                onPress={() => navigation.navigate("Profile")}
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
@@ -109,7 +109,7 @@ export default function SettingScreen (navigation) {
     
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate()}
+                onPress={() => navigation.navigate("AddWashrooms")}
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
