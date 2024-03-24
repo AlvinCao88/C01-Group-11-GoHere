@@ -70,6 +70,7 @@ export default function SettingScreen ({navigation}) {
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.3}
+                onPress={() => Linking.openURL("https://crohnsandcolitis.ca/Privacy-Policy")}
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
