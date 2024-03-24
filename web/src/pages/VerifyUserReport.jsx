@@ -46,11 +46,13 @@ const VerifyUserReport = () => {
 
     try {
       const res = await fetch(
-        `/api/v1/admin/verifyReport/${id}`,
+        `/api/v1/admin/verifyReports/${id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+
           },
         },
       );
