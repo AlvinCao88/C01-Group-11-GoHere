@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Linking, TouchableOpacity, SafeAreaView,
-        View, Text, StyleSheet, Switch, Button } from 'react-native';
-import { IoChevronForwardOutline } from "react-icons/io5";;
+        View, Text, StyleSheet, Switch } from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
 
 //TODO: add in navigation to other screens
 //TODO: test
@@ -11,7 +11,7 @@ export default function SettingScreen (navigation) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
-                <Text style={[styles.headerText, { color: "#DA5C59" }]}>
+                <Text style={[styles.titleText, { color: "#DA5C59" }]}>
                     Settings
                 </Text>
             </View>
@@ -23,9 +23,9 @@ export default function SettingScreen (navigation) {
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
-                        My profile
+                            My profile
                     </Text>
-                    <IoChevronForwardOutline></IoChevronForwardOutline>
+                    <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
                 </View>
             </TouchableOpacity>
 
@@ -43,20 +43,24 @@ export default function SettingScreen (navigation) {
                     <Text style={styles.buttonText}>
                         Location Permission
                     </Text>
-                    <IoChevronForwardOutline></IoChevronForwardOutline>
+                    <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
                 </View>
             </TouchableOpacity>
 
-            <View  style={styles.arrow}>
-                <Text style={styles.buttonText}>Analytics</Text>
-                <Switch
-                    onChange={() => analytics ? setAnalytics(false) : setAnalytics(true)}
-                    trackColor={{false: "#767577", true: "#DA5C59"}}
-                ></Switch>
-            </View>
-            <Text style={styles.smallText}>
-                Enable analytics to send anonymous usage to support app improvements.
-            </Text>
+            <TouchableOpacity style={styles.button} activeOpacity={1}>
+                <View style={styles.arrow}>
+                    <Text style={styles.buttonText}>Analytics</Text>
+                    <Switch
+                        value={analytics}
+                        onValueChange={() => setAnalytics(!analytics)}
+                        trackColor={{false: "#767577", true: "#DA5C59"}}
+                        thumbColor={analytics ? "#3BBEFF" : "#BEBEBE"}
+                    ></Switch>
+                </View>
+                <Text style={styles.smallText}>
+                    Enable analytics to send anonymous usage to support app improvements.
+                </Text>
+            </TouchableOpacity>
 
             <Text style={styles.headerText}>
                 PRIVACY AND TERMS
@@ -67,11 +71,11 @@ export default function SettingScreen (navigation) {
                 style={styles.button}
                 activeOpacity={0.3}
             >
-                <View>
+                <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
                         Privacy Policy
                     </Text>
-                    <IoChevronForwardOutline style={styles.arrow}></IoChevronForwardOutline>
+                    <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
                 </View>
             </TouchableOpacity>
 
@@ -84,28 +88,35 @@ export default function SettingScreen (navigation) {
                 style={styles.button}
                 activeOpacity={0.3}
             >
-                <View>
+                <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
                         Request Support
                     </Text>
-                    <IoChevronForwardOutline style={styles.arrow}></IoChevronForwardOutline>
+                    <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
                 </View>
             </TouchableOpacity>
 
-            <View>
-                <Text style={styles.buttonText}>
-                    Version
-                </Text>
-                <Text style={styles.versionText}>
-                    1.0.0
-                </Text>
-            </View>
+            <TouchableOpacity style={styles.button} activeOpacity={1}>
+                <View style={styles.arrow}>
+                    <Text style={styles.buttonText}>
+                        Version
+                    </Text>
+                    <Text style={styles.versionText}>
+                        1.0.0
+                    </Text>
+                </View>
+            </TouchableOpacity>
     
             <TouchableOpacity
-                style={styles.addWashroomButton}
+                style={styles.button}
                 onPress={() => navigation.navigate()}
             >
-                Add a washroom
+                <View style={styles.arrow}>
+                    <Text style={styles.buttonText}>
+                        Add a washroom
+                    </Text>
+                    <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
+                </View>
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -124,7 +135,7 @@ const styles = StyleSheet.create({
         width: "90%",
         marginVertical: 20,
         alignSelf: "center",
-        marginBottom: 40,
+        marginBottom: 12,
     },
 
     headerContainer: {
@@ -135,8 +146,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
 
-    headerText: {
-        fontSize: 20,
+    titleText: {
+        fontSize: 25,
         fontWeight: "bold",
         marginBottom: 10,
         color: "#DA5C59"
@@ -146,35 +157,33 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         width: "90%",
         alignSelf: "center",
-        marginBottom: 15
+        marginTop: 12,
+        marginBottom: 12
     },
 
     buttonText: {
-        fontSize: 10,
+        fontSize: 15,
         textAlign: "left",
         color: "black",
-        flexDirection: "row",
-        justifyContent: "flex-start"
     },
 
     arrow: {
         flexDirection: "row",
-        justifyContent: "flex-end"
+        justifyContent: "space-between",
+        alignItems: "center"
     },
 
     smallText: {
-        fontSize: 5,
-        textAlign: "center",
+        fontSize: 10,
+        textAlign: "left",
         color: "black",
         flexDirection: "row",
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
     },
 
     versionText: {
-        fontSize: 5,
+        fontSize: 10,
         color: "black",
-        flexDirection: "row",
-        justifyContent: "flex-end"
     },
 
     addWashroomButton: {
@@ -183,7 +192,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 130,
         borderRadius: 8,
         marginTop: 10,
-        width: "100%",
-        alignItems: "center"
+        width: "90%",
+        justifyContent: "space-between"
     },
+
+    headerText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginTop: 10,
+        marginBottom: 10,
+        color: "#DA5C59",
+        paddingHorizontal: 20
+    }
 })
