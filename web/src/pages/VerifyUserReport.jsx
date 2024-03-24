@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Form, Spinner, Stack } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import "./ValidateRequests.css";
+import "./VerifyUserReport.css";
 
-const ValidateNewWashroom = () => {
+const VerifyUserReport = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [requestDetails, setRequestDetails] = useState({});
@@ -13,9 +13,9 @@ const ValidateNewWashroom = () => {
   const fullAddressRef = useRef(null);
 
   useEffect(() => {
-    async function fetchWashroomReqeust() {
+    async function fetchUserReport() {
       try {
-        const res = await fetch(`/api/v1/admin/addWashroom/getRequest/${id}`, {
+        const res = await fetch(`/api/v1/admin/getReports/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -25,7 +25,7 @@ const ValidateNewWashroom = () => {
 
         const data = await res.json();
         if (!data || !data.response) {
-          navigate("/validate/washrooms");
+          navigate("/verify/reports");
         }
 
         console.log(data);
@@ -33,21 +33,21 @@ const ValidateNewWashroom = () => {
         setRequestDetails(data.response);
       } catch (e) {
         console.log(e);
-        navigate("/validate/washrooms");
+        navigate("/verify/reports");
       }
     }
 
-    fetchWashroomReqeust();
+    fetchUserReport();
   }, [id, navigate]);
 
-  async function validateWashroom(e) {
+  async function verifyReports(e) {
     setLoading(true);
 
     e.preventDefault();
 
     try {
       const res = await fetch(
-        `/api/v1/admin/addWashroom/validateRequest/${id}`,
+        `/api/v1/admin/verifyReports/${id}`,
         {
           method: "POST",
           headers: {
@@ -73,7 +73,7 @@ const ValidateNewWashroom = () => {
       setIsError(false);
       setLoading(false);
 
-      navigate("/validate/washrooms");
+      navigate("/verify/reports");
     } catch (e) {
       console.log(e);
       setLoading(false);
@@ -111,7 +111,7 @@ const ValidateNewWashroom = () => {
         </Form.Group>
       </div>
 
-      <Form onSubmit={validateWashroom}>
+      <Form onSubmit={verifyReports}>
         <Form.Group className="mb-3">
           <Form.Label>Name on Google Maps</Form.Label>
           <Form.Control type="text" placeholder="Tim Hortons" ref={nameRef} />
@@ -137,4 +137,4 @@ const ValidateNewWashroom = () => {
   );
 };
 
-export default ValidateNewWashroom;
+export default VerifyUserReport;

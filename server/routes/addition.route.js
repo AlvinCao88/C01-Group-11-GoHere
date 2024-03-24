@@ -1,5 +1,8 @@
 import express from "express";
-import { addWashroomRequest, addIssue } from "../controller/addition.controller.js";
+import {
+  addBusinessRequest,
+  addWashroomRequest, addIssue,
+} from "../controller/addition.controller.js";
 
 const router = express.Router();
 
@@ -14,6 +17,28 @@ const router = express.Router();
 //}
 //It should be in raw JSON
 //no url params are needed.
+router.post("/addWashroomRequest", addWashroomRequest);
+
+/*
+This is called when the /issue endpoint is called, it handles adding issues into the issues collection
+of the db.
+
+Takes in request with format:
+BUSINESS_WASHROOM_REQUEST {
+    id: uuid, (provided automatically by mongodb)
+    businessName: string,
+    contactName: string,
+    email: string,
+    phoneNumber: string,
+    address: string,
+    city: string,
+    province: string,
+    description: string,
+}
+*/
+router.post("/addBusinessRequest", addBusinessRequest);
+
+
 router.post("/add", addWashroomRequest);
 
 /*

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SlidingUpPanelComponent from "../components/SlidingUpPanelComponentInfo";
+import TierList from "../components/TierList";
+import { useAllPrismicDocumentsByType } from "@prismicio/react";
+
 
 const CARD_HEIGHT = 300;
 
@@ -13,6 +16,7 @@ export default function InfoScreen({ navigation }) {
   };
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
       <View style={styles.headerContainer}>
         <Text style={[styles.headerText, { color: "#DA5C59" }]}>
           About GoHere
@@ -26,12 +30,17 @@ export default function InfoScreen({ navigation }) {
         </Text>
       </View>
       <View style={styles.dividingLine}></View>
+      <View style={styles.TierContainer}>
+      <TierList  />
+      </View>
+      </ScrollView>
       <SlidingUpPanelComponent
         CARD_HEIGHT={CARD_HEIGHT}
         panelOpen={panelOpen}
         setPanelOpen={setPanelOpen}
         navigation={navigation}
       />
+      
     </SafeAreaView>
   );
 }
@@ -42,13 +51,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingTop: 20,
   },
+  TierContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: 0,
+  },
   dividingLine: {
     height: 1,
     backgroundColor: "#d7d7d7",
     width: "90%",
     marginVertical: 20,
     alignSelf: "center",
-    marginBottom: 40,
+    marginBottom: 0,
   },
   panel: {
     flex: 1,

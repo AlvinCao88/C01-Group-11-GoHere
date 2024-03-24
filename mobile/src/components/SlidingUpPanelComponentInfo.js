@@ -1,7 +1,13 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+  Animated,
+} from "react-native";
 import SlidingUpPanel from "rn-sliding-up-panel";
-import { Animated } from "react-native";
 import RateApp from "./RateApp";
 
 const SlidingUpPanelComponentInfo = ({
@@ -13,7 +19,7 @@ const SlidingUpPanelComponentInfo = ({
   const animatedValue = useRef(new Animated.Value(CARD_HEIGHT)).current;
   useEffect(() => {
     const listenerId = animatedValue.addListener(({ value }) => {
-      const isOpen = value > CARD_HEIGHT * 0.5;
+      const isOpen = value > CARD_HEIGHT * 0.8;
       setPanelOpen(isOpen);
     });
 
@@ -24,10 +30,10 @@ const SlidingUpPanelComponentInfo = ({
 
   return (
     <SlidingUpPanel
-      draggableRange={{ top: CARD_HEIGHT, bottom: 120 }}
+      draggableRange={{ top: CARD_HEIGHT, bottom: 175 }}
       animatedValue={animatedValue}
       backdropOpacity={0}
-      friction={50}
+      springTension={300}
     >
       <View style={styles.panel}>
         <View style={styles.panelHandle}></View>
@@ -40,24 +46,52 @@ const SlidingUpPanelComponentInfo = ({
             <View style={styles.dividingLine}></View>
           </>
         )}
-        <TouchableOpacity
-          style={styles.donateButton}
-          onPress={() => navigation.navigate("Donate")}
-        >
-          <Text style={styles.donateButtonText}>Donate</Text>
-        </TouchableOpacity>
-        <RateApp></RateApp>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={styles.donateButton}
+            onPress={() => navigation.navigate("Donate")}
+          >
+            <Text style={styles.donateButtonText}>Donate</Text>
+          </TouchableOpacity>
+          <View style={styles.rateAppContainer}>
+            <RateApp></RateApp>
+          </View>
+        </View>
       </View>
     </SlidingUpPanel>
   );
 };
 
 const styles = StyleSheet.create({
+  panel: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    elevation: Platform.select({ ios: 4, android: 15 }),
+    shadowColor: "rgba(0,0,0,1)",
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    alignItems: "flex-start",
+  },
+  buttonsContainer: {
+    marginTop: 15,
+    width: "100%",
+  },
+  rateAppContainer: {
+    width: "90%",
+    alignSelf: "center",
+  },
   dividingLine: {
     height: 1,
     backgroundColor: "#d7d7d7",
     width: "90%",
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 5,
   },
   panelHandle: {
     width: 40,
@@ -75,20 +109,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     width: "90%",
     alignItems: "center",
-  },
-  panel: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -3 },
-    elevation: 4,
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    paddingTop: 10,
-    paddingHorizontal: 0,
-    alignItems: "center",
+    alignSelf: "center",
   },
   supportTitle: {
     fontSize: 20,

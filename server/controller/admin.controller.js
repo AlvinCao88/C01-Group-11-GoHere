@@ -209,3 +209,276 @@ export async function getManyWashroomRequests(_, res) {
     res.status(500).json({ error: `${e}` });
   }
 }
+      
+export async function removeSingleWashroomRequest(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const collection = db.instance.collection(
+      db.collections.ADD_WASHROOM_REQUESTS,
+    );
+    const data = await collection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+    }
+    res.json({ response: `Deleted Washroom Request with id: ${id}` });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}
+
+/* ======================================================================= */
+
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+export async function getSingleReport(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const collection = db.instance.collection(
+      db.collections.USER_REPORT,
+    );
+    const data = await collection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data) {
+      return res
+        .status(404)
+            .json({ error: "Unable to find report with given ID." });
+    }
+    res.json({ response: data });
+  } catch (e) {
+    console.error("Error in getSingleReport:", e);
+    res.status(500).json({ error: `${e.message || e}` });
+  }
+}
+
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+export async function getAllUserReports(_, res) {
+  try {
+    const collection = db.instance.collection(
+      db.collections.USER_REPORT,
+    );
+
+    const data = collection.find({});
+
+    if ((await collection.countDocuments({})) === 0) {
+      return res.status(404).json({ error: "There are no reports." });
+    }
+
+    res.json({ response: await data.toArray() });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}
+
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ */
+
+export async function verifyUserReport(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const userReportCollection = db.instance.collection(db.collections.USER_REPORT);
+    const washroomCollection = db.instance.collection(db.collections.WASHROOMS);
+
+    // Step 1: Check if the washroom (in report) actually exists in washroom collection
+    const report = await userReportCollection.findOne({ _id: new ObjectId(id) });
+    if (!report) {
+      return res.status(404).json({ error: "Unable to find report with given ID." });
+    }
+    const washroom = await washroomCollection.findOne({ _id: new ObjectId(report.washroomID) });
+    if (!washroom) {
+      return res.status(404).json({ error: "Washroom not found for the given report." });
+    }
+    
+    // Step 2: Verify whether the report should be approved by an admin
+    const adminApproval = true; // Replace with actual logic (from frontend button) to check admin approval
+    if (!adminApproval) {
+      // Step 3: Delete the report that is not verified
+      await userReportCollection.deleteOne({ _id: new ObjectId(id) });
+      res.json({ message: "User report not verified, deleted successfully." });
+    } else {
+      const updatedReport = await userReportCollection.findOneAndUpdate(
+        { _id: new ObjectId(id) },
+        { $set: { status: true } },
+        { returnDocument: 'after' }
+      );
+      res.json({ message: "User report successfully verified by admin.", report: updatedReport });
+    }
+    } catch (e) {
+      console.error("Error in verifyUserReport:", e);
+      res.status(500).json({ error: `${e.message || e}` });
+    }
+}
+
+
+/* ======================================================================== */
+
+export async function getSingleAddBusinessRequest(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const collection = db.instance.collection(
+      db.collections.ADD_BUSINESS_REQUESTS,
+    );
+    const data = await collection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+    }
+    res.json({ response: data });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}
+
+export async function validateAddBusinessRequest(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    // First check that the washroom request actually exists
+    const requestCollection = db.instance.collection(
+      db.collections.ADD_BUSINESS_REQUESTS,
+    );
+    const data = await requestCollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data)
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+
+    const { name, fullAddress } = await req.body;
+    // Validate the information sent
+    if (!name || !fullAddress)
+      return res.status(400).json({ error: "Missing fields in body." });
+    if (fullAddress.split(",").length != 4)
+      return res.status(400).json({ error: "Address not of correct format." });
+
+    // Get long/lat information from google Geocode API
+    const geocodeRes = await fetch(
+      "https://maps.googleapis.com/maps/api/geocode/json" +
+        `?address=${name},${fullAddress}&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    );
+
+    // There may be multiple results, we select the first one for simplicity
+    const { results: geocodeBody, status } = await geocodeRes.json();
+    if (status !== "OK")
+      return res.status(400).json({ error: "Failed to find location." });
+
+    // Get open/close hours and contact information from google Places API
+    const placesRes = await fetch(
+      "https://maps.googleapis.com/maps/api/place/details/json" +
+        `?place_id=${geocodeBody[0].place_id}` +
+        `&fields=opening_hours,formatted_phone_number,website` +
+        `&key=${process.env.GOOGLE_MAPS_API_KEY}`,
+    );
+    const { result: placesBody } = await placesRes.json();
+
+    const washroomCollection = db.instance.collection(db.collections.WASHROOMS);
+    const result = await washroomCollection.insertOne({
+      name: name,
+      fullAddress: fullAddress,
+      latitude: geocodeBody[0].geometry.location.lat,
+      longitude: geocodeBody[0].geometry.location.lng,
+      hours:
+        placesBody && placesBody.opening_hours
+          ? placesBody.opening_hours.weekday_text
+          : [],
+      contact: {
+        number: placesBody ? placesBody.formatted_phone_number : "",
+        website: placesBody ? placesBody.website : "",
+      },
+    });
+
+    // After successful validation, delete the request
+    await requestCollection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    res.json({
+      response: "Sucessfully added washroom.",
+      insertedId: result.insertedId,
+    });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}
+
+export async function getManyBusinessRequests(req, res) {
+  try {
+    const collection = db.instance.collection(
+      db.collections.ADD_BUSINESS_REQUESTS,
+    );
+
+    const data = collection.find({});
+
+    if ((await collection.countDocuments({})) === 0) {
+      return res.status(404).json({ error: "There are no requests." });
+    }
+
+    res.json({ response: await data.toArray() });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}
+
+  
+export async function removeSingleBusinessRequest(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const collection = db.instance.collection(
+      db.collections.ADD_BUSINESS_REQUESTS,
+    );
+    const data = await collection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+    }
+    res.json({ response: `Deleted Business Request with id: ${id}` });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
+  }
+}

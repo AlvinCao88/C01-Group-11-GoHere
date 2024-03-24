@@ -58,7 +58,8 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(lat1 * (Math.PI / 180)) *
       Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c; // Distance in kilometers
   return distance;
@@ -71,7 +72,7 @@ function findClosestWashrooms(userLatitude, userLongitude) {
       userLatitude,
       userLongitude,
       washroom.latitude,
-      washroom.longitude
+      washroom.longitude,
     );
     return { washroom, distance };
   });
@@ -95,11 +96,3 @@ export async function findClosestWashroomsController(req, res) {
 // module.exports = {
 //   findClosestWashroomsController,
 // };
-
-// Test use
-// const userLatitude = 37.7749; // User's latitude
-// const userLongitude = -122.4194; // User's longitude
-
-// const closestWashrooms = findClosestWashrooms(userLatitude, userLongitude);
-
-// Now `closestWashrooms` contains the list of washrooms sorted by distance from the user
