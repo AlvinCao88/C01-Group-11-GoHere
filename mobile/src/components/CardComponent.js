@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Platform } from "react-native";
 
 const CardComponent = ({ isEnglish, textTranslations }) => {
   return (
@@ -21,9 +21,6 @@ const CardComponent = ({ isEnglish, textTranslations }) => {
                 ? textTranslations.accessCard.en
                 : textTranslations.accessCard.fr}
             </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
             <View style={styles.subtitleBox}>
               <Text style={styles.cardSubtitle}>
                 {isEnglish
@@ -31,21 +28,7 @@ const CardComponent = ({ isEnglish, textTranslations }) => {
                   : textTranslations.crohnsDisease.fr}
               </Text>
             </View>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
-            <Text style={styles.spacingText}> </Text>
+
             <Text style={styles.cardContent}>
               {isEnglish
                 ? textTranslations.helpText.en
@@ -64,9 +47,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    // elevation: 5,
+    shadowOpacity: Platform.select({ ios: 0.35, android: 0 }),
+    shadowRadius: Platform.select({ ios: 10, android: 0 }),
     width: "95%",
     alignSelf: "center",
     borderRadius: 5,
@@ -90,10 +72,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     backgroundColor: "#fff",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: Platform.select({ ios: 0, android: 15 }),
     borderRadius: 10,
     width: "95%",
     alignSelf: "center",
@@ -132,6 +112,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     backgroundColor: "transparent",
     marginLeft: -60,
+    marginTop: 15,
   },
   cardSubtitle: {
     color: "#fff",
@@ -142,6 +123,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     textAlign: "left",
+    marginTop: 40,
   },
 });
 
