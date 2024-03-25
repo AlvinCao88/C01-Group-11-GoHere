@@ -1,7 +1,19 @@
 import { View, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { useRoute } from '@react-navigation/native';
 
-const SearchComponent = ({navigation, text, onChangeText}) => {
+const SearchComponent = ({ navigation, text, onChangeText }) => {
+  const route = useRoute();
+
+  const handleNavigate = () => {
+    console.log(navigation)
+    if (route.name === "WashroomBookmarks") {
+      navigation.goBack();
+    } else {
+      navigation.navigate("WashroomBookmarks");
+    }
+  };
+
   return (
     <View style={styles.search}>
       <TextInput
@@ -11,12 +23,7 @@ const SearchComponent = ({navigation, text, onChangeText}) => {
         value={text}
         onPressIn={() => navigation.navigate("WashroomSearch")}
       />
-      <TouchableOpacity
-        style={styles.saved}
-        onPress={() => {
-          navigation.navigate("WashroomBookmarks");
-        }}
-      >
+      <TouchableOpacity style={styles.saved} onPress={handleNavigate}>
         <MaterialIcons name="bookmark-outline" size={24} color={"#DA5C59"} />
       </TouchableOpacity>
     </View>
@@ -31,7 +38,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: "white",
     width: "100%",
-    gap: 10
+    gap: 10,
   },
   input: {
     height: 40,
@@ -47,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     borderColor: "#efefef",
-    borderWidth: 2
+    borderWidth: 2,
   },
 });
 export default SearchComponent;

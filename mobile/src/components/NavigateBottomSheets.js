@@ -11,7 +11,7 @@ import WashroomBookmarksList from '../screens/WashroomBookmarksList';
 
 const Stack = createStackNavigator();
 
-const NavigateBottomSheets = forwardRef(function ({sheetRef}, ref) {
+const NavigateBottomSheets = forwardRef(function ({sheetRef, setCenter}, ref) {
   return (
     <NavigationContainer independent={true} ref={ref}>
       <Stack.Navigator >
@@ -24,7 +24,7 @@ const NavigateBottomSheets = forwardRef(function ({sheetRef}, ref) {
             name="WashroomInfo" 
             component={WashroomInfo} 
             options={{headerShown:false}}
-            initialParams={{sheetRef: sheetRef}}
+            initialParams={{sheetRef: sheetRef, setCenter: setCenter}}
         />
         <Stack.Screen 
             name="WashroomSearch" 

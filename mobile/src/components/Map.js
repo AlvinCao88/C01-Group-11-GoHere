@@ -79,8 +79,8 @@ export default function Map({ center,  expandFn }) {
       region={{
         latitude: center.latitude, //change this to center.latittude
         longitude: center.longitude, //change this to center.longitutde
-        latitudeDelta: 0.05,
-        longitudeDelta: 0.05,
+        latitudeDelta: center.latitudeDelta,
+        longitudeDelta: center.longitudeDelta,
       }}
       onRegionChangeComplete={onRegionChangeComplete}
       onPress={Keyboard.dismiss}
@@ -90,7 +90,7 @@ export default function Map({ center,  expandFn }) {
         ? null
         : clusters.map((cluster) => {
             // Check if the cluster is null or undefined
-            if (!cluster) return null;
+            // if (!cluster) return null;
 
             // Check if the cluster represents a single marker
             //   console.log(cluster.properties.point_count)

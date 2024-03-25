@@ -22,7 +22,7 @@ const WashroomInfo = ( {route, navigation}) => {
     setIsWashroomInfoFocused(isFocused);
   }, [isFocused, setIsWashroomInfoFocused]);
   
-  const {id, sheetRef} = route.params;
+  const {id, sheetRef, setCenter} = route.params;
   const [washroom, setWashroom] = useState(null);
   const [loading, setLoading] = useState(true);
   const [inBookmarks, setInBookmarks] = useState(true); // check if washroom already in bookmarks
@@ -35,12 +35,18 @@ const WashroomInfo = ( {route, navigation}) => {
   useEffect(() => {
     const getWashroom = async () => {
       try {
-        const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query//washrooms/${id}`);
+        const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms/${id}`);
         if (!response.ok) {
-          // console.log("Server failed:", response.status);
+          console.log("Server failed:", response.status);
         } else {
           const data = await response.json();
           setWashroom(data.response);
+          setCenter({
+            latitude: data.response.latitude,
+            longitude: data.response.longitude,
+            longitudeDelta: 0.005,
+            latitudeDelta: 0.005,
+          })
           // console.log(data);
         }
       } catch (error) {

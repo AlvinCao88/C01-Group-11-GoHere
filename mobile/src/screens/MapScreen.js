@@ -18,6 +18,8 @@ export default function WashroomBottomSheet() {
   const [center, setCenter] = useState({
     latitude: 43.78309609,
     longitude: -79.1873263,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
   });
   const { isWashroomInfoFocused } = useNavigationState();
 
@@ -62,7 +64,7 @@ export default function WashroomBottomSheet() {
             snapPoints={snapPoints}
             enablePanDownToClose={false}
           >
-            <NavigateBottomSheets ref={navigationRef} sheetRef={sheetRef}/>
+            <NavigateBottomSheets ref={navigationRef} sheetRef={sheetRef} setCenter={setCenter}/>
           </BottomSheet>
           <StatusBar style="auto" />
         </View>
