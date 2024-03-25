@@ -121,7 +121,7 @@ export default function AddWashroomScreen({ navigation }) {
         onPress={() => navigation.goBack()}
         style={styles.backButton}
       >
-        <Text style={{ fontSize: 24, color: "black" }}>&lt;</Text>
+        <Text style={{ fontSize: 24, color: "#FF6347" }}>&lt;</Text>
       </TouchableOpacity>
       <View style={styles.dividingLine}></View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -132,6 +132,7 @@ export default function AddWashroomScreen({ navigation }) {
             value={address}
             onChangeText={setAddress}
             style={styles.textInput}
+            placeholderTextColor="#888"
           />
           <Text style={styles.spaceText}> </Text>
           <Text style={styles.solidText}>City</Text>
@@ -140,6 +141,7 @@ export default function AddWashroomScreen({ navigation }) {
             value={city}
             onChangeText={setCity}
             style={styles.textInput}
+            placeholderTextColor="#888"
           />
           <Text style={styles.spaceText}> </Text>
           <Text style={styles.solidText}>Province</Text>
@@ -167,7 +169,7 @@ export default function AddWashroomScreen({ navigation }) {
                 { label: "Quebec", value: "Quebec" },
                 { label: "Saskatchewan", value: "Saskatchewan" },
               ]}
-              style={styles}
+              style={pickerSelectStyles}
             />
           </View>
           <Text style={styles.spaceText}> </Text>
@@ -177,6 +179,7 @@ export default function AddWashroomScreen({ navigation }) {
             value={description}
             onChangeText={setDescription}
             style={styles.textInput}
+            placeholderTextColor="#888"
           />
         </View>
         <TouchableOpacity
@@ -227,6 +230,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
     fontSize: 20,
+    color: "#FF6347",
   },
   scrollViewContent: {
     paddingBottom: 20,
@@ -244,11 +248,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: "100%",
   },
+ 
   container: {
     flex: 1,
     padding: 20,
     paddingTop: 50,
     justifyContent: "flex-start",
+    backgroundColor: "#FFF",
   },
   inputContainer: {
     marginBottom: 20,
@@ -256,7 +262,7 @@ const styles = StyleSheet.create({
   },
   solidText: {
     fontSize: 16,
-    color: "#3b3b3b",
+    color: "#FF6347",
     marginLeft: 25,
     marginBottom: 5,
   },
@@ -268,7 +274,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderBottomWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#FF6347",
     padding: 5,
     marginBottom: 10,
     width: "90%",
@@ -288,7 +294,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#B0B0B0",
   },
   submitButtonActive: {
-    backgroundColor: "#000",
+    backgroundColor: "#FF6347",
   },
   submitButtonText: {
     color: "white",
@@ -296,7 +302,7 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     borderBottomWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#FF6347",
     paddingBottom: 5,
     marginBottom: 10,
     width: "90%",
@@ -313,6 +319,31 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     color: "black",
     paddingRight: 30,
+    marginBottom: 10,
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
+    marginBottom: 10,
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    color: "black",
+    paddingRight: 30, // to ensure the text is never behind the icon
     marginBottom: 10,
   },
 });
