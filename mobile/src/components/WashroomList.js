@@ -56,7 +56,7 @@ export default WashroomList = ( {navigation}) => {
 
     
     return(
-        <View style={{height: 500}}>
+        <View style={{height: "100%"}}>
             <View style={styles.search}>
             <TouchableOpacity >
                 <TextInput
