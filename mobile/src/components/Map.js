@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Keyboard } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import useSupercluster from 'use-supercluster';
@@ -96,6 +96,7 @@ export default function Map() {
           longitudeDelta: 0.05,
         }}
         onRegionChangeComplete={onRegionChangeComplete}
+        onPress={Keyboard.dismiss}
       >
         {/* Render clustered markers */}
         {loading ? null: clusters.map(cluster => {

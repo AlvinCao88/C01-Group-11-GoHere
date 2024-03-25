@@ -5,13 +5,26 @@ import {
   StyleSheet, 
   Pressable,
   TouchableOpacity, 
-  ActivityIndicator } from 'react-native';
+  ActivityIndicator, 
+  Linking, 
+  Alert, } from 'react-native';
 import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { useIsFocused } from '@react-navigation/native';
+import { useNavigationState } from '../components/NavigationStateContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WashroomInfo = ( {route, navigation}) => {
+  const isFocused = useIsFocused();
+  const { setIsWashroomInfoFocused } = useNavigationState();
+
+  useEffect(() => {
+    setIsWashroomInfoFocused(isFocused);
+  }, [isFocused, setIsWashroomInfoFocused]);
+  
   const {id} = route.params;
   const [washroom, setWashroom] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [inBookmarks, setInBookmarks] = useState(true); // check if washroom already in bookmarks
 
   const sheetRef = useRef(null);
   // variables
@@ -35,9 +48,92 @@ const WashroomInfo = ( {route, navigation}) => {
         setLoading(false);
       }
     };
+
+    const checkInBookmarks = async () => {
+      try {
+        const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
+        // Check whether washroom is in list
+        if (!bookmarks || !bookmarks.some((e) => e._id === id))
+          setInBookmarks(false)
+        console.log(bookmarks)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
   
     getWashroom();
+    checkInBookmarks();
   }, []);
+
+const handleWebsitePress = useCallback(async () => {
+  const url = washroom?.contact?.website;
+  if (!url) {
+    Alert.alert('This washroom does not have a website.');
+    return;
+  }
+  const canOpen = await Linking.canOpenURL(url);
+  if (canOpen) {
+    await Linking.openURL(url);
+  } else {
+    Alert.alert('Error. Unable to open the URL.');
+  }
+}, [washroom]);
+
+const handleCallPress = useCallback(async () => {
+  const phoneNumber = washroom?.contact?.number;
+  if (!phoneNumber) {
+    Alert.alert('This washroom does not have a phone number listed.');
+    return;
+  }
+  
+  const canOpen = await Linking.canOpenURL(`tel:${phoneNumber}`);
+  if (canOpen) {
+    await Linking.openURL(`tel:${phoneNumber}`);
+  } else {
+    Alert.alert('Error. Unable to call the phone number.');
+  }
+}, [washroom]);
+
+  const handleSaveWashroom = async (value) => {
+    try {
+      const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
+      if (!bookmarks) {
+        await AsyncStorage.setItem("bookmarks", JSON.stringify([{
+          _id: value._id,
+          name: value.name,
+          fullAddress: value.fullAddress,
+          province: value.province
+        }]))
+      }
+      else {
+        await AsyncStorage.setItem("bookmarks", JSON.stringify([...bookmarks, {
+          _id: value._id,
+          name: value.name,
+          fullAddress: value.fullAddress,
+          province: value.province
+        }]))
+      }
+      setInBookmarks(true);
+    }
+    catch (e) {
+      console.error(e)
+    }
+  }
+  
+  const handleUnsaveWashroom = async (value) => {
+    try {
+      const bookmarks = JSON.parse(await AsyncStorage.getItem("bookmarks"));
+      if (bookmarks) {
+        // remove washroom from bookmarks
+        await AsyncStorage.setItem("bookmarks", JSON.stringify(bookmarks.filter((e) => e._id !== value)))
+      }
+      setInBookmarks(false);
+    }
+    catch (e) {
+      console.error(e)
+    }
+  }
 
   
   // const handleWebsitePress = useCallback(async () => {
@@ -60,6 +156,9 @@ const WashroomInfo = ( {route, navigation}) => {
     
   return (
     <BottomSheetScrollView style={styles.container}  >
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Text style={styles.backButtonText}>Back</Text>
+      </TouchableOpacity>
       {loading  ? (
             <ActivityIndicator color={"red"} size='large'/>
             ) : ( washroom ? 
@@ -68,9 +167,15 @@ const WashroomInfo = ( {route, navigation}) => {
                   <Text style={styles.name}>{washroom.name}</Text> 
                   <Text style={styles.washroomContent}>{washroom.fullAddress}</Text> 
                   <View >
-                    <TouchableOpacity style={styles.saveButton}>
+                    {inBookmarks ?
+                    <TouchableOpacity style={styles.saveButton} onPress={() => handleUnsaveWashroom(id)}>
+                      <Text style={styles.saveText}>Unsave</Text>
+                    </TouchableOpacity>
+                      :
+                    <TouchableOpacity style={styles.saveButton} onPress={() => handleSaveWashroom(washroom)}>
                       <Text style={styles.saveText}>Save</Text>
                     </TouchableOpacity>
+                    }
                   </View>
                   <Text style={styles.sectionTitle}>Open hours</Text>
                   <View>
@@ -88,10 +193,10 @@ const WashroomInfo = ( {route, navigation}) => {
                   
                   <Text style={styles.sectionTitle}>Contact</Text>
                   <View style={styles.contactView}>
-                    <TouchableOpacity style={styles.websiteButton} >
+                    <TouchableOpacity style={styles.websiteButton} onPress={handleWebsitePress}>
                         <Text style={styles.contactText}>Website</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.callButton}>
+                      <TouchableOpacity style={styles.callButton} onPress={handleCallPress}>
                         <Text style={styles.contactText}>Call</Text>
                       </TouchableOpacity>
                     </View>
@@ -103,10 +208,10 @@ const WashroomInfo = ( {route, navigation}) => {
                   <Text style={styles.sectionTitle}>Report</Text>
                   <View style={styles.contactView}>
                     <TouchableOpacity 
-                      style={styles.saveButton}
+                      style={styles.reportButton}
                       onPress={() => navigation.navigate("ReportIssueScreen", {washroomId: id})}
                     >
-                      <Text style={styles.saveText}>Report a Washroom</Text>
+                      <Text style={styles.reportText}>Report a Washroom</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -199,13 +304,9 @@ const styles = StyleSheet.create({
     padding: 10
   },
   directionButton:{
-    backgroundColor:'black',
-    borderColor: '#efefef',
-    borderWidth: 1,
-    padding:15,
+    backgroundColor:'white',
+    padding:20,
     width: "90%",
-    // alignItems: 'center',
-    borderRadius: 10,
   },
   directionText:{
     color: 'white',
@@ -223,6 +324,31 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 14,
+  },
+  reportButton: {
+    backgroundColor: '#d64c49',
+    width: '95%',
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  reportText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  backButton: {
+    marginTop: 20,
+    marginLeft: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10, // Reduced padding
+    backgroundColor: '#ddd', // Example background color
+    borderRadius: 5,
+    alignSelf: 'flex-start', // Align to the left
+  },
+  backButtonText: {
+    fontSize: 16,
   },
 });
 

@@ -6,6 +6,8 @@ import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity, Button, 
 import BottomSheet, {  BottomSheetModalProvider, BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import MapScreen from "../screens/MapScreen";
 import NavigateBottomSheets from "./NavigateBottomSheets";
+import DirectionsPanel from "../components/DirectionsPanel"
+import { useNavigationState } from '../components/NavigationStateContext';
 
 export default WashroomBottomSheet = () => {
   // ref
@@ -13,6 +15,8 @@ export default WashroomBottomSheet = () => {
   // variables
   const snapPoints = useMemo(() => ['12%', '30%', '90%'], []);
   //callback 
+
+  const { isWashroomInfoFocused } = useNavigationState();
   
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -30,7 +34,7 @@ export default WashroomBottomSheet = () => {
         </BottomSheet>
         <StatusBar style="auto" />
         </View>
-
+        {isWashroomInfoFocused && <DirectionsPanel />}
       </BottomSheetModalProvider>
     </GestureHandlerRootView>
   );
@@ -54,9 +58,9 @@ const styles = StyleSheet.create({
     // flex: 1,
     alignItems: 'left',
     backgroundColor: 'white',
-    borderBottomWidth: 1, // Adjust the border width as needed
-    borderBottomColor: '#D3D3D3', // Adjust the border color as needed
-    borderBottomStyle: 'solid', // You can also use 'dotted' or 'dashed'
+    borderBottomWidth: 1,
+    borderBottomColor: '#D3D3D3',
+    borderBottomStyle: 'solid',
   },
   text: {
     fontSize: 12,
