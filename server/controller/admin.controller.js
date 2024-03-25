@@ -209,7 +209,7 @@ export async function getManyWashroomRequests(_, res) {
     res.status(500).json({ error: `${e}` });
   }
 }
-      
+
 export async function removeSingleWashroomRequest(req, res) {
   try {
     const { id } = req.params;
@@ -248,9 +248,7 @@ export async function getSingleReport(req, res) {
       return res.status(400).json({ error: "Invalid ID." });
     }
 
-    const collection = db.instance.collection(
-      db.collections.USER_REPORT,
-    );
+    const collection = db.instance.collection(db.collections.USER_REPORT);
     const data = await collection.findOne({
       _id: new ObjectId(id),
     });
@@ -258,7 +256,7 @@ export async function getSingleReport(req, res) {
     if (!data) {
       return res
         .status(404)
-            .json({ error: "Unable to find report with given ID." });
+        .json({ error: "Unable to find report with given ID." });
     }
     res.json({ response: data });
   } catch (e) {
@@ -273,11 +271,9 @@ export async function getSingleReport(req, res) {
  */
 export async function getAllUserReports(_, res) {
   try {
-    const collection = db.instance.collection(
-      db.collections.USER_REPORT,
-    );
+    const collection = db.instance.collection(db.collections.USER_REPORT);
 
-    const data = collection.find({});
+    const data = collection.find({ status: false });
 
     if ((await collection.countDocuments({})) === 0) {
       return res.status(404).json({ error: "There are no reports." });
@@ -300,7 +296,16 @@ export async function verifyUserReport(req, res) {
     if (!ObjectId.isValid(id)) {
       return res.status(400).json({ error: "Invalid ID." });
     }
-    const userReportCollection = db.instance.collection(db.collections.USER_REPORT);
+
+    const newWashroom = await req.body;
+    if (!newWashroom || !newWashroom.contact || !newWashroom.hours) {
+      return res.status(400).json({ error: "Please send a correct body" });
+    }
+
+    const userReportCollection = db.instance.collection(
+      db.collections.USER_REPORT,
+    );
+    const washroomCollection = db.instance.collection(db.collections.WASHROOMS);
 
     // Step 1: Update the status of the report to true
     const updatedReport = await userReportCollection.findOneAndUpdate(
@@ -309,17 +314,29 @@ export async function verifyUserReport(req, res) {
     );
 
     if (!updatedReport) {
-      return res.status(404).json({ error: "Unable to find report with given ID." });
+      return res
+        .status(404)
+        .json({ error: "Unable to find report with given ID." });
     }
 
-    res.json({ message: "User report successfully verified by admin.", report: updatedReport });
+    // Step 2: Now update the fields of the washroom
+    const updatedWashroom = await washroomCollection.findOneAndUpdate(
+      { _id: new ObjectId(updatedReport.washroomId) },
+      { $set: { hours: newWashroom.hours, contact: newWashroom.contact } },
+    );
 
+    if (!updatedWashroom) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find washroom with given ID." });
+    }
+
+    res.json({ message: "User report successfully verified by admin." });
   } catch (e) {
     console.error("Error in verifyUserReport:", e);
     res.status(500).json({ error: `${e.message || e}` });
   }
 }
-
 
 /* ======================================================================== */
 
@@ -443,7 +460,6 @@ export async function getManyBusinessRequests(req, res) {
   }
 }
 
-  
 export async function removeSingleBusinessRequest(req, res) {
   try {
     const { id } = req.params;
