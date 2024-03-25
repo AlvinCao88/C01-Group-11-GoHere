@@ -3,7 +3,6 @@ import {
   View, 
   Text, 
   StyleSheet, 
-  Pressable,
   TouchableOpacity, 
   ActivityIndicator, 
   Linking, 
@@ -21,15 +20,15 @@ const WashroomInfo = ( {route, navigation}) => {
     setIsWashroomInfoFocused(isFocused);
   }, [isFocused, setIsWashroomInfoFocused]);
   
-  const {id} = route.params;
+  const {id, sheetRef} = route.params;
   const [washroom, setWashroom] = useState(null);
   const [loading, setLoading] = useState(true);
   const [inBookmarks, setInBookmarks] = useState(true); // check if washroom already in bookmarks
 
-  const sheetRef = useRef(null);
-  // variables
-  const snapPoints = useMemo(() => [ '30%', '90%'], []);
-  //callback 
+  useEffect(() => {
+    sheetRef.current.expand()
+  }, [])
+
   
   useEffect(() => {
     const getWashroom = async () => {

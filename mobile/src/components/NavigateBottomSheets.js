@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { forwardRef }  from 'react';
 import {
   createStackNavigator,
 } from '@react-navigation/stack';
@@ -10,11 +10,10 @@ import ReportIssueScreen from '../screens/ReportIssueScreen';
 import WashroomBookmarksList from '../screens/WashroomBookmarksList';
 
 const Stack = createStackNavigator();
-const NavigateBottomSheets = () => {
 
+const NavigateBottomSheets = forwardRef(function ({sheetRef}, ref) {
   return (
-    
-    <NavigationContainer independent={true}>
+    <NavigationContainer independent={true} ref={ref}>
       <Stack.Navigator >
         <Stack.Screen
             name="WashroomList"
@@ -25,6 +24,7 @@ const NavigateBottomSheets = () => {
             name="WashroomInfo" 
             component={WashroomInfo} 
             options={{headerShown:false}}
+            initialParams={{sheetRef: sheetRef}}
         />
         <Stack.Screen 
             name="WashroomSearch" 
@@ -46,7 +46,7 @@ const NavigateBottomSheets = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+});
 
 
 export default NavigateBottomSheets;

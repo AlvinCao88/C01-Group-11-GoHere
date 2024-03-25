@@ -13,12 +13,12 @@ import NewsScreen from "./src/screens/NewsScreen";
 import DetailedNewsScreen from "./src/screens/DetailedNewsScreen";
 import CardScreen from "./src/screens/CardScreen";
 import DonateScreen from "./src/screens/DonationScreen"
-import WashroomBottomSheet from "./src/components/WashroomBottomSheet";
 import InfoScreen from "./src/screens/InfoScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import { NavigationStateProvider } from "./src/components/NavigationStateContext"
 
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import MapScreen from "./src/screens/MapScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -38,7 +38,7 @@ export default function App() {
                 return <MaterialCommunityIcons name="card-account-details" size={size} color={color} />;
               } else {
                 let iconName;
-                if (route.name === 'Setting') {
+                if (route.name === 'Settings') {
                   iconName = focused ? 'settings-sharp' : 'settings-sharp';
                 } else if (route.name === 'Explore') {
                   iconName = focused ? 'search-outline' : 'search-outline';
@@ -56,7 +56,7 @@ export default function App() {
         >
           <Tab.Screen
             name="Explore"
-            component={WashroomBottomSheet}
+            component={MapScreen}
             options={{ headerShown: false }}
           />
           <Tab.Screen
