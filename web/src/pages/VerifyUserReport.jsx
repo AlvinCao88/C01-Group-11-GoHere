@@ -42,37 +42,23 @@ const VerifyUserReport = () => {
 
   async function verifyReports(e) {
     setLoading(true);
-
     e.preventDefault();
 
     try {
       const res = await fetch(
         `/api/v1/admin/verifyReports/${id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+
           },
-          body: JSON.stringify({
-            name: nameRef.current.value,
-            fullAddress: fullAddressRef.current.value,
-          }),
         },
       );
-
       if (!res.ok) {
-        console.log(await res.json());
-        setIsError(true);
-        setLoading(false);
-        return;
+        throw new Error('Failed to update status');
       }
-
-      nameRef.current.value = "";
-      fullAddressRef.current.value = "";
-      setIsError(false);
-      setLoading(false);
-
       navigate("/verify/reports");
     } catch (e) {
       console.log(e);
@@ -83,57 +69,46 @@ const VerifyUserReport = () => {
 
   return (
     <Stack gap={5} className="m-5 all-container">
-      <div className="position-relative p-5 border border-5 border-primary rounded-5">
-        <p className="request-id bg-primary text-white">
-          Request ID: {requestDetails._id}
-        </p>
-        <Form.Group className="mb-3">
-          <Form.Label>Address</Form.Label>
-          <Form.Control value={requestDetails.address || ""} disabled />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>City</Form.Label>
-          <Form.Control value={requestDetails.city || ""} disabled />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Province</Form.Label>
-          <Form.Control value={requestDetails.province || ""} disabled />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            className="textarea"
-            as="textarea"
-            rows={4}
-            value={requestDetails.description || ""}
-            disabled
-          />
-        </Form.Group>
-      </div>
+    <div className="position-relative p-5 border border-5 border-primary rounded-5">
+      <p className="request-id bg-primary text-white">
+        Request ID: {requestDetails._id}
+      </p>
+      <Form.Group className="mb-3">
+        <Form.Label>Name</Form.Label>
+        <Form.Control value={requestDetails.name || ""} disabled />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Phone Number</Form.Label>
+        <Form.Control value={requestDetails.phoneNum || ""} disabled />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Email</Form.Label>
+        <Form.Control value={requestDetails.email || ""} disabled />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label>Issue Description</Form.Label>
+        <Form.Control
+          className="textarea"
+          as="textarea"
+          rows={4}
+          value={requestDetails.issue || ""}
+          disabled
+        />
+      </Form.Group>
+    </div>
 
-      <Form onSubmit={verifyReports}>
-        <Form.Group className="mb-3">
-          <Form.Label>Name on Google Maps</Form.Label>
-          <Form.Control type="text" placeholder="Tim Hortons" ref={nameRef} />
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Full Address</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Address, City, Province Postal Code, Country"
-            ref={fullAddressRef}
-          />
-        </Form.Group>
-        <Button className="text-white" type="submit">
-          {loading ? <Spinner size="sm" /> : "Submit"}
-        </Button>
-        {isError && (
-          <div className="text-primary mt-3">
-            An error occured, please try again.
-          </div>
-        )}
-      </Form>
-    </Stack>
+    <Form onSubmit={verifyReports}>
+      <Button className="text-white" type="submit">
+        {loading ? <Spinner size="sm" /> : "Verify"}
+      </Button>
+
+      {isError && (
+        <div className="text-primary mt-3">
+          An error occured, please try again.
+        </div>
+      )}
+    </Form>
+  </Stack>
   );
 };
 

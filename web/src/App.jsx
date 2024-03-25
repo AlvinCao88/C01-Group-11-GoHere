@@ -87,7 +87,6 @@ function App() {
               path="/verify/report/:id"
               element={<VerifyUserReport />}
             />
-
             <Route
               path="/validate/businesses"
               element={<NewBusinessRequests />}

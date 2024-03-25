@@ -131,3 +131,4 @@ dist
 .expo
 db
 server/.env.yaml
+jsconfig.json

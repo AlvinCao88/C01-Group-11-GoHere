@@ -18,6 +18,7 @@ import InfoScreen from "./src/screens/InfoScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import { NavigationStateProvider } from "./src/components/NavigationStateContext"
 
+import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -74,9 +75,9 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Tab.Screen
-            name="Setting"
-            component={SettingScreen}
-            options={{ headerShown: false }}
+            name="Settings"
+            component={SettingStack}
+            options={{ headerShown: false}}
           />
         </Tab.Navigator>
       </NavigationContainer>
@@ -110,3 +111,26 @@ function InfoStack() {
     </Stack.Navigator>
   );
 }
+
+function SettingStack() {
+  return (
+    <Stack.Navigator initialRouteName="SettingsPage" screenOptions={{headerShown: false}}>
+      <Stack.Screen name="SettingsPage" component={SettingScreen} />
+      <Stack.Screen name="AddWashrooms" component={AddWashroomScreen} />
+    </Stack.Navigator>
+  )
+}
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <StatusBar />
+//       <Tab.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
+//         <Tab.Screen name="Map" component={MapScreen} />
+//         <Tab.Screen name="Card" component={CardScreen} />
+//         <Tab.Screen name="Info" component={InfoStack} />
+//         <Tab.Screen name="Settings" component={SettingStack} />
+//       </Tab.Navigator>
+//     </NavigationContainer>
+//   );
+// }

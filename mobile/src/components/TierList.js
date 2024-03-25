@@ -89,12 +89,12 @@ const TierList = ({ navigation }) => {
       </View>
 
       <View>
-        <Text style={styles.silverSponsorText}>Silver</Text>
+        <Text style={styles.silverSponsorText}>Silver Sponsor</Text>
         {renderSponsors('Silver')}
       </View>
 
       <View style={styles.bronzeContainer}>
-        <Text style={styles.bronzeSponsorText}>Bronze</Text>
+        <Text style={styles.bronzeSponsorText}>Bronze Sponsor</Text>
         {renderSponsors('Bronze')}
       </View>
     </SafeAreaView>
