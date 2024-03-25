@@ -63,7 +63,7 @@ const WashroomInfo = ( {route, navigation}) => {
   
     getWashroom();
     checkInBookmarks();
-  }, []);
+  }, [id]);
 
 const handleWebsitePress = useCallback(async () => {
   const url = washroom?.contact?.website;

@@ -24,6 +24,7 @@ export default function WashroomBottomSheet() {
   // Id is the id of the washroom so we can navigate to the correct washroom info page
   function expandAndNavigateBottomSheet(id) {
     navigationRef.current.navigate("WashroomInfo", {id: id})
+    sheetRef.current.expand();
   }
 
   useEffect(() => {
