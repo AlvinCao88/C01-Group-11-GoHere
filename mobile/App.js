@@ -16,6 +16,7 @@ import DonateScreen from "./src/screens/DonationScreen"
 import InfoScreen from "./src/screens/InfoScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import { NavigationStateProvider } from "./src/components/NavigationStateContext"
+import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 import AddBusinessScreen from "./src/screens/AddBusinessScreen";
@@ -120,7 +121,7 @@ function SettingStack() {
       <Stack.Screen name="AddWashrooms" component={AddWashroomScreen} />
       <Stack.Screen name="AddBusinesses" component={AddBusinessScreen} />
     </Stack.Navigator>
-  )
+  );
 }
 
 // export default function App() {
