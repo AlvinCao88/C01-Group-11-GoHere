@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   dividingLine: {
-    marginTop: 40,
+    marginTop: 50,
     borderBottomColor: "#B0B0B0",
     borderBottomWidth: 1,
     width: "100%",
