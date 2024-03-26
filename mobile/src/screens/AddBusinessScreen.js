@@ -92,6 +92,7 @@ export default function AddBusinessScreen({ navigation }) {
         contactName,
         phoneNumber,
         address,
+        email,
         city,
         province,
         description,

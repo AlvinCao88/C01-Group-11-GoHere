@@ -89,6 +89,7 @@ const VerifyUserReport = () => {
   }
 
   return (
+    <div className="d-flex justify-content-center">
     <Stack gap={5} className="m-5 all-container">
       <div className="position-relative p-5 border border-5 border-primary rounded-5">
         <p className="request-id bg-primary text-white">
@@ -217,6 +218,7 @@ const VerifyUserReport = () => {
         )}
       </Form>
     </Stack>
+    </div>
   );
 };
 
