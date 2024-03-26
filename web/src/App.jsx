@@ -9,13 +9,13 @@ import {
 import MainPageLayout from "./components/MainPageLayout";
 import Loading from "./components/Loading";
 import "./custom.scss";
-import LoginPage from "./pages/LoginPage";
-import NewWashroomRequest from "./pages/NewWashroomRequests";
-import ValidateNewWashroom from "./pages/ValidateNewWashroom";
-import UserReportList from "./pages/UserReportList";
-import NewBusinessRequests from "./pages/NewBusinessRequests";
-import ValidateNewBusiness from "./pages/ValidateNewBusiness";
-import VerifyUserReport from "./pages/VerifyUserReport"
+import LoginPage from "./pages/login/LoginPage";
+import NewWashroomRequest from "./pages/washrooms/NewWashroomRequests";
+import ValidateNewWashroom from "./pages/washrooms/ValidateNewWashroom";
+import UserReportList from "./pages/reports/UserReportList";
+import NewBusinessRequests from "./pages/businesses/NewBusinessRequests";
+import ValidateNewBusiness from "./pages/businesses/ValidateNewBusiness";
+import VerifyUserReport from "./pages/reports/VerifyUserReport"
 
 async function checkIsAdmin() {
   try {
@@ -64,6 +64,7 @@ function App() {
               !isAdmin ? <Outlet /> : <Navigate to="/validate/washrooms" />
             }
           >
+            <Route path="/" element={<LoginPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<LoginPage mode={"signup"} />} />
           </Route>
@@ -87,7 +88,6 @@ function App() {
               path="/verify/report/:id"
               element={<VerifyUserReport />}
             />
-
             <Route
               path="/validate/businesses"
               element={<NewBusinessRequests />}

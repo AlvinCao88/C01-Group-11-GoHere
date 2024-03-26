@@ -13,12 +13,14 @@ import NewsScreen from "./src/screens/NewsScreen";
 import DetailedNewsScreen from "./src/screens/DetailedNewsScreen";
 import CardScreen from "./src/screens/CardScreen";
 import DonateScreen from "./src/screens/DonationScreen"
-import WashroomBottomSheet from "./src/components/WashroomBottomSheet";
 import InfoScreen from "./src/screens/InfoScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import { NavigationStateProvider } from "./src/components/NavigationStateContext"
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 
+import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import AddBusinessScreen from "./src/screens/AddBusinessScreen";
+import MapScreen from "./src/screens/MapScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -38,7 +40,7 @@ export default function App() {
                 return <MaterialCommunityIcons name="card-account-details" size={size} color={color} />;
               } else {
                 let iconName;
-                if (route.name === 'Setting') {
+                if (route.name === 'Settings') {
                   iconName = focused ? 'settings-sharp' : 'settings-sharp';
                 } else if (route.name === 'Explore') {
                   iconName = focused ? 'search-outline' : 'search-outline';
@@ -56,7 +58,7 @@ export default function App() {
         >
           <Tab.Screen
             name="Explore"
-            component={WashroomBottomSheet}
+            component={MapScreen}
             options={{ headerShown: false }}
           />
           <Tab.Screen
@@ -75,9 +77,9 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Tab.Screen
-            name="Setting"
-            component={SettingsStack}
-            options={{ headerShown: false }}
+            name="Settings"
+            component={SettingStack}
+            options={{ headerShown: false}}
           />
         </Tab.Navigator>
       </NavigationContainer>
@@ -112,11 +114,26 @@ function InfoStack() {
   );
 }
 
-function SettingsStack() {
+function SettingStack() {
   return (
-    <Stack.Navigator initialRouteName="Settings" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Settings" component={SettingScreen} />
-      <Stack.Screen name="AddWashroom" component={AddWashroomScreen} />
+    <Stack.Navigator initialRouteName="SettingsPage" screenOptions={{headerShown: false}}>
+      <Stack.Screen name="SettingsPage" component={SettingScreen} />
+      <Stack.Screen name="AddWashrooms" component={AddWashroomScreen} />
+      <Stack.Screen name="AddBusinesses" component={AddBusinessScreen} />
     </Stack.Navigator>
   );
 }
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <StatusBar />
+//       <Tab.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
+//         <Tab.Screen name="Map" component={MapScreen} />
+//         <Tab.Screen name="Card" component={CardScreen} />
+//         <Tab.Screen name="Info" component={InfoStack} />
+//         <Tab.Screen name="Settings" component={SettingStack} />
+//       </Tab.Navigator>
+//     </NavigationContainer>
+//   );
+// }

@@ -5,10 +5,11 @@ import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import BackButton from '../components/BackButton'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import SearchComponent from "./SearchComponent";
 
 
 
-export default WashroomBottomSheet = ( {navigation}) => {
+const WashroomSearch = ( {navigation}) => {
      // ref
   const sheetRef = useRef(null);
   // variables
@@ -102,15 +103,7 @@ export default WashroomBottomSheet = ( {navigation}) => {
     return(
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.mainContainer}>
-            <View style={styles.search}>
-                <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                onSubmitEditing={() => handleTextChange(text)}
-                value={text}
-                placeholder="Search for a place or address"
-                />
-            </View>
+            <SearchComponent navigation={navigation} text={text} onChangeText={onChangeText}/>
             <View style={styles.header}>
         <Text style={styles.text}>RECENT SEARCH</Text>
         {/* Back Button */}
@@ -173,12 +166,6 @@ const styles = StyleSheet.create({
         alignItems:'center',
         backgroundColor: 'white',
       },
-    search: {
-      height:'10%',
-      alignItems: 'center',
-      backgroundColor: 'white',
-      width: '100%',
-    },
     washroomNearby: {
       // flex: 1,
       alignItems: 'left',
@@ -205,19 +192,10 @@ const styles = StyleSheet.create({
         color:'grey',
         
       },
-    input: {
-      height: 40,
-      margin: 12,
-      padding: 10,
-      backgroundColor:'#efefef',
-      borderRadius:5,
-      width: '90%',
-    },
     washroomList: {
       flex: 1,
       padding: 10,
       backgroundColor: 'white',
-      padding: 10,
     },
     backButton: {
       marginTop: 0,
@@ -249,4 +227,4 @@ const styles = StyleSheet.create({
     },
   });
   
-  
+export default WashroomSearch;
