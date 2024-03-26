@@ -120,6 +120,7 @@ function LoginPage({ mode }) {
             onClick={(e) => {
               handleSubmit(e);
             }}
+            className="text-white"
             variant="primary"
             type="submit"
           >
