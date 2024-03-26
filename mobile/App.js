@@ -17,8 +17,6 @@ import InfoScreen from "./src/screens/InfoScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import { NavigationStateProvider } from "./src/components/NavigationStateContext"
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
-
-import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 import AddBusinessScreen from "./src/screens/AddBusinessScreen";
 import MapScreen from "./src/screens/MapScreen";
 
