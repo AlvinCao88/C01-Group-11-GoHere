@@ -1,10 +1,11 @@
 import "react-native-gesture-handler";
 import React, { useCallback, useRef, useMemo, useState, useEffect} from 'react';
-import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator } from 'react-native';
-import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { StyleSheet, Text, View,  SafeAreaView, TouchableOpacity,  TextInput, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import SearchComponent from "./SearchComponent";
 
 
-export default WashroomBottomSheet = ( {navigation}) => {
+const WashroomSearch = ( {navigation}) => {
      // ref
   const sheetRef = useRef(null);
   // variables
@@ -54,20 +55,18 @@ export default WashroomBottomSheet = ( {navigation}) => {
     //   );
     // }, []);
 
-    
     return(
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{height: 500}}>
-            <View style={styles.search}>
-                <TextInput
-                style={styles.input}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder="Search for a place or address"
-                />
-            </View>
-            <View style={styles.washroomNearby}>
-                <Text style={styles.text}>RECENT SEARCH</Text>
-            </View>
+            <SearchComponent navigation={navigation} text={text} onChangeText={onChangeText}/>
+            <View style={styles.header}>
+        <Text style={styles.text}>RECENT SEARCH</Text>
+        {/* Back Button */}
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+      </View>
+            
             <BottomSheetScrollView>
                 {/* {loading ? (
                 <ActivityIndicator color={"red"} size='large'/>
@@ -76,8 +75,8 @@ export default WashroomBottomSheet = ( {navigation}) => {
                 )} */}
         </BottomSheetScrollView>
       </View>
-    )
-
+      </TouchableWithoutFeedback>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -89,6 +88,16 @@ const styles = StyleSheet.create({
       alignItems:'center',
       backgroundColor: 'white',
     },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: '#D3D3D3',
+      paddingBottom: 10,
+      paddingTop: 10,
+      backgroundColor: 'white',
+    },
     contentContainer: {
         flex: 1,
         padding: 24,
@@ -97,11 +106,6 @@ const styles = StyleSheet.create({
         alignItems:'center',
         backgroundColor: 'white',
       },
-    search: {
-      height:'10%',
-      alignItems: 'left',
-      backgroundColor: 'white'
-    },
     washroomNearby: {
       // flex: 1,
       alignItems: 'left',
@@ -128,21 +132,23 @@ const styles = StyleSheet.create({
         color:'grey',
         
       },
-    input: {
-      height: 40,
-      margin: 12,
-      padding: 10,
-      backgroundColor:'#efefef',
-      borderRadius:5
-      
-    },
     washroomList: {
       flex: 1,
       padding: 10,
       backgroundColor: 'white',
-      padding: 10,
     },
-    
+    backButton: {
+      marginTop: 0,
+      marginRight: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 10,
+      backgroundColor: '#ddd',
+      borderRadius: 5,
+      alignSelf: 'right',
+    },
+    backButtonText: {
+      fontSize: 16,
+    },
   });
   
-  
+export default WashroomSearch;
