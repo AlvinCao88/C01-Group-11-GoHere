@@ -92,7 +92,7 @@ const NewBusinessRequests = () => {
                 {e.address}, {e.city}, {e.province}
               </Col>
               <Col xs={2}>
-                <Button className="m-2" variant="primary">
+                <Button className="m-2" variant="success">
                   <Link className="link" to={`/validate/business/${e._id}`}>
                     Validate
                   </Link>
