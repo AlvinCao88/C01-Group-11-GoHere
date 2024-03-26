@@ -19,13 +19,6 @@ import SearchComponent from "./SearchComponent";
 import WashroomItemComponent from "./WashroomItemComponent";
 
 const WashroomList = ({ navigation }) => {
-  // ref
-  const sheetRef = useRef(null);
-  // variables
-  const snapPoints = useMemo(() => ["12%", "30%", "90%"], []);
-  //callback
-
-  const [text, onChangeText] = React.useState("Search for a place or address");
   const [loading, setLoading] = useState(true);
   const [washrooms, setWashrooms] = useState([]);
 
