@@ -107,7 +107,7 @@ router.get(
  */
 router.delete("/removeBusiness/:id", verifyToken, removeSingleBusinessRequest);
 
-router.delete("/userReport/remove",verifyToken, removeSingleReport);
+router.delete("/userReport/remove/:id",verifyToken, removeSingleReport);
 router.get('/userReport/get/:id', verifyToken, getSingleReport);
 router.get('/userReport/getAll', verifyToken, getAllUserReports);
 router.put('/userReport/validateRequest/:id', verifyToken, verifyUserReport);

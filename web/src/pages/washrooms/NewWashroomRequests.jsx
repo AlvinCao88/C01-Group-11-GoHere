@@ -64,7 +64,7 @@ const NewWashroomRequests = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button className="text-white" variant="primary" onClick={handleRemoveRequest}>
+          <Button className="text-white" variant="danger" onClick={handleRemoveRequest}>
             Delete Request
           </Button>
         </Modal.Footer>
@@ -86,7 +86,7 @@ const NewWashroomRequests = () => {
             </Col>
             <Col>{e.description}</Col>
             <Col xs={2}>
-              <Button variant="primary">
+              <Button variant="success">
                 <Link className="link" to={`/validate/washroom/${e._id}`}>
                   Validate
                 </Link>

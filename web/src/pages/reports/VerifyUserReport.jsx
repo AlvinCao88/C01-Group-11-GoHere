@@ -69,7 +69,7 @@ const VerifyUserReport = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`/api/v1/admin/verifyReports/${id}`, {
+      const res = await fetch(`/api/v1/admin/userReport/validateRequest/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -206,8 +206,8 @@ const VerifyUserReport = () => {
           />
         </Form.Group>
 
-        <Button className="text-white" type="submit">
-          {loading ? <Spinner size="sm" /> : "Verify"}
+        <Button className="text-white" variant="success" type="submit">
+          {loading ? <Spinner size="sm" /> : "Validate"}
         </Button>
 
         {isError && (

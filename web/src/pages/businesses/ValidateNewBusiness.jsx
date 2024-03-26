@@ -138,7 +138,7 @@ const ValidateNewBusiness = () => {
             ref={fullAddressRef}
           />
         </Form.Group>
-        <Button className="text-white" type="submit">
+        <Button className="text-white" variant="success" type="submit">
           {loading ? <Spinner size="sm" /> : "Submit"}
         </Button>
         {isError && (
