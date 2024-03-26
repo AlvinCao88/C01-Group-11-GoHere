@@ -2,7 +2,7 @@ import { View, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useRoute } from '@react-navigation/native';
 
-const SearchComponent = ({ navigation, text, onChangeText }) => {
+const SearchComponent = ({ navigation, text, onChangeText, handleTextChange }) => {
   const route = useRoute();
 
   const handleNavigate = () => {
@@ -22,6 +22,7 @@ const SearchComponent = ({ navigation, text, onChangeText }) => {
         onChangeText={onChangeText}
         value={text}
         onPressIn={() => navigation.navigate("WashroomSearch")}
+        onSubmitEditing={() => handleTextChange(text)}
       />
       <TouchableOpacity style={styles.saved} onPress={handleNavigate}>
         <MaterialIcons name="bookmark-outline" size={24} color={"#DA5C59"} />
