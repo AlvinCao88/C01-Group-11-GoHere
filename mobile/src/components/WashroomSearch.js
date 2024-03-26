@@ -103,7 +103,7 @@ const WashroomSearch = ( {navigation}) => {
     return(
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.mainContainer}>
-            <SearchComponent navigation={navigation} text={text} onChangeText={onChangeText}/>
+            <SearchComponent navigation={navigation} text={text} onChangeText={onChangeText} handleTextChange={handleTextChange}/>
             <View style={styles.header}>
         <Text style={styles.text}>RECENT SEARCH</Text>
         {/* Back Button */}
