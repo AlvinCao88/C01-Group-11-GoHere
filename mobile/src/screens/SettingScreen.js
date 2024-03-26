@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Linking, TouchableOpacity, SafeAreaView,
-        View, Text, StyleSheet, Switch } from 'react-native';
+        View, Text, StyleSheet, Switch, ScrollView} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
 //TODO: add in navigation to other screens
@@ -10,6 +10,7 @@ export default function SettingScreen ({navigation}) {
     const [analytics, setAnalytics] = useState(false); // the state used to keep track of analytics on or off
 
     return (
+        <ScrollView>
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <Text style={[styles.titleText, { color: "#DA5C59" }]}>
@@ -114,12 +115,26 @@ export default function SettingScreen ({navigation}) {
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
-                        Add a washroom
+                        Add a Washroom
                     </Text>
                     <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
                 </View>
             </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("AddBusinesses")}
+            >
+                <View style={styles.arrow}>
+                    <Text style={styles.buttonText}>
+                        Add a Business
+                    </Text>
+                    <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
+                </View>
+            </TouchableOpacity>
+
         </SafeAreaView>
+        </ScrollView>
     );
 }
 

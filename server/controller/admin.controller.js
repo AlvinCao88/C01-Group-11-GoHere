@@ -21,12 +21,16 @@ async function getUser(email) {
 
 export async function registerUser(req, res) {
   try {
-    const { email, password } = req.body;
+    const { email, password, registrationId } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !registrationId) {
       return res
         .status(400)
-        .json({ error: "Email and password both needed to register." });
+        .json({ error: "Email, Password, and Registration Id both needed to register." });
+    }
+
+    if(registrationId !== "super secret 123"){
+      return res.status(401).json({error: "Registration Id invalid."});
     }
 
     if (!validator.validate(email)) {
@@ -335,6 +339,31 @@ export async function verifyUserReport(req, res) {
   } catch (e) {
     console.error("Error in verifyUserReport:", e);
     res.status(500).json({ error: `${e.message || e}` });
+  }
+}
+
+export async function removeSingleReport(req, res) {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: "Invalid ID." });
+    }
+
+    const userReportCollection = db.instance.collection(
+      db.collections.USER_REPORT,
+    );
+    const data = await userReportCollection.deleteOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ error: "Unable to find request with given ID." });
+    }
+    res.json({ response: `Deleted Business Request with id: ${id}` });
+  } catch (e) {
+    res.status(500).json({ error: `${e}` });
   }
 }
 

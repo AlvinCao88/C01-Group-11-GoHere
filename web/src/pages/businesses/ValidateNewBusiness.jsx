@@ -82,6 +82,8 @@ const ValidateNewBusiness = () => {
   }
 
   return (
+    <div className="d-flex justify-content-center">
+
     <Stack gap={5} className="m-5 all-container">
       <div className="position-relative p-5 border border-5 border-primary rounded-5">
         <p className="request-id bg-primary text-white">
@@ -138,7 +140,7 @@ const ValidateNewBusiness = () => {
             ref={fullAddressRef}
           />
         </Form.Group>
-        <Button className="text-white" type="submit">
+        <Button className="text-white" variant="success" type="submit">
           {loading ? <Spinner size="sm" /> : "Submit"}
         </Button>
         {isError && (
@@ -148,7 +150,10 @@ const ValidateNewBusiness = () => {
         )}
       </Form>
     </Stack>
+    </div>
+
   );
+  
 };
 
 export default ValidateNewBusiness;

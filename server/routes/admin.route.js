@@ -14,6 +14,7 @@ import {
   verifyUserReport,
   getAllUserReports,
   getSingleReport,
+  removeSingleReport,
 } from "../controller/admin.controller.js";
 
 const router = Router();
@@ -26,13 +27,6 @@ router.get("/isAdmin", verifyToken, (req, res) => {
   res.json({ response: "Valid User" });
 });
 
-router.get("/testRestrictedGetRequest", verifyToken, async (req, res) => {
-  try {
-    res.status(200).json({ response: "This is a super secret message." });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 /**
  * Returns a single washroom request from the database.
@@ -60,7 +54,7 @@ router.post(
 );
 
 /**
- * Returns a list of washroom requests from the database. TODO: Pagination
+ * Returns a list of washroom requests from the database.
  */
 router.get(
   "/addWashroom/getManyRequests",
@@ -71,7 +65,7 @@ router.get(
 /**
  *  Removes a washroom from the ADD_BUSINESS_REQUESTS collection
  */
-router.delete("/removeWashroom/:id");
+router.delete("/removeWashroom/:id", removeSingleWashroomRequest);
 
 /**
  * Returns a single business from the database.
@@ -113,8 +107,9 @@ router.get(
  */
 router.delete("/removeBusiness/:id", verifyToken, removeSingleBusinessRequest);
 
-router.get('/getReports/:id', verifyToken, getSingleReport);
-router.get('/getAllReports', verifyToken, getAllUserReports);
-router.put('/verifyReports/:id', verifyToken, verifyUserReport);
+router.delete("/userReport/remove/:id",verifyToken, removeSingleReport);
+router.get('/userReport/get/:id', verifyToken, getSingleReport);
+router.get('/userReport/getAll', verifyToken, getAllUserReports);
+router.put('/userReport/validateRequest/:id', verifyToken, verifyUserReport);
 
 export default router;

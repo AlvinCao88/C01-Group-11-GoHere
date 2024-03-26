@@ -14,7 +14,7 @@ const VerifyUserReport = () => {
   useEffect(() => {
     async function fetchUserReport() {
       try {
-        const res = await fetch(`/api/v1/admin/getReports/${id}`, {
+        const res = await fetch(`/api/v1/admin/userReport/get/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const VerifyUserReport = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`/api/v1/admin/verifyReports/${id}`, {
+      const res = await fetch(`/api/v1/admin/userReport/validateRequest/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -89,6 +89,7 @@ const VerifyUserReport = () => {
   }
 
   return (
+    <div className="d-flex justify-content-center">
     <Stack gap={5} className="m-5 all-container">
       <div className="position-relative p-5 border border-5 border-primary rounded-5">
         <p className="request-id bg-primary text-white">
@@ -206,8 +207,8 @@ const VerifyUserReport = () => {
           />
         </Form.Group>
 
-        <Button className="text-white" type="submit">
-          {loading ? <Spinner size="sm" /> : "Verify"}
+        <Button className="text-white" variant="success" type="submit">
+          {loading ? <Spinner size="sm" /> : "Validate"}
         </Button>
 
         {isError && (
@@ -217,6 +218,7 @@ const VerifyUserReport = () => {
         )}
       </Form>
     </Stack>
+    </div>
   );
 };
 

@@ -18,6 +18,7 @@ import SettingScreen from "./src/screens/SettingScreen";
 import { NavigationStateProvider } from "./src/components/NavigationStateContext"
 
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
+import AddBusinessScreen from "./src/screens/AddBusinessScreen";
 import MapScreen from "./src/screens/MapScreen";
 
 
@@ -117,6 +118,7 @@ function SettingStack() {
     <Stack.Navigator initialRouteName="SettingsPage" screenOptions={{headerShown: false}}>
       <Stack.Screen name="SettingsPage" component={SettingScreen} />
       <Stack.Screen name="AddWashrooms" component={AddWashroomScreen} />
+      <Stack.Screen name="AddBusinesses" component={AddBusinessScreen} />
     </Stack.Navigator>
   )
 }
