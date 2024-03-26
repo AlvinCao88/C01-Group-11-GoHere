@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Modal, Container, Row } from "react-bootstrap";
 import "./UserReportList.css";
 import { Link } from "react-router-dom";
 
 const NewUserReports = () => {
   const [userReports, setUserReports] = useState([]);
+  const [deleteId, setDeleteId] = useState("");
+
 
   useEffect(() => {
     async function getUserReports() {
       try {
-        const res = await fetch("/api/v1/admin/getAllReports", {
+        const res = await fetch("/api/v1/admin/userReport/getAll", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,

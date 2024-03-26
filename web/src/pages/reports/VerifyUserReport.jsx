@@ -14,7 +14,7 @@ const VerifyUserReport = () => {
   useEffect(() => {
     async function fetchUserReport() {
       try {
-        const res = await fetch(`/api/v1/admin/getReports/${id}`, {
+        const res = await fetch(`/api/v1/admin/userReport/get/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

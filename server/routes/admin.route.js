@@ -14,6 +14,7 @@ import {
   verifyUserReport,
   getAllUserReports,
   getSingleReport,
+  removeSingleReport,
 } from "../controller/admin.controller.js";
 
 const router = Router();
@@ -53,7 +54,7 @@ router.post(
 );
 
 /**
- * Returns a list of washroom requests from the database. TODO: Pagination
+ * Returns a list of washroom requests from the database.
  */
 router.get(
   "/addWashroom/getManyRequests",
@@ -105,8 +106,10 @@ router.get(
  *  Removes a business from the ADD_BUSINESS_REQUESTS collection
  */
 router.delete("/removeBusiness/:id", verifyToken, removeSingleBusinessRequest);
-router.get('/getReports/:id', verifyToken, getSingleReport);
-router.get('/getAllReports', verifyToken, getAllUserReports);
-router.put('/verifyReports/:id', verifyToken, verifyUserReport);
+
+router.delete("/userReport/remove",verifyToken, removeSingleReport);
+router.get('/userReport/get/:id', verifyToken, getSingleReport);
+router.get('/userReport/getAll', verifyToken, getAllUserReports);
+router.put('/userReport/validateRequest/:id', verifyToken, verifyUserReport);
 
 export default router;
