@@ -1,17 +1,18 @@
-import React, {useState, useEffect, useRef, useMemo, useCallback} from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  Pressable,
-  TouchableOpacity, 
-  ActivityIndicator, 
-  Linking, 
-  Alert, } from 'react-native';
-import {   BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { useIsFocused } from '@react-navigation/native';
-import { useNavigationState } from '../components/NavigationStateContext';
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { useNavigationState } from '../components/NavigationStateContext';
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const WashroomInfo = ( {route, navigation}) => {
   const isFocused = useIsFocused();
@@ -21,25 +22,31 @@ const WashroomInfo = ( {route, navigation}) => {
     setIsWashroomInfoFocused(isFocused);
   }, [isFocused, setIsWashroomInfoFocused]);
   
-  const {id} = route.params;
+  const {id, sheetRef, setCenter} = route.params;
   const [washroom, setWashroom] = useState(null);
   const [loading, setLoading] = useState(true);
   const [inBookmarks, setInBookmarks] = useState(true); // check if washroom already in bookmarks
 
-  const sheetRef = useRef(null);
-  // variables
-  const snapPoints = useMemo(() => [ '30%', '90%'], []);
-  //callback 
+  useEffect(() => {
+    sheetRef.current.expand()
+  }, [])
+
   
   useEffect(() => {
     const getWashroom = async () => {
       try {
-        const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query//washrooms/${id}`);
+        const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms/${id}`);
         if (!response.ok) {
-          // console.log("Server failed:", response.status);
+          console.log("Server failed:", response.status);
         } else {
           const data = await response.json();
           setWashroom(data.response);
+          setCenter({
+            latitude: data.response.latitude,
+            longitude: data.response.longitude,
+            longitudeDelta: 0.005,
+            latitudeDelta: 0.005,
+          })
           // console.log(data);
         }
       } catch (error) {
@@ -64,7 +71,7 @@ const WashroomInfo = ( {route, navigation}) => {
   
     getWashroom();
     checkInBookmarks();
-  }, []);
+  }, [id]);
 
 const handleWebsitePress = useCallback(async () => {
   const url = washroom?.contact?.website;
@@ -169,10 +176,12 @@ const handleCallPress = useCallback(async () => {
                   <View >
                     {inBookmarks ?
                     <TouchableOpacity style={styles.saveButton} onPress={() => handleUnsaveWashroom(id)}>
+                      <MaterialIcons name="bookmark" size={24} color={"red"} />
                       <Text style={styles.saveText}>Unsave</Text>
                     </TouchableOpacity>
                       :
                     <TouchableOpacity style={styles.saveButton} onPress={() => handleSaveWashroom(washroom)}>
+                      <MaterialIcons name="bookmark-outline" size={24} color={"red"} />
                       <Text style={styles.saveText}>Save</Text>
                     </TouchableOpacity>
                     }
@@ -258,9 +267,11 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     borderColor: '#efefef',
     borderWidth: 1,
-    padding:15,
-    width: 90,
+    padding: 10,
+    width: 100,
+    flexDirection: "row",
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 10,
   },
   saveText:{
