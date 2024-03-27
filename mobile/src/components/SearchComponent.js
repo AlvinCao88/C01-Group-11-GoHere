@@ -1,12 +1,18 @@
-import { View, TouchableOpacity, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  Text,
+} from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 
-const SearchComponent = ({ navigation, text, onChangeText, handleTextChange }) => {
+const SearchComponent = ({ navigation }) => {
   const route = useRoute();
 
   const handleNavigate = () => {
-    console.log(navigation)
+    console.log(navigation);
     if (route.name === "WashroomBookmarks") {
       navigation.goBack();
     } else {
@@ -16,14 +22,12 @@ const SearchComponent = ({ navigation, text, onChangeText, handleTextChange }) =
 
   return (
     <View style={styles.search}>
-      <TextInput
+      <TouchableOpacity
         style={styles.input}
-        placeholder="Search for a place or address"
-        onChangeText={onChangeText}
-        value={text}
         onPressIn={() => navigation.navigate("WashroomSearch")}
-        onSubmitEditing={() => handleTextChange(text)}
-      />
+      >
+        <Text>Search for place or address...</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.saved} onPress={handleNavigate}>
         <MaterialIcons name="bookmark-outline" size={24} color={"#DA5C59"} />
       </TouchableOpacity>

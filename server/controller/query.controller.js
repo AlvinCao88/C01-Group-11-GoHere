@@ -96,3 +96,22 @@ export async function findClosestWashroomsController(req, res) {
 // module.exports = {
 //   findClosestWashroomsController,
 // };
+
+export async function getSearchWashroom(req, res) {
+  const { query } = req.body;
+  try {
+    const washrooms = await washroomCollection.find({
+      $or: [
+        { name: { $regex: query, $options: "i" } }, 
+        { fullAddress: { $regex: query, $options: "i" } }, 
+      ],
+    }).toArray();
+    if (washrooms.length === 0) {
+      return res.status(404).json({ error: "No washrooms found matching the text." });
+    }
+    res.json({ response: washrooms });
+  } catch (error) {
+    console.error("Error searching washrooms:", error);
+    res.status(500).json({ error: "Server Error" });
+  }
+}

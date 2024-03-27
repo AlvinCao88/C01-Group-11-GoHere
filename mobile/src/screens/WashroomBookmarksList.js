@@ -55,11 +55,6 @@ const WashroomBookmarksList = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.fullSize}>
-        <SearchComponent
-          navigation={navigation}
-          text={""}
-          onChangeText={() => {}}
-        />
         <View style={styles.title}>
           <Text style={styles.text}>SAVED WASHROOMS</Text>
           <TouchableOpacity
@@ -109,6 +104,7 @@ const WashroomBookmarksList = ({ navigation }) => {
 const styles = StyleSheet.create({
   fullSize: {
     flex: 1,
+    backgroundColor:'white',
   },
   title: {
     alignItems: "left",
