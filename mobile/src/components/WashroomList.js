@@ -21,7 +21,7 @@ import WashroomItemComponent from "./WashroomItemComponent";
 const WashroomList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [washrooms, setWashrooms] = useState([]);
-
+  
   useEffect(() => {
     const getWashrooms = async () => {
       try {
@@ -69,7 +69,7 @@ const WashroomList = ({ navigation }) => {
         <View style={styles.washroomNearby}>
           <Text style={styles.text}>WASHROOMS NEARBY</Text>
         </View>
-        <BottomSheetScrollView style={styles.test}>
+        <BottomSheetScrollView style={styles.contentContainer}>
           {/* <View style={styles.contentContainer}> */}
           {loading ? (
             <ActivityIndicator color={"red"} size="large" />
@@ -97,14 +97,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    padding: 24,
-    justifyContent: "center",
-    alignContent: "center",
-    alignItems: "center",
     backgroundColor: "white",
   },
   washroomNearby: {
-    // flex: 1,
     alignItems: "left",
     backgroundColor: "white",
     borderBottomWidth: 1,

@@ -30,6 +30,8 @@ const NavigateBottomSheets = forwardRef(function ({sheetRef, setCenter}, ref) {
             name="WashroomSearch" 
             component={WashroomSearch} 
             options={{headerShown:false}}
+            initialParams={{sheetRef: sheetRef}}
+
         />
 
         <Stack.Screen

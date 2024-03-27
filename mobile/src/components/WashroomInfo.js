@@ -26,7 +26,7 @@ const WashroomInfo = ( {route, navigation}) => {
   const [washroom, setWashroom] = useState(null);
   const [loading, setLoading] = useState(true);
   const [inBookmarks, setInBookmarks] = useState(true); // check if washroom already in bookmarks
-
+  // console.log(sheetRef);
   useEffect(() => {
     sheetRef.current.expand()
   }, [])
