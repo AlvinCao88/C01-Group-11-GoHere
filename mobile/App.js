@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import React, { useState, useRef } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -19,6 +20,7 @@ import { NavigationStateProvider } from "./src/components/NavigationStateContext
 import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 import AddBusinessScreen from "./src/screens/AddBusinessScreen";
 import MapScreen from "./src/screens/MapScreen";
+import ProfileScreen from "./src/screens/UserProfileScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -116,6 +118,7 @@ function SettingStack() {
   return (
     <Stack.Navigator initialRouteName="SettingsPage" screenOptions={{headerShown: false}}>
       <Stack.Screen name="SettingsPage" component={SettingScreen} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       <Stack.Screen name="AddWashrooms" component={AddWashroomScreen} />
       <Stack.Screen name="AddBusinesses" component={AddBusinessScreen} />
     </Stack.Navigator>
