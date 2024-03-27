@@ -19,62 +19,74 @@ import {
 } from "react-native";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import WashroomItemComponent from "./WashroomItemComponent";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const WashroomSearch = ({ route, navigation }) => {
-  const { sheetRef } = route.params;
+  //const { sheetRef } = route.params;
   const [text, onChangeText] = useState("");
   const [loading, setLoading] = useState(true);
   const [washrooms, setWashrooms] = useState([]);
-    const [searchTerms, setSearchTerms] = useState([]);
+  const [searchTerms, setSearchTerms] = useState([]);
 
-    const handleTextChange = async (textValue) => {
-      if (textValue.trim()) {
-        try {
-          const existingTerms = await AsyncStorage.getItem('searchTerms');
-          const terms = existingTerms ? JSON.parse(existingTerms) : [];
-          if (!terms.includes(textValue)) { 
-            const updatedTerms = [textValue, ...terms];
-            await AsyncStorage.setItem('searchTerms', JSON.stringify(updatedTerms));
-            setSearchTerms(updatedTerms);
-          }
-          onChangeText('');
-        } catch (e) {
-          console.log(e);
+  const handleTextChange = async (textValueInput) => {
+    const textValue = textValueInput.nativeEvent
+      ? textValueInput.nativeEvent.text
+      : textValueInput;
+    if (textValue.trim()) {
+      try {
+        const existingTerms = await AsyncStorage.getItem("searchTerms");
+        const terms = existingTerms ? JSON.parse(existingTerms) : [];
+        if (!terms.includes(textValue)) {
+          const updatedTerms = [textValue, ...terms];
+          await AsyncStorage.setItem(
+            "searchTerms",
+            JSON.stringify(updatedTerms)
+          );
+          setSearchTerms(updatedTerms);
         }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  const removeTerm = async (termToRemove) => {
+    const updatedTerms = searchTerms.filter((term) => term !== termToRemove);
+    setSearchTerms(updatedTerms);
+    await AsyncStorage.setItem("searchTerms", JSON.stringify(updatedTerms));
+  };
+  useEffect(() => {
+    const loadSearchTerms = async () => {
+      try {
+        const terms = await AsyncStorage.getItem("searchTerms");
+        if (terms !== null) {
+          setSearchTerms(JSON.parse(terms));
+        }
+      } catch (e) {
+        console.log(e);
       }
     };
-    const removeTerm = async (termToRemove) => {
-      const updatedTerms = searchTerms.filter(term => term !== termToRemove);
-      setSearchTerms(updatedTerms);
-      await AsyncStorage.setItem('searchTerms', JSON.stringify(updatedTerms));
-    };
-    useEffect(() => {
-      const loadSearchTerms = async () => {
-        try {
-          const terms = await AsyncStorage.getItem('searchTerms');
-          if(terms !== null) {
-            setSearchTerms(JSON.parse(terms));
-          }
-        } catch(e) {
-          console.log(e);
-        }
-      };
-    
-      loadSearchTerms();
-    }, []);
-    
-    
 
-
-
-  useEffect(() => {
-    sheetRef.current.expand();
+    loadSearchTerms();
   }, []);
+
+  // useEffect(() => {
+  //   sheetRef.current.expand();
+  // }, []);
 
   const handleInputTextChange = (event) => {
     onChangeText(event.nativeEvent.text);
   };
-  
+
+  const clearText = () => {
+    onChangeText("");
+  };
+
+  const onSearchTermPress = async (term) => {
+    onChangeText(term);
+  };
+
   useEffect(() => {
     const getSearchWashrooms = async () => {
       try {
@@ -85,7 +97,7 @@ const WashroomSearch = ({ route, navigation }) => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ query: text }), 
+            body: JSON.stringify({ query: text }),
           }
         );
         if (!response.ok) {
@@ -120,11 +132,12 @@ const WashroomSearch = ({ route, navigation }) => {
         <View style={styles.search}>
           <TextInput
             placeholder="Search for place or address"
-            text=""
             onChange={handleInputTextChange}
-            // onSubmitEditing={getSearchWashrooms}
+            onSubmitEditing={handleTextChange}
+            value={text}
             autoFocus={true}
             style={styles.input}
+            onPressIn={clearText}
           ></TextInput>
           <TouchableOpacity
             style={styles.backButton}
@@ -139,10 +152,25 @@ const WashroomSearch = ({ route, navigation }) => {
         </View>
 
         <BottomSheetScrollView>
-          {loading ? (
+          {text.length === 0 ? (
+            <View style={styles.searchContainer}>
+              {searchTerms.slice().map((term, index) => (
+                <View key={index} style={styles.searchTermContainer}>
+                  <TouchableOpacity onPress={() => onSearchTermPress(term)}>
+                    <Text style={styles.searchTerm}>{term}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => removeTerm(term)}>
+                    <Ionicons name="close-outline" size={24} color="black" />
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          ) : loading ? (
             <ActivityIndicator color={"red"} size="large" />
           ) : washrooms.length === 0 ? (
-            <Text style={styles.noWashroomText}>No washrooms found matching the search!</Text>
+            <Text style={styles.noWashroomText}>
+              No washrooms found matching the search!
+            </Text>
           ) : (
             washrooms.map(renderItem)
           )}
@@ -162,10 +190,10 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 10,
   },
-    mainContainer: {
-      flex: 1,
-      backgroundColor: 'white',
-    },
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
   container: {
     flex: 1,
     padding: 24,
@@ -223,7 +251,7 @@ const styles = StyleSheet.create({
     fontWeight: "300",
     color: "grey",
   },
-  noWashroomText:{
+  noWashroomText: {
     fontSize: 14,
     fontWeight: "500",
     textAlign: "center",
@@ -235,33 +263,30 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   backButton: {
-    marginTop: 0,
-    marginRight: 10,
     paddingVertical: 5,
     paddingHorizontal: 10,
     backgroundColor: "#ddd",
     borderRadius: 5,
-    alignSelf: "right",
   },
   backButtonText: {
     fontSize: 16,
   },
-    searchTerm: {
-      fontSize: 14,
-      color: '#000',
-    },
-    searchContainer: {
-      flex: 1,
-      backgroundColor: 'white',
-    },
-    searchTermContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginLeft: 25,
-      marginVertical: 10,
-      paddingRight: 25,
-    },
+  searchTerm: {
+    fontSize: 14,
+    color: "#000",
+  },
+  searchContainer: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  searchTermContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginLeft: 25,
+    marginVertical: 10,
+    paddingRight: 25,
+  },
 });
 
 export default WashroomSearch;

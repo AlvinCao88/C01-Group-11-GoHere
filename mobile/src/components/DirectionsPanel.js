@@ -4,14 +4,34 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
+  Dimensions, 
+  Linking,
 } from "react-native";
+import { getGlobalWashroom } from './GlobalWashroomContext';
 
 const DirectionsPanel = () => {
+  const { currentWashroom } = getGlobalWashroom();
+  const handleGetDirections = async () => {
+    if (!currentWashroom) return;
+    const appLink = `googlemaps://?daddr=${currentWashroom.latitude},${currentWashroom.longitude}&directionsmode=driving`;
+    const browserLink = `https://www.google.com/maps/dir/?api=1&destination=${currentWashroom.latitude},${currentWashroom.longitude}`;
+  
+    try {
+      const canOpenApp = await Linking.canOpenURL(appLink);
+      if (canOpenApp) {
+        await Linking.openURL(appLink);
+      } else {
+        await Linking.openURL(browserLink);
+      }
+    } catch (error) {
+      console.error("Failed to open URL:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.panelBackground}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleGetDirections}>
           <Text style={styles.buttonText}>Get Directions</Text>
         </TouchableOpacity>
       </View>

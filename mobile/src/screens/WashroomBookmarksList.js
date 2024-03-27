@@ -13,6 +13,7 @@ import WashroomItemComponent from "../components/WashroomItemComponent";
 import SearchComponent from "../components/SearchComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import BackButton from "../components/BackButton";
 
 const WashroomBookmarksList = ({ navigation }) => {
   const [bookmarks, setBookmarks] = useState([]);
@@ -44,7 +45,7 @@ const WashroomBookmarksList = ({ navigation }) => {
       // remove washroom from bookmarks
       await AsyncStorage.setItem(
         "bookmarks",
-        JSON.stringify(bookmarks.filter((e) => e._id !== id)),
+        JSON.stringify(bookmarks.filter((e) => e._id !== id))
       );
       setBookmarks(bookmarks.filter((e) => e._id !== id));
     } catch (e) {
@@ -57,13 +58,23 @@ const WashroomBookmarksList = ({ navigation }) => {
       <View style={styles.fullSize}>
         <View style={styles.title}>
           <Text style={styles.text}>SAVED WASHROOMS</Text>
-          <TouchableOpacity
-            style={styles.edit}
-            onPressIn={() => setEditMode(!editMode)}
-          >
-            {editMode ? <Text>Done</Text> : <Text>Edit</Text>}
-          </TouchableOpacity>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <TouchableOpacity
+              style={styles.editButton}
+              onPressIn={() => setEditMode(!editMode)}
+            >
+              <Text style={styles.buttonText}>
+                {editMode ? "Done" : "Edit"}
+              </Text>
+            </TouchableOpacity>
+            <BackButton
+              text="Back"
+              styleButton={styles.editButton}
+              styleText={styles.buttonText}
+            />
+          </View>
         </View>
+
         <BottomSheetScrollView style={styles.test}>
           {loading ? (
             <ActivityIndicator color={"red"} size="large" />
@@ -92,7 +103,7 @@ const WashroomBookmarksList = ({ navigation }) => {
                   navigation={navigation}
                   key={e._id}
                 />
-              ),
+              )
             )
           )}
         </BottomSheetScrollView>
@@ -104,23 +115,22 @@ const WashroomBookmarksList = ({ navigation }) => {
 const styles = StyleSheet.create({
   fullSize: {
     flex: 1,
-    backgroundColor:'white',
+    backgroundColor: "white",
   },
   title: {
-    alignItems: "left",
     backgroundColor: "white",
     borderBottomWidth: 1,
     borderBottomColor: "#D3D3D3",
-    borderBottomStyle: "solid",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    padding: 10,
   },
   text: {
     fontSize: 14,
-    color: "red",
+    color: "#DA5C59",
     fontWeight: "500",
-    padding: 10,
+    padding: 5,
   },
   edit: {
     padding: 10,
@@ -133,6 +143,33 @@ const styles = StyleSheet.create({
   },
   delete: {
     padding: 10,
+  },
+  backButton: {
+    marginTop: 20,
+    marginRight: 10,
+    marginLeft: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    backgroundColor: "#ddd",
+    borderRadius: 5,
+    alignSelf: "right",
+    alignItems: "center",
+    width: "18%",
+  },
+  backButtonText: {
+    fontSize: 16,
+  },
+  editButton: {
+    marginRight: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    backgroundColor: "#ddd",
+    borderRadius: 5,
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 16,
   },
 });
 
