@@ -21,6 +21,7 @@ import AddWashroomScreen from "./src/screens/AddWashroomScreen";
 import AddBusinessScreen from "./src/screens/AddBusinessScreen";
 import MapScreen from "./src/screens/MapScreen";
 import ProfileScreen from "./src/screens/UserProfileScreen";
+import { GlobalWashroom } from './src/components/GlobalWashroomContext';
 
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
+    <GlobalWashroom>
     <NavigationStateProvider>
     <PrismicProvider client={client}>
       <NavigationContainer>
@@ -85,6 +87,7 @@ export default function App() {
       </NavigationContainer>
     </PrismicProvider>
     </NavigationStateProvider>
+    </GlobalWashroom>
   );
 }
 

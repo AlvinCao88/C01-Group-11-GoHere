@@ -14,19 +14,21 @@ import {
 import { useNavigationState } from '../components/NavigationStateContext';
 import BackButton from '../components/BackButton'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { getGlobalWashroom } from '../components/GlobalWashroomContext';
 
 const WashroomInfo = ( {route, navigation}) => {
   const isFocused = useIsFocused();
   const { setIsWashroomInfoFocused } = useNavigationState();
+  const { setWashroom } = getGlobalWashroom();
 
   useEffect(() => {
     setIsWashroomInfoFocused(isFocused);
   }, [isFocused, setIsWashroomInfoFocused]);
   
   const {id, sheetRef, setCenter} = route.params;
-  const [washroom, setWashroom] = useState(null);
+  const [washroom, setWashroomLocal] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [inBookmarks, setInBookmarks] = useState(true); // check if washroom already in bookmarks
+  const [inBookmarks, setInBookmarks] = useState(true);
   // console.log(sheetRef);
   useEffect(() => {
     sheetRef.current.expand()
@@ -39,19 +41,19 @@ const WashroomInfo = ( {route, navigation}) => {
         const response = await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms/${id}`);
         if (!response.ok) {
           console.log("Server failed:", response.status);
-        } else {
-          const data = await response.json();
-          setWashroom(data.response);
-          setCenter({
-            latitude: data.response.latitude,
-            longitude: data.response.longitude,
-            longitudeDelta: 0.005,
-            latitudeDelta: 0.005,
-          })
-          // console.log(data);
+          return;
         }
+        const data = await response.json();
+        setWashroomLocal(data.response);
+        setWashroom(data.response);
+        setCenter({
+          latitude: data.response.latitude,
+          longitude: data.response.longitude,
+          longitudeDelta: 0.005,
+          latitudeDelta: 0.005,
+        });
       } catch (error) {
-        console.log("Fetch function failed:", error);
+        console.error("Fetch function failed:", error);
       } finally {
         setLoading(false);
       }
@@ -72,7 +74,7 @@ const WashroomInfo = ( {route, navigation}) => {
   
     getWashroom();
     checkInBookmarks();
-  }, [id]);
+  }, [id, setWashroom, setCenter]);
 
 const handleWebsitePress = useCallback(async () => {
   const url = washroom?.contact?.website;
