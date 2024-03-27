@@ -3,11 +3,12 @@ import { Linking, TouchableOpacity, SafeAreaView,
         View, Text, StyleSheet, Switch } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
-//TODO: add in navigation to other screens
-//TODO: test
-//NOTE: the profile button doesn't do anything since we don't actually have profiles, same with analytics, doesn't do anything
 export default function SettingScreen ({navigation}) {
     const [analytics, setAnalytics] = useState(false); // the state used to keep track of analytics on or off
+
+    //email for support with prefilled information
+    const supportEmailAddress = "gohere@crohnsandcolitis.ca";
+    const supportEmailSubject = "support%20request";
 
     return (
         <SafeAreaView style={styles.container}>
@@ -88,7 +89,7 @@ export default function SettingScreen ({navigation}) {
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.3}
-                onPress={() => Linking.openURL("mailto:gohere@crohnsandcolitis.ca?subject=support%20request")}
+                onPress={() => Linking.openURL(`mailto:${supportEmailAddress}?subject=${supportEmailSubject}`)}
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
