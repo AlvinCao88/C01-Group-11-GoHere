@@ -1,23 +1,29 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, StatusBar } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, StatusBar, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { useNavigation } from '@react-navigation/native';
+import BackButton from '../components/BackButton'
 
 import Checkout from '../components/Checkout';
 
 export default function DonationScreen() {
   const navigation = useNavigation();
+  const dismissKeyboard = () => Keyboard.dismiss();
 
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+    <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>Back</Text>
-      </TouchableOpacity>
-      <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY}>
-        <Checkout />
-      </StripeProvider>
-    </View>
+      <View style={styles.header}>
+        <BackButton text="Back" styleButton={styles.backButton} styleText={styles.backButtonText} onPress={() => navigation.goBack()} />
+      </View>
+      <View style={styles.content}>
+        <StripeProvider publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY}>
+          <Checkout />
+        </StripeProvider>
+      </View>
+    </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -25,17 +31,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    paddingVertical: 30,
+  },
+  header: {
+    width: '100%',
+    paddingHorizontal: 15,
+    paddingTop: 15,
+    alignItems: 'flex-start',
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   backButton: {
-    position: 'absolute',
-    top: 60,
-    left: 20,
-    padding: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    backgroundColor: '#ddd',
+    borderRadius: 5,
   },
   backButtonText: {
-    fontSize: 24,
-    color: '#000',
+    fontSize: 18,
   },
 });

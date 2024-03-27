@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import { useNavigationState } from '../components/NavigationStateContext';
+import BackButton from '../components/BackButton'
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const WashroomInfo = ( {route, navigation}) => {
@@ -163,15 +164,20 @@ const handleCallPress = useCallback(async () => {
     
   return (
     <BottomSheetScrollView style={styles.container}  >
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Text style={styles.backButtonText}>Back</Text>
-      </TouchableOpacity>
+
       {loading  ? (
             <ActivityIndicator color={"red"} size='large'/>
             ) : ( washroom ? 
               <View style={styles.container}>
                 <View style={styles.infoSection}>
-                  <Text style={styles.name}>{washroom.name}</Text> 
+                  <View style={styles.header}>
+                    <View style={styles.titleContainer}>
+                    <Text style={styles.name}>{washroom.name}</Text> 
+                    </View>
+                    <View style={styles.buttonContainer}>
+                      <BackButton text="Back" styleButton={styles.backButton} styleText={styles.backButtonText} />
+                    </View>
+                  </View>
                   <Text style={styles.washroomContent}>{washroom.fullAddress}</Text> 
                   <View >
                     {inBookmarks ?
@@ -255,7 +261,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     // padding:10,
-    marginBottom: 10
   },
   washroomContent: {
     fontSize: 12,
@@ -350,16 +355,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   backButton: {
-    marginTop: 20,
-    marginLeft: 20,
+    marginLeft: 10,
     paddingVertical: 5,
-    paddingHorizontal: 10, // Reduced padding
-    backgroundColor: '#ddd', // Example background color
+    paddingHorizontal: 10,
+    backgroundColor: '#ddd',
     borderRadius: 5,
-    alignSelf: 'flex-start', // Align to the left
+    alignSelf: 'flex-end',
   },
   backButtonText: {
     fontSize: 16,
+  },
+  header: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 15,
+    marginTop: 10,
+  },
+  titleContainer: {
+    width: '80%',
+  },
+  buttonContainer: {
+    justifyContent: 'center',
   },
 });
 

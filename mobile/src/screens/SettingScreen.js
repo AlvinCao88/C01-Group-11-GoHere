@@ -138,6 +138,7 @@ export default function SettingScreen ({navigation}) {
     );
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
