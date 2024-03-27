@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   backButtonText: {
     fontSize: 20,
-    color: '#FF6347', // red color
+    color: '#DA5C59', // red color
   },
   logoContainer: {
     marginBottom: 20,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#FF6347', // red color
+    color: '#DA5C59', // red color
   },
   amountButtonsContainer: {
     flexDirection: 'row',
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   amountButton: {
-    backgroundColor: '#FF6347',
+    backgroundColor: '#DA5C59',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   customAmountButton: {
-    backgroundColor: '#FF6347',
+    backgroundColor: '#DA5C59',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
