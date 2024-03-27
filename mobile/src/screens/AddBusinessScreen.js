@@ -68,8 +68,12 @@ const Popup = ({ visible, message, onHide }) => {
   );
 };
 
-export default function AddWashroomScreen({ navigation }) {
+export default function AddBusinessScreen({ navigation }) {
   const [address, setAddress] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [description, setDescription] = useState("");
   const [province, setProvince] = useState("");
@@ -85,7 +89,11 @@ export default function AddWashroomScreen({ navigation }) {
   const handleSubmit = async () => {
     if (isFormComplete) {
       const washroomRequest = {
+        businessName,
+        contactName,
+        phoneNumber,
         address,
+        email,
         city,
         province,
         description,
@@ -93,7 +101,7 @@ export default function AddWashroomScreen({ navigation }) {
       
       try {
         const response = await fetch(
-          `${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/add`,
+          `${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/addBusinessRequest`,
           {
             method: "POST",
             headers: {
@@ -104,7 +112,7 @@ export default function AddWashroomScreen({ navigation }) {
         );
 
         if (response.ok) {
-          console.log("Washroom request submitted successfully");
+          console.log("Business request submitted successfully");
           setPopupVisible(true);
         } else {
           const resData = await response.text();
@@ -122,6 +130,43 @@ export default function AddWashroomScreen({ navigation }) {
       <View style={styles.dividingLine}></View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.inputContainer}>
+        <Text style={styles.solidText}>Business Name</Text>
+          <TextInput
+            placeholder="Enter Business Name"
+            value={businessName}
+            onChangeText={setBusinessName}
+            style={styles.textInput}
+            placeholderTextColor="#888"
+          />
+          <Text style={styles.spaceText}> </Text>
+          <Text style={styles.solidText}>Contact Name</Text>
+          <TextInput
+            placeholder="Enter Contact Name"
+            value={contactName}
+            onChangeText={setContactName}
+            style={styles.textInput}
+            placeholderTextColor="#888"
+          />
+          <Text style={styles.spaceText}> </Text>
+          <Text style={styles.solidText}>Email</Text>
+          <TextInput
+            placeholder="Enter email"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.textInput}
+            placeholderTextColor="#888"
+          />
+          <Text style={styles.spaceText}> </Text>
+          <Text style={styles.solidText}>Phone Number</Text>
+          <TextInput
+            placeholder="Enter the address"
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}
+            keyboardType = 'numeric'
+            style={styles.textInput}
+            placeholderTextColor="#888"
+          />
+          <Text style={styles.spaceText}> </Text>
           <Text style={styles.solidText}>Address</Text>
           <TextInput
             placeholder="Enter the address"

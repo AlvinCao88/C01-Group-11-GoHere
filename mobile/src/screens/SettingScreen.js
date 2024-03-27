@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Linking, TouchableOpacity, SafeAreaView,
-        View, Text, StyleSheet, Switch } from 'react-native';
+        View, Text, StyleSheet, Switch, ScrollView} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
 export default function SettingScreen ({navigation}) {
@@ -11,6 +11,7 @@ export default function SettingScreen ({navigation}) {
     const supportEmailSubject = "support%20request";
 
     return (
+        <ScrollView>
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <Text style={[styles.titleText, { color: "#DA5C59" }]}>
@@ -21,6 +22,7 @@ export default function SettingScreen ({navigation}) {
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.3}
+                onPress={() => navigation.navigate("ProfileScreen")}
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
@@ -55,7 +57,7 @@ export default function SettingScreen ({navigation}) {
                         value={analytics}
                         onValueChange={() => setAnalytics(!analytics)}
                         trackColor={{false: "#767577", true: "#DA5C59"}}
-                        thumbColor={analytics ? "#3BBEFF" : "#BEBEBE"}
+                        thumbColor={analytics ? "white" : "#BEBEBE"}
                     ></Switch>
                 </View>
                 <Text style={styles.smallText}>
@@ -116,14 +118,29 @@ export default function SettingScreen ({navigation}) {
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
-                        Add a washroom
+                        Add a Washroom
                     </Text>
                     <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
                 </View>
             </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("AddBusinesses")}
+            >
+                <View style={styles.arrow}>
+                    <Text style={styles.buttonText}>
+                        Add a Business
+                    </Text>
+                    <Ionicons name="chevron-forward-outline" size={16}></Ionicons>
+                </View>
+            </TouchableOpacity>
+
         </SafeAreaView>
+        </ScrollView>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {

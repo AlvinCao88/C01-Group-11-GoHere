@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Form, Spinner, Stack } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import "./VerifyUserReport.css";
+import "./ValidateRequests.css";
 
-const VerifyUserReport = () => {
+const ValidateNewBusiness = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [requestDetails, setRequestDetails] = useState({});
@@ -13,9 +13,9 @@ const VerifyUserReport = () => {
   const fullAddressRef = useRef(null);
 
   useEffect(() => {
-    async function fetchUserReport() {
+    async function fetchBusinessRequest() {
       try {
-        const res = await fetch(`/api/v1/admin/getReports/${id}`, {
+        const res = await fetch(`/api/v1/admin/addBusiness/getRequest/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -25,7 +25,7 @@ const VerifyUserReport = () => {
 
         const data = await res.json();
         if (!data || !data.response) {
-          navigate("/verify/reports");
+          navigate("/validate/businesses");
         }
 
         console.log(data);
@@ -33,21 +33,21 @@ const VerifyUserReport = () => {
         setRequestDetails(data.response);
       } catch (e) {
         console.log(e);
-        navigate("/verify/reports");
+        navigate("/validate/businesses");
       }
     }
 
-    fetchUserReport();
+    fetchBusinessRequest();
   }, [id, navigate]);
 
-  async function verifyReports(e) {
+  async function validateBusiness(e) {
     setLoading(true);
 
     e.preventDefault();
 
     try {
       const res = await fetch(
-        `/api/v1/admin/verifyReports/${id}`,
+        `/api/v1/admin/addBusiness/validateRequest/${id}`,
         {
           method: "POST",
           headers: {
@@ -73,7 +73,7 @@ const VerifyUserReport = () => {
       setIsError(false);
       setLoading(false);
 
-      navigate("/verify/reports");
+      navigate("/validate/businesses");
     } catch (e) {
       console.log(e);
       setLoading(false);
@@ -82,11 +82,27 @@ const VerifyUserReport = () => {
   }
 
   return (
+    <div className="d-flex justify-content-center">
+
     <Stack gap={5} className="m-5 all-container">
       <div className="position-relative p-5 border border-5 border-primary rounded-5">
         <p className="request-id bg-primary text-white">
           Request ID: {requestDetails._id}
         </p>
+        <Form.Group className="mb-3">
+          <Form.Label>Business Name</Form.Label>
+          <Form.Control value={requestDetails.address || ""} disabled />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Contact Details</Form.Label>
+          <Form.Control
+            value={
+              `${requestDetails.contactName}, ${requestDetails.email}, ${requestDetails.phoneNumber}` ||
+              ""
+            }
+            disabled
+          />
+        </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Address</Form.Label>
           <Form.Control value={requestDetails.address || ""} disabled />
@@ -111,7 +127,7 @@ const VerifyUserReport = () => {
         </Form.Group>
       </div>
 
-      <Form onSubmit={verifyReports}>
+      <Form onSubmit={validateBusiness}>
         <Form.Group className="mb-3">
           <Form.Label>Name on Google Maps</Form.Label>
           <Form.Control type="text" placeholder="Tim Hortons" ref={nameRef} />
@@ -124,7 +140,7 @@ const VerifyUserReport = () => {
             ref={fullAddressRef}
           />
         </Form.Group>
-        <Button className="text-white" type="submit">
+        <Button className="text-white" variant="success" type="submit">
           {loading ? <Spinner size="sm" /> : "Submit"}
         </Button>
         {isError && (
@@ -134,7 +150,10 @@ const VerifyUserReport = () => {
         )}
       </Form>
     </Stack>
+    </div>
+
   );
+  
 };
 
-export default VerifyUserReport;
+export default ValidateNewBusiness;
