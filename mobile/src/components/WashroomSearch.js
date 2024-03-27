@@ -71,7 +71,7 @@ const WashroomSearch = ({ route, navigation }) => {
     sheetRef.current.expand();
   }, []);
 
-  const handleTextChange = (event) => {
+  const handleInputTextChange = (event) => {
     onChangeText(event.nativeEvent.text);
   };
   
@@ -121,7 +121,7 @@ const WashroomSearch = ({ route, navigation }) => {
           <TextInput
             placeholder="Search for place or address"
             text=""
-            onChange={handleTextChange}
+            onChange={handleInputTextChange}
             // onSubmitEditing={getSearchWashrooms}
             autoFocus={true}
             style={styles.input}
