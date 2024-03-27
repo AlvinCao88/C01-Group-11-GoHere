@@ -88,7 +88,7 @@ export default function SettingScreen ({navigation}) {
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.3}
-                onPress={() => Linking.openURL("mailto:gohere@crohnsandcolitis.ca?subject=support request")}
+                onPress={() => Linking.openURL("mailto:gohere@crohnsandcolitis.ca?subject=support%20request")}
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
