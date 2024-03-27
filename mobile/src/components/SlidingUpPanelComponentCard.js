@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 import SlidingUpPanel from "rn-sliding-up-panel";
 import { Linking } from "react-native";
 import { Animated } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SlidingUpPanelComponent = ({
   isEnglish,
@@ -21,6 +22,21 @@ const SlidingUpPanelComponent = ({
     );
   };
 
+  const [condition, setCondition] = useState('');
+
+  useEffect(() => {
+    const loadNames = async () => {
+      const storedCondition = await AsyncStorage.getItem('condition');
+      if (storedCondition) {
+        setCondition(storedCondition);
+      } else {
+        setCondition("Crohn's disease");
+      }
+    };
+
+    loadNames();
+  }, []);
+
   return (
     <SlidingUpPanel
       draggableRange={{ top: CARD_HEIGHT, bottom: 190 }}
@@ -32,14 +48,22 @@ const SlidingUpPanelComponent = ({
       <View style={styles.panel}>
         <View style={styles.panelHandle}></View>
         <Text style={styles.panelTitle}>
-          {isEnglish
-            ? textTranslations.crohnsDisease.en
-            : textTranslations.crohnsDisease.fr}
+        {isEnglish && condition == "Ulcerative colitis"
+                ? textTranslations.ulcerativeDisease.en
+                : !isEnglish && condition == "Ulcerative colitis"
+                ? textTranslations.ulcerativeDisease.fr
+                : !isEnglish && condition == "Crohn's disease"
+                ? textTranslations.crohnsDisease.fr
+                : textTranslations.crohnsDisease.en }
         </Text>
         <Text style={styles.panelContent}>
-          {isEnglish
-            ? textTranslations.bottomText.en
-            : textTranslations.bottomText.fr}
+        {isEnglish && condition == "Ulcerative colitis"
+                ? textTranslations.bottomTextColitis.en
+                : !isEnglish && condition == "Ulcerative colitis"
+                ? textTranslations.bottomTextColitis.fr
+                : !isEnglish && condition == "Crohn's disease"
+                ? textTranslations.bottomTextChohns.fr
+                : textTranslations.bottomTextChohns.en }
         </Text>
         <View style={styles.dividingLine}></View>
         <Text style={styles.spacingText}> </Text>

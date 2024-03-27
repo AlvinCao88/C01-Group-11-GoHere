@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Linking, TouchableOpacity, SafeAreaView,
         View, Text, StyleSheet, Switch, ScrollView} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
@@ -6,9 +6,9 @@ import {Ionicons} from '@expo/vector-icons';
 //TODO: add in navigation to other screens
 //TODO: test
 //NOTE: the profile button doesn't do anything since we don't actually have profiles, same with analytics, doesn't do anything
-export default function SettingScreen ({navigation}) {
-    const [analytics, setAnalytics] = useState(false); // the state used to keep track of analytics on or off
-
+export default function SettingScreen({ navigation }) {
+  const [analytics, setAnalytics] = useState(false);
+    
     return (
         <ScrollView>
         <SafeAreaView style={styles.container}>
@@ -21,6 +21,7 @@ export default function SettingScreen ({navigation}) {
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.3}
+                onPress={() => navigation.navigate("ProfileScreen")}
             >
                 <View style={styles.arrow}>
                     <Text style={styles.buttonText}>
@@ -55,7 +56,7 @@ export default function SettingScreen ({navigation}) {
                         value={analytics}
                         onValueChange={() => setAnalytics(!analytics)}
                         trackColor={{false: "#767577", true: "#DA5C59"}}
-                        thumbColor={analytics ? "#3BBEFF" : "#BEBEBE"}
+                        thumbColor={analytics ? "#BEBEBE" : "#BEBEBE"}
                     ></Switch>
                 </View>
                 <Text style={styles.smallText}>

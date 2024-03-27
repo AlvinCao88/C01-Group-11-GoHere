@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, Platform } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CardComponent = ({ isEnglish, textTranslations }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [condition, setCondition] = useState('');
+
+  useEffect(() => {
+    const loadNames = async () => {
+      const storedFirstName = await AsyncStorage.getItem('firstName');
+      const storedLastName = await AsyncStorage.getItem('lastName');
+      const storedCondition = await AsyncStorage.getItem('condition');
+      if (storedFirstName) setFirstName(storedFirstName);
+      if (storedLastName) setLastName(storedLastName);
+      if (storedCondition) {
+        setCondition(storedCondition);
+      } else {
+        setCondition("Crohn's disease");
+      }
+    };
+
+    loadNames();
+  }, []);
+
   return (
     <View style={styles.shadowContainer}>
       <View style={styles.cardMaster}>
@@ -23,11 +45,23 @@ const CardComponent = ({ isEnglish, textTranslations }) => {
             </Text>
             <View style={styles.subtitleBox}>
               <Text style={styles.cardSubtitle}>
-                {isEnglish
-                  ? textTranslations.crohnsDisease.en
-                  : textTranslations.crohnsDisease.fr}
+              {isEnglish && condition == "Ulcerative colitis"
+                ? textTranslations.ulcerativeDisease.en
+                : !isEnglish && condition == "Ulcerative colitis"
+                ? textTranslations.ulcerativeDisease.fr
+                : !isEnglish && condition == "Crohn's disease"
+                ? textTranslations.crohnsDisease.fr
+                : textTranslations.crohnsDisease.en }
               </Text>
             </View>
+
+            {(firstName || lastName) ? (
+  <Text style={styles.cardName}>
+    {`${firstName} ${lastName}`.trim()}
+  </Text>
+) : (
+  <Text style={styles.invisibleText}>Place Holder</Text>
+)}
 
             <Text style={styles.cardContent}>
               {isEnglish
@@ -108,10 +142,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 6,
-    alignSelf: "center",
+    alignSelf: "flex-start",
     marginVertical: 4,
     backgroundColor: "transparent",
-    marginLeft: -60,
     marginTop: 15,
   },
   cardSubtitle: {
@@ -123,7 +156,21 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     textAlign: "left",
-    marginTop: 40,
+    marginTop: 5,
+  },
+  cardName: {
+    color: "#fff",
+    fontSize: 16,
+    textAlign: "left",
+    marginTop: 20,
+    fontWeight: "bold",
+  },
+  invisibleText: {
+    color: "transparent", // Makes the text invisible
+    fontSize: 16,
+    textAlign: "left",
+    marginTop: 20,
+    fontWeight: "bold",
   },
 });
 

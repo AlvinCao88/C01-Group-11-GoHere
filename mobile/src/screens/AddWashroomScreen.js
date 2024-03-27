@@ -12,6 +12,7 @@ import {
   Dimensions,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
+import BackButton from '../components/BackButton';
 
 const screenHeight = Dimensions.get("window").height;
 const Popup = ({ visible, message, onHide }) => {
@@ -117,12 +118,7 @@ export default function AddWashroomScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.backButton}
-      >
-        <Text style={{ fontSize: 24, color: "#FF6347" }}>&lt;</Text>
-      </TouchableOpacity>
+      <BackButton text="Back" styleButton={styles.backButton} styleText={styles.backButtonText} />
       <View style={styles.dividingLine}></View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.inputContainer}>
@@ -230,7 +226,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
     fontSize: 20,
-    color: "#FF6347",
+    color: "#DA5C59",
   },
   scrollViewContent: {
     paddingBottom: 20,
@@ -262,7 +258,7 @@ const styles = StyleSheet.create({
   },
   solidText: {
     fontSize: 16,
-    color: "#FF6347",
+    color: "#DA5C59",
     marginLeft: 25,
     marginBottom: 5,
   },
@@ -274,7 +270,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderBottomWidth: 1,
-    borderColor: "#FF6347",
+    borderColor: "#DA5C59",
     padding: 5,
     marginBottom: 10,
     width: "90%",
@@ -294,7 +290,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#B0B0B0",
   },
   submitButtonActive: {
-    backgroundColor: "#FF6347",
+    backgroundColor: "#DA5C59",
   },
   submitButtonText: {
     color: "white",
@@ -302,7 +298,7 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     borderBottomWidth: 1,
-    borderColor: "#FF6347",
+    borderColor: "#DA5C59",
     paddingBottom: 5,
     marginBottom: 10,
     width: "90%",
@@ -321,6 +317,20 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     marginBottom: 10,
   },
+  backButton: {
+    marginTop: 0,
+    marginRight: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    backgroundColor: '#ddd',
+    borderRadius: 5,
+    alignSelf: 'right',
+    alignItems: 'center',
+    width: "18%"
+  },
+  backButtonText: {
+    fontSize: 16,
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
@@ -332,7 +342,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 4,
     color: "black",
-    paddingRight: 30, // to ensure the text is never behind the icon
+    paddingRight: 30,
     marginBottom: 10,
   },
   inputAndroid: {
@@ -343,7 +353,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 8,
     color: "black",
-    paddingRight: 30, // to ensure the text is never behind the icon
+    paddingRight: 30,
     marginBottom: 10,
   },
 });

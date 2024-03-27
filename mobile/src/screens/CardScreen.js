@@ -29,6 +29,10 @@ export default function CardScreen() {
       en: "Crohn's Disease",
       fr: "Maladie de Crohn",
     },
+    ulcerativeDisease: {
+      en: "Ulcerative colitis",
+      fr: "Colite ulcéreuse",
+    },
     helpText: {
       en: "Please help. I require urgent access to a washroom.",
       fr: "Veuillez m'aider. Je nécessite un accés urgent aux toilettes.",
@@ -41,9 +45,13 @@ export default function CardScreen() {
       en: "GoHere Washroom Access Program",
       fr: "Programme accès aux toilettes GoHere",
     },
-    bottomText: {
+    bottomTextChohns: {
       en: "I live with Crohn's, a medical condition requiring urgent use of the washroom. Thank you for your understanding and cooperation.",
       fr: "J'ai la maladie de Crohn, une maladie qui nécessite un accès urgent aux toilettes. Merci de votre compréhension et de votre coopération.",
+    },
+    bottomTextColitis: {
+      en: "I live with colitis, a medical condition requiring urgent use of the washroom. Thank you for your understanding and cooperation.",
+      fr: "Je vis avec la maladie colite ulcéreuse. Mon état fait en sorte que je dois utiliser vos toilettes d'urgence. Merci de votre compréhension et de votre soutien.",
     },
   };
 
