@@ -10,6 +10,7 @@ import SlidingUpPanel from "rn-sliding-up-panel";
 import { Linking } from "react-native";
 import { Animated } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from '@react-navigation/native';
 
 const SlidingUpPanelComponent = ({
   isEnglish,
@@ -24,18 +25,24 @@ const SlidingUpPanelComponent = ({
 
   const [condition, setCondition] = useState('');
 
-  useEffect(() => {
-    const loadNames = async () => {
-      const storedCondition = await AsyncStorage.getItem('condition');
-      if (storedCondition) {
-        setCondition(storedCondition);
-      } else {
-        setCondition("Crohn's disease");
-      }
-    };
+  const loadNames = async () => {
+    const storedCondition = await AsyncStorage.getItem('condition');
+    if (storedCondition) {
+      setCondition(storedCondition);
+    } else {
+      setCondition("Crohn's disease");
+    }
+  };
 
+  useEffect(() => {
     loadNames();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadNames();
+    }, [])
+  );
 
   return (
     <SlidingUpPanel

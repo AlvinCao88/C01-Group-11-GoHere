@@ -56,7 +56,7 @@ export default function SettingScreen({ navigation }) {
                         value={analytics}
                         onValueChange={() => setAnalytics(!analytics)}
                         trackColor={{false: "#767577", true: "#DA5C59"}}
-                        thumbColor={analytics ? "#BEBEBE" : "#BEBEBE"}
+                        thumbColor={analytics ? "white" : "#BEBEBE"}
                     ></Switch>
                 </View>
                 <Text style={styles.smallText}>
