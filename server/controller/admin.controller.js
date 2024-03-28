@@ -356,7 +356,7 @@ export async function removeSingleReport(req, res) {
       _id: new ObjectId(id),
     });
 
-    if (!data) {
+    if (data.deletedCount === 0) {
       return res
         .status(404)
         .json({ error: "Unable to find request with given ID." });
