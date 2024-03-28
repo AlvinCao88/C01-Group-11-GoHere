@@ -1,47 +1,26 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity, Text, StatusBar, Image, TextInput, Alert } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  StatusBar,
+  Image,
+  TextInput,
+  Alert,
+} from "react-native";
 import { useStripe } from "@stripe/stripe-react-native";
 
-const Checkout = () => {
-  const [amount, setAmount] = useState("1");
+const Checkout = ({ navigation }) => {
   const stripe = useStripe();
-  const [customAmount, setCustomAmount] = useState('');
-  const [placeholderText, setPlaceholderText] = useState('Custom Amount');
+  const [customAmount, setCustomAmount] = useState("");
+  const [placeholderText, setPlaceholderText] = useState("Custom Amount");
 
   const handleCustomAmountChange = (text) => {
     setCustomAmount(text);
   };
 
-  const handleDonate = (amount) => {
-    if (amount <= 0) {
-      Alert.alert('Invalid Amount', 'Please enter a valid donation amount.');
-      return;
-    }
-
-    Alert.alert(
-      'Confirm Donation',
-      `Are you sure you want to donate $${amount}?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Donate',
-          onPress: () => {
-            // Handle donation logic here
-            console.log('Donation amount:', amount);
-            setCustomAmount('');
-            setPlaceholderText(`$${amount}`);
-          },
-        },
-      ],
-      { cancelable: false }
-    );
-  };
-
-
-  const donate = async () => {
+  const donate = async (amount) => {
     try {
       const finalAmount = parseFloat(amount).toFixed(2); //limit to 2 decimal places
       if (finalAmount <= 0) {
@@ -85,37 +64,53 @@ const Checkout = () => {
         return Alert.alert(presentSheet.error.message);
       }
 
-            // letting the user know it was successful
-            Alert.alert("Thank you for the donation.");
+      // letting the user know it was successful
+      Alert.alert("Thank you for the donation.");
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Payment failed.");
+    }
+  };
 
-        } catch (err) {
-            console.error(err);
-            Alert.alert("Payment failed.");
-        }
-    };
-    
-    return (
-      <View>
+  return (
+    <View>
       <StatusBar style="light" />
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>Back</Text>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
       </TouchableOpacity>
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/IMG_2348.jpg')} // Assuming you have a logo image
+          source={require("../../assets/IMG_2348.jpg")} // Assuming you have a logo image
           style={styles.logo}
           resizeMode="contain"
         />
       </View>
       <Text style={styles.heading}>Support Our Cause</Text>
       <View style={styles.amountButtonsContainer}>
-        <TouchableOpacity style={styles.amountButton} onPress={() => handleDonate(1)}>
+        <TouchableOpacity
+          style={styles.amountButton}
+          onPress={() => {
+            donate("1");
+          }}
+        >
           <Text style={styles.amountButtonText}>$1</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.amountButton} onPress={() => handleDonate(5)}>
+        <TouchableOpacity
+          style={styles.amountButton}
+          onPress={() => {
+            donate("5");
+          }}
+        >
           <Text style={styles.amountButtonText}>$5</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.amountButton} onPress={() => handleDonate(20)}>
+        <TouchableOpacity
+          style={styles.amountButton}
+          onPress={() => {
+            donate("20");
+          }}
+        >
           <Text style={styles.amountButtonText}>$20</Text>
         </TouchableOpacity>
       </View>
@@ -129,24 +124,26 @@ const Checkout = () => {
         />
         <TouchableOpacity
           style={styles.customAmountButton}
-          onPress={() => handleDonate(parseFloat(customAmount))}
+          onPress={() => {
+            donate(customAmount);
+          }}
         >
           <Text style={styles.customAmountButtonText}>Donate</Text>
         </TouchableOpacity>
       </View>
-      </View>
-    )
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff', // white background
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff", // white background
+    alignItems: "center",
+    justifyContent: "center",
   },
   backButton: {
-    position: 'absolute',
+    position: "absolute",
     top: 60,
     left: 20,
     padding: 10,
@@ -156,6 +153,7 @@ const styles = StyleSheet.create({
     color: '#DA5C59', // red color
   },
   logoContainer: {
+    alignItems: "center",
     marginBottom: 20,
   },
   logo: {
@@ -164,13 +162,13 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
     color: '#DA5C59', // red color
   },
   amountButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginBottom: 20,
   },
   amountButton: {
@@ -181,16 +179,16 @@ const styles = StyleSheet.create({
   },
   amountButtonText: {
     fontSize: 16,
-    color: '#fff',
+    color: "#fff",
   },
   customAmountContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   customAmountInput: {
     flex: 1,
     height: 40,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 10,
@@ -204,7 +202,7 @@ const styles = StyleSheet.create({
   },
   customAmountButtonText: {
     fontSize: 16,
-    color: '#fff',
+    color: "#fff",
   },
 });
 export default Checkout;

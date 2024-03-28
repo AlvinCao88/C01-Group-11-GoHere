@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 function LoginPage({ mode }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [registrationId, setRegistrationId] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = (e) => {
@@ -53,9 +54,10 @@ function LoginPage({ mode }) {
         body: JSON.stringify({
           email: email,
           password: password,
+          registrationId: registrationId,
         }),
       });
-
+      
       const responseBody = await response.json();
 
       if (response.ok) {
@@ -101,10 +103,24 @@ function LoginPage({ mode }) {
               placeholder="Password"
             />
           </Form.Group>
+  
+          
+      { mode === "signup" ?  <Form.Group className="mb-3" >
+            <Form.Label>Registration Id</Form.Label>
+            <Form.Control
+              onChange={(e) => {
+                setRegistrationId(e.target.value);
+              }}
+              type="Id"
+              placeholder="Id"
+            />
+          </Form.Group> : <></>}
+
           <Button
             onClick={(e) => {
               handleSubmit(e);
             }}
+            className="text-white"
             variant="primary"
             type="submit"
           >
