@@ -23,7 +23,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const WashroomSearch = ({ route, navigation }) => {
-  //const { sheetRef } = route.params;
+  const { sheetRef } = route.params;
   const [text, onChangeText] = useState("");
   const [loading, setLoading] = useState(true);
   const [washrooms, setWashrooms] = useState([]);
@@ -71,9 +71,9 @@ const WashroomSearch = ({ route, navigation }) => {
     loadSearchTerms();
   }, []);
 
-  // useEffect(() => {
-  //   sheetRef.current.expand();
-  // }, []);
+  useEffect(() => {
+    sheetRef.current.expand();
+  }, []);
 
   const handleInputTextChange = (event) => {
     onChangeText(event.nativeEvent.text);

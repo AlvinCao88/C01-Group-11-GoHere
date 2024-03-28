@@ -76,6 +76,7 @@ export default function Map({ center,  expandFn }) {
     <MapView
       style={styles.map}
       showsUserLocation={true}
+      showsMyLocationButton={true}
       region={{
         latitude: center.latitude, //change this to center.latittude
         longitude: center.longitude, //change this to center.longitutde
@@ -84,6 +85,10 @@ export default function Map({ center,  expandFn }) {
       }}
       onRegionChangeComplete={onRegionChangeComplete}
       onPress={Keyboard.dismiss}
+      mapPadding={{
+        top: 40,
+        bottom: 10,
+      }}
     >
       {/* Render clustered markers */}
       {loading

@@ -18,7 +18,7 @@ const TierList = ({ navigation }) => {
   const renderSponsors = (tierLevel) => {
     return (
       <ScrollView 
-        showsHorizontalScrollIndicator={true}
+        showsHorizontalScrollIndicator={false}
         horizontal={true} 
         style={styles.container} 
         snapToAlignment="start"
@@ -123,14 +123,15 @@ const styles = StyleSheet.create({
     color: "#FFD700",
     paddingTop: 30,
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: 32,
     alignSelf: 'center',
+    borderColor: '#FFD700',
   },
   silverSponsorText: {
     color: "#C0C0C0",
     paddingTop: 0,
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: 32,
     alignSelf: 'center',
   },
   bronzeContainer: {
@@ -145,15 +146,15 @@ const styles = StyleSheet.create({
     color: "#CD7F32",
     paddingTop: 0,
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: 32,
     alignSelf: 'center',
   },
   imageContainer: {
-    width: 420, 
+    padding: 10,
+    width: 450, 
     height: 220, 
     overflow: "hidden",
     marginRight: 5, 
-    // borderWidth: 3,
   },
   image: {
     flex: 1,
