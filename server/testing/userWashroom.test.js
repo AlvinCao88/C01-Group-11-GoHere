@@ -1,10 +1,50 @@
 const fetch = require("node-fetch");
 const SERVER_URL = "http://localhost:8000";
 const { getToken } = require("./utils");
+const { MongoClient } = require("mongodb");
+
+let client;
+let db;
+let token;
+
+async function connectToDatabase() {
+    if (db) {
+        return db;
+    }
+
+    const connectionString = "mongodb://localhost:27017";
+    client = new MongoClient(connectionString);
+
+    try {
+        await client.connect();
+        db = client.db("GoHere");
+        return db;
+    } catch (error) {
+        console.error("Could not connect to MongoDB", error);
+        throw error;
+    }
+}
+
+beforeAll(async() => {
+    token = await getToken();
+});
+
+afterEach(async () => {
+    const db = await connectToDatabase();
+    const collection = db.collection(collections.ADD_WASHROOM_REQUESTS);
+    await collection.deleteMany({}); //fresh clean db for each test
+});
+
+afterAll(async () => {
+    if (client) await client.close();
+});
+
+const collections = {
+    ADD_WASHROOM_REQUESTS: "AddWashroomRequests",
+};
+
 
 test("/admin/addWashroom/getRequest/:id - Give invalid request ID", async () => {
-  const token = await getToken();
-
   const res = await fetch(
     `${SERVER_URL}/admin/addWashroom/getRequest/invalid-object-id`,
     {
@@ -22,14 +62,6 @@ test("/admin/addWashroom/getRequest/:id - Give invalid request ID", async () => 
 });
 
 test("/admin/addWashroom/getManyRequests - Get no requests", async () => {
-  const token = await getToken();
-
-  await fetch(`${SERVER_URL}/deleteAll`, {
-    method: "DELETE",
-    mode: "cors",
-    cache: "no-cache",
-  });
-
   const res = await fetch(`${SERVER_URL}/admin/addWashroom/getManyRequests`, {
     method: "GET",
     mode: "cors",
@@ -44,14 +76,6 @@ test("/admin/addWashroom/getManyRequests - Get no requests", async () => {
 });
 
 test("/admin/addWashroom/getManyRequests - Get 3 requests", async () => {
-  const token = await getToken();
-
-  await fetch(`${SERVER_URL}/deleteAll`, {
-    method: "DELETE",
-    mode: "cors",
-    cache: "no-cache",
-  });
-
   for (let i = 0; i < 3; i++) {
     await fetch(`${SERVER_URL}/user/request/addWashroomRequest`, {
       method: "POST",
@@ -80,8 +104,6 @@ test("/admin/addWashroom/getManyRequests - Get 3 requests", async () => {
 });
 
 test("/admin/addWashroom/valdateRequest/:id - Incorrect fields in validation", async () => {
-  const token = await getToken();
-
   const washroomRes = await fetch(
     `${SERVER_URL}/user/request/addWashroomRequest`,
     {
