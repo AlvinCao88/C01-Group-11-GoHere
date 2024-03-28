@@ -6,6 +6,7 @@ import validator from "email-validator";
 
 const userCollection = db.instance.collection(db.collections.ADMINS);
 
+
 async function createUser(email, password) {
   const hashedPassword = await bcrypt.hash(password, 10);
   await userCollection.insertOne({
