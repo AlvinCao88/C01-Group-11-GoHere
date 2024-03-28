@@ -1,14 +1,9 @@
 import { RichText } from "react-native-prismic-richtext";
 import { usePrismicDocumentByID } from "@prismicio/react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+
+import BackButton from "../components/BackButton";
 
 const DetailedNewsScreen = ({ route }) => {
   const { id } = route.params;
@@ -17,14 +12,22 @@ const DetailedNewsScreen = ({ route }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       {document && (
         <ScrollView style={styles.container}>
-          <RichText
-            richText={document.data.title}
-            defaultStyle={{
-              fontSize: 26,
-              fontWeight: "bold",
-              color: "#DA5C59",
-            }}
-          />
+          <View style={styles.title}>
+            <BackButton
+              text="Back"
+              styleButton={styles.editButton}
+              styleText={styles.buttonText}
+            />
+            <RichText
+              richText={document.data.title}
+              defaultStyle={{
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "#DA5C59",
+              }}
+            />
+
+          </View>
           <Text style={styles.date}>
             Date Published: {document.data.publication_data}
           </Text>
@@ -71,6 +74,22 @@ const styles = StyleSheet.create({
   bottomPadding: {
     height: 100,
   },
+  editButton: {
+    marginRight: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    backgroundColor: "#ddd",
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 16,
+  },
+  title: {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 20
+  }
 });
 
 export default DetailedNewsScreen;
