@@ -19,7 +19,6 @@ async function connectToDatabase() {
   try {
     await client.connect();
     db = client.db("GoHere");
-    console.log("Connected to MongoDB");
     return db;
   } catch (error) {
     console.error("Could not connect to MongoDB", error);
@@ -43,7 +42,6 @@ async function insertWashrooms(washrooms) {
     const result = await washroomCollection.insertMany(washrooms);
     return result.insertedIds;
   } else {
-    console.log("No washrooms to add.");
   }
 }
 
@@ -59,7 +57,6 @@ async function insertTestWashroom() {
 
   try {
     const result = await washroomCollection.insertOne(testWashroomData);
-    console.log(`A new washroom was added with the id ${result.insertedId}`);
     return result.insertedId;
   } catch (error) {
     console.error("Error inserting test washroom:", error);
