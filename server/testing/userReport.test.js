@@ -4,6 +4,7 @@ const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
 dotenv.config();
 const { v4: uuidv4 } = require("uuid");
+const { getToken } = require("./utils");
 
 
 // This test file will test backend for user reports
@@ -30,26 +31,7 @@ async function connectToDatabase() {
 }
 
 beforeAll(async() => {
-    const res = await fetch(`${SERVER_URL}/admin/registerUser`, {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: `${uuidv4()}@email.com`,
-          password: `${uuidv4()}`,
-          registrationId: "super secret 123",
-    })});
-
-    const resBody = await res.json();
-    if (res.ok) {
-        token = resBody.token;
-        console.log("token obtained");
-        return;
-    }
-    console.log("token not obtained");
+    token = getToken();
 });
 
 afterEach(async () => {
@@ -148,9 +130,11 @@ test("removing 1 issue, non proper Id", async () => {
 
     const res = await fetch(`${SERVER_URL}/admin/userReport/remove/${insertedId}`, {
         method: "DELETE",
+        mode: "cors",
+        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
         },
     })
 
@@ -163,9 +147,11 @@ test("get 1 issue, proper Id", async () => {
 
     const res = await fetch(`${SERVER_URL}/admin/userReport/get/${insertedId}`, {
         method: "GET",
+        mode: "cors",
+        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
         },
     })
 
@@ -178,9 +164,11 @@ test("get 1 issue, non proper Id", async () => {
 
     const res = await fetch(`${SERVER_URL}/admin/userReport/get/${insertedId}`, {
         method: "GET",
+        mode: "cors",
+        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
         },
     })
 
@@ -193,9 +181,11 @@ test("get all issue, 3 issue in db", async () => {
 
     const res = await fetch(`${SERVER_URL}/admin/userReport/getAll`, {
         method: "GET",
+        mode: "cors",
+        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
         },
     })
 
@@ -206,9 +196,11 @@ test("get all issue, 3 issue in db", async () => {
 test("get all issue, empty db", async () => {
     const res = await fetch(`${SERVER_URL}/admin/userReport/getAll`, {
         method: "GET",
+        mode: "cors",
+        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
         },
     })
 
