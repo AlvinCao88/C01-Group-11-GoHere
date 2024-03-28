@@ -6,7 +6,6 @@ import validator from "email-validator";
 
 const userCollection = db.instance.collection(db.collections.ADMINS);
 
-
 async function createUser(email, password) {
   const hashedPassword = await bcrypt.hash(password, 10);
   await userCollection.insertOne({
@@ -25,13 +24,13 @@ export async function registerUser(req, res) {
     const { email, password, registrationId } = req.body;
 
     if (!email || !password || !registrationId) {
-      return res
-        .status(400)
-        .json({ error: "Email, Password, and Registration Id both needed to register." });
+      return res.status(400).json({
+        error: "Email, Password, and Registration Id both needed to register.",
+      });
     }
 
-    if(registrationId !== "super secret 123"){
-      return res.status(401).json({error: "Registration Id invalid."});
+    if (registrationId !== "super secret 123") {
+      return res.status(401).json({ error: "Registration Id invalid." });
     }
 
     if (!validator.validate(email)) {

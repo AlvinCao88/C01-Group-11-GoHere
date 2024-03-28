@@ -24,9 +24,8 @@ router.post("/registerUser", registerUser);
 router.post("/loginUser", loginUser);
 
 router.get("/isAdmin", verifyToken, (req, res) => {
-  res.json({ response: "Valid User" });
+  res.status(200).json({ response: "Valid User" });
 });
-
 
 /**
  * Returns a single washroom request from the database.
@@ -107,9 +106,9 @@ router.get(
  */
 router.delete("/removeBusiness/:id", verifyToken, removeSingleBusinessRequest);
 
-router.delete("/userReport/remove/:id",verifyToken, removeSingleReport);
-router.get('/userReport/get/:id', verifyToken, getSingleReport);
-router.get('/userReport/getAll', verifyToken, getAllUserReports);
-router.put('/userReport/validateRequest/:id', verifyToken, verifyUserReport);
+router.delete("/userReport/remove/:id", verifyToken, removeSingleReport);
+router.get("/userReport/get/:id", verifyToken, getSingleReport);
+router.get("/userReport/getAll", verifyToken, getAllUserReports);
+router.put("/userReport/validateRequest/:id", verifyToken, verifyUserReport);
 
 export default router;

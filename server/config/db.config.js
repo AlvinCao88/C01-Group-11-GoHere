@@ -4,14 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 let connectionString;
-if (process.env.ENV === "Test"){
+if (process.env.ENV === "Test") {
   connectionString = "mongodb://mongodb:27017";
-}
-else if (process.env.ENV === "Docker")
+} else if (process.env.ENV === "Docker")
   connectionString = process.env.MONGODB_URL || "mongodb://mongodb:27017";
 else connectionString = process.env.MONGODB_URL || "mongodb://localhost:27017";
 
-console.log(connectionString)
+console.log(connectionString);
 
 const client = new MongoClient(connectionString);
 
@@ -34,6 +33,6 @@ export default {
     ADMINS: "Admins",
     BUSINESSES: "Businesses",
     ADD_BUSINESS_REQUESTS: "AddBusinessRequests",
-    USER_REPORT: "UserReport"
+    USER_REPORT: "UserReport",
   },
 };
