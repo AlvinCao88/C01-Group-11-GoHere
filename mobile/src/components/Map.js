@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View, Dimensions, Keyboard } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import useSupercluster from "use-supercluster";
+import { decode } from "@mapbox/polyline";
+import { getGlobalWashroom } from "./GlobalWashroomContext";
+import * as Location from "expo-location";
 
-export default function Map({ center,  expandFn }) {
+export default function Map({ center, expandFn }) {
+  const { currentWashroom } = getGlobalWashroom();
   const [loading, setLoading] = useState(true);
   // const mapRef = useRef(null);
   const [markers, setMarkers] = useState([]);
   const bounds = useRef(null);
   const [zoom, setZoom] = useState(12);
+  const [coords, setCoords] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`)
@@ -72,6 +77,46 @@ export default function Map({ center,  expandFn }) {
     zoom,
     options: { radius: 75, maxZoom: 20 },
   });
+
+  const getDirections = async (current, destinationLoc) => {
+    try {
+      let resp = await fetch(
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${current}&destination=${destinationLoc}&key=${process.env.EXPO_PUBLIC_GOOGLE_API}`
+      );
+      let respJson = await resp.json();
+      let points = decode(respJson.routes[0].overview_polyline.points);
+      let coords = points.map((point, index) => {
+        return {
+          latitude: point[0],
+          longitude: point[1],
+        };
+      });
+      return coords;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let location = await Location.getCurrentPositionAsync({});
+        if (currentWashroom != null) {
+          getDirections(
+            `${location.coords.latitude}, ${location.coords.longitude}`,
+            `${currentWashroom.latitude}, ${currentWashroom.longitude}`
+          )
+            .then((coords) => setCoords(coords))
+            .catch((err) => console.log("Something went wrong", err));
+        } else if (currentWashroom == null) {
+          setCoords([]);
+        }
+      } catch (error) {
+        console.error("Error getting current location:", error);
+      }
+    })();
+  }, [currentWashroom]);
+
   return (
     <MapView
       style={styles.map}
@@ -145,6 +190,9 @@ export default function Map({ center,  expandFn }) {
       {/*     image={require('../../assets/here.png')} */}
       {/**/}
       {/* /> */}
+      {coords.length > 0 && (
+        <Polyline coordinates={coords} strokeWidth={4} strokeColor="#DA5C59" />
+      )}
     </MapView>
   );
 }
