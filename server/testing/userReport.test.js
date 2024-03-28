@@ -10,7 +10,6 @@ const { getToken } = require("./utils");
 // This test file will test backend for user reports
 let client;
 let db;
-let token;
 
 async function connectToDatabase() {
     if (db) {
@@ -30,10 +29,6 @@ async function connectToDatabase() {
     }
 }
 
-beforeAll(async() => {
-    token = getToken();
-});
-
 afterEach(async () => {
     const db = await connectToDatabase();
     const washroomCollection = db.collection(collections.USER_REPORT);
@@ -41,6 +36,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
+    insertOneIssue();
     if (client) await client.close();
 });
   
@@ -111,13 +107,14 @@ async function insertThreeIssue() {
 }
 
 test("removing 1 issue, proper Id", async () => {
+    const token = await getToken();
     const insertedId = await insertOneIssue();
 
     const res = await fetch(`${SERVER_URL}/admin/userReport/remove/${insertedId}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `${token}`,
+            Authorization: `Bearer ${token}`,
         },
     })
 
@@ -126,12 +123,21 @@ test("removing 1 issue, proper Id", async () => {
 });
 
 test("removing 1 issue, non proper Id", async () => {
-    const insertedId = 0;
+    const token = await getToken();
+    const insertedId = await insertOneIssue();
+    
+    //replacing the first letter of the id to have a bad id
+    let badId = insertedId.toString();
+    const first = badId.charAt(0);
+    if (first === 'a') {
+        badId = badId.replace('a', 'b');
+    }
+    else {
+        badId = badId.replace(first, 'a');
+    }
 
-    const res = await fetch(`${SERVER_URL}/admin/userReport/remove/${insertedId}`, {
+    const res = await fetch(`${SERVER_URL}/admin/userReport/remove/${badId}`, {
         method: "DELETE",
-        mode: "cors",
-        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -143,12 +149,11 @@ test("removing 1 issue, non proper Id", async () => {
 });
 
 test("get 1 issue, proper Id", async () => {
-    const insertedId = insertOneIssue();
+    const token = await getToken();
+    const insertedId = await insertOneIssue();
 
     const res = await fetch(`${SERVER_URL}/admin/userReport/get/${insertedId}`, {
         method: "GET",
-        mode: "cors",
-        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -156,16 +161,26 @@ test("get 1 issue, proper Id", async () => {
     })
 
     const resBody = await res.json();
+    console.log(resBody);
     expect(res.status).toBe(200);
 });
 
 test("get 1 issue, non proper Id", async () => {
-    const insertedId = 0;
+    const token = await getToken();
+    const insertedId = await insertOneIssue();
 
-    const res = await fetch(`${SERVER_URL}/admin/userReport/get/${insertedId}`, {
+    //replacing the first letter of the id to have a bad id
+    let badId = insertedId.toString();
+    const first = badId.charAt(0);
+    if (first === 'a') {
+        badId = badId.replace('a', 'b');
+    }
+    else {
+        badId = badId.replace(first, 'a');
+    }
+
+    const res = await fetch(`${SERVER_URL}/admin/userReport/get/${badId}`, {
         method: "GET",
-        mode: "cors",
-        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -177,12 +192,11 @@ test("get 1 issue, non proper Id", async () => {
 });
 
 test("get all issue, 3 issue in db", async () => {
+    const token = await getToken();
     insertThreeIssue();
 
     const res = await fetch(`${SERVER_URL}/admin/userReport/getAll`, {
         method: "GET",
-        mode: "cors",
-        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -194,10 +208,9 @@ test("get all issue, 3 issue in db", async () => {
 });
 
 test("get all issue, empty db", async () => {
+    const token = await getToken();
     const res = await fetch(`${SERVER_URL}/admin/userReport/getAll`, {
         method: "GET",
-        mode: "cors",
-        cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
