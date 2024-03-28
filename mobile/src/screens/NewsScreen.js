@@ -1,5 +1,4 @@
 import {
-  Dimensions,
   Image,
   ScrollView,
   StyleSheet,
@@ -16,7 +15,7 @@ const NewsScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-      <Text style={styles.header}>News and Updates</Text>
+      <Text style={styles.header}>News and Update</Text>
       <ScrollView style={styles.container}>
         {results &&
           results.length !== 0 &&
@@ -26,7 +25,10 @@ const NewsScreen = ({ navigation }) => {
               style={styles.newsItem}
               onPress={() => navigation.navigate("Detailed News", { id: e.id })}
             >
-              <RichText richText={e.data.title} defaultStyle={styles.newsTitle} />
+              <RichText
+                richText={e.data.title}
+                defaultStyle={styles.newsTitle}
+              />
               <View style={styles.imageContainer}>
                 <Image
                   source={{ uri: e.data.image.url }}
@@ -49,13 +51,16 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingTop: 30,
     fontSize: 26,
     fontWeight: "bold",
     color: "#DA5C59",
   },
   newsItem: {
-    marginVertical: 20
+    marginVertical: 20,
+    borderRadius: 22,
+    borderWidth: 2 ,
+    borderColor:"grey",
   },
   imageContainer: {
     height: 200,
@@ -65,7 +70,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: "cover", 
+    resizeMode: "cover",
   },
   newsTitle: {
     borderTopLeftRadius: 20,
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
     fontWeight: "bold",
-    borderTopEndRadius: 200
+    borderTopEndRadius: 200,
   },
 });
 

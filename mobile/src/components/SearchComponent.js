@@ -1,9 +1,4 @@
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-} from "react-native";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useRoute } from "@react-navigation/native";
 

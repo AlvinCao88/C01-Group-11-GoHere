@@ -12,7 +12,7 @@ import {
   Dimensions,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
-import BackButton from '../components/BackButton';
+import BackButton from "../components/BackButton";
 
 const screenHeight = Dimensions.get("window").height;
 const Popup = ({ visible, message, onHide }) => {
@@ -98,7 +98,7 @@ export default function AddBusinessScreen({ navigation }) {
         province,
         description,
       };
-      
+
       try {
         const response = await fetch(
           `${process.env.EXPO_PUBLIC_SERVER_URL}/user/request/addBusinessRequest`,
@@ -108,11 +108,19 @@ export default function AddBusinessScreen({ navigation }) {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(washroomRequest),
-          },
+          }
         );
 
         if (response.ok) {
           console.log("Business request submitted successfully");
+          setAddress("");
+          setCity("");
+          setDescription("");
+          setProvince("");
+          setBusinessName("");
+          setContactName("");
+          setEmail("");
+          setPhoneNumber("");
           setPopupVisible(true);
         } else {
           const resData = await response.text();
@@ -126,11 +134,15 @@ export default function AddBusinessScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <BackButton text="Back" styleButton={styles.backButton} styleText={styles.backButtonText} />
+      <BackButton
+        text="Back"
+        styleButton={styles.backButton}
+        styleText={styles.backButtonText}
+      />
       <View style={styles.dividingLine}></View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.inputContainer}>
-        <Text style={styles.solidText}>Business Name</Text>
+          <Text style={styles.solidText}>Business Name</Text>
           <TextInput
             placeholder="Enter Business Name"
             value={businessName}
@@ -162,7 +174,7 @@ export default function AddBusinessScreen({ navigation }) {
             placeholder="Enter the address"
             value={phoneNumber}
             onChangeText={setPhoneNumber}
-            keyboardType = 'numeric'
+            keyboardType="numeric"
             style={styles.textInput}
             placeholderTextColor="#888"
           />
@@ -191,6 +203,7 @@ export default function AddBusinessScreen({ navigation }) {
           <View style={styles.pickerContainer}>
             <RNPickerSelect
               placeholder={{ label: "Select a province", value: "" }}
+              value={province}
               onValueChange={setProvince}
               items={[
                 { label: "Alberta", value: "Alberta" },
@@ -289,7 +302,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: "100%",
   },
- 
+
   container: {
     flex: 1,
     padding: 20,
@@ -302,7 +315,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   solidText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#DA5C59",
     marginLeft: 25,
     marginBottom: 5,
@@ -368,11 +381,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    backgroundColor: '#ddd',
+    backgroundColor: "#ddd",
     borderRadius: 5,
-    alignSelf: 'right',
-    alignItems: 'center',
-    width: "18%"
+    alignSelf: "right",
+    alignItems: "center",
+    width: "18%",
   },
   backButtonText: {
     fontSize: 16,

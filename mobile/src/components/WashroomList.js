@@ -21,12 +21,12 @@ import WashroomItemComponent from "./WashroomItemComponent";
 const WashroomList = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [washrooms, setWashrooms] = useState([]);
-  
+
   useEffect(() => {
     const getWashrooms = async () => {
       try {
         const response = await fetch(
-          `${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`,
+          `${process.env.EXPO_PUBLIC_SERVER_URL}/user/query/washrooms`
         );
         if (!response.ok) {
           console.log("Server failed:", response.status);
@@ -130,4 +130,3 @@ const styles = StyleSheet.create({
 });
 
 export default WashroomList;
-

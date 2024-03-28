@@ -105,6 +105,10 @@ export default function AddWashroomScreen({ navigation }) {
 
         if (response.ok) {
           console.log("Washroom request submitted successfully");
+          setAddress("");
+          setCity("");
+          setDescription("");
+          setProvince(" ");
           setPopupVisible(true);
         } else {
           const resData = await response.text();
@@ -146,6 +150,7 @@ export default function AddWashroomScreen({ navigation }) {
           <View style={styles.pickerContainer}>
             <RNPickerSelect
               placeholder={{ label: "Select a province", value: "" }}
+              value={province}
               onValueChange={setProvince}
               items={[
                 { label: "Alberta", value: "Alberta" },
@@ -257,7 +262,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   solidText: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#DA5C59",
     marginLeft: 25,
     marginBottom: 5,

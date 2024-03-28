@@ -3,36 +3,31 @@ import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SlidingUpPanelComponent from "../components/SlidingUpPanelComponentInfo";
 import TierList from "../components/TierList";
-import { useAllPrismicDocumentsByType } from "@prismicio/react";
-
 
 const CARD_HEIGHT = 300;
 
 export default function InfoScreen({ navigation }) {
   const [panelOpen, setPanelOpen] = useState(true);
 
-  const togglePanel = () => {
-    setPanelOpen(!panelOpen);
-  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-      <View style={styles.headerContainer}>
-        <Text style={[styles.headerText, { color: "#DA5C59" }]}>
-          About GoHere
-        </Text>
-      </View>
-      <View style={styles.content}>
-        <Text style={styles.description}>
-          Crohn’s and Colitis Canada’s GoHere program helps create
-          understanding, supportive and accessible communities by improving
-          washroom access.
-        </Text>
-      </View>
-      <View style={styles.dividingLine}></View>
-      <View style={styles.TierContainer}>
-      <TierList  />
-      </View>
+        <View style={styles.headerContainer}>
+          <Text style={[styles.headerText, { color: "#DA5C59" }]}>
+            About GoHere
+          </Text>
+        </View>
+        <View style={styles.content}>
+          <Text style={styles.description}>
+            Crohn’s and Colitis Canada’s GoHere program helps create
+            understanding, supportive and accessible communities by improving
+            washroom access.
+          </Text>
+        </View>
+        <View style={styles.dividingLine}></View>
+        <View style={styles.TierContainer}>
+          <TierList />
+        </View>
       </ScrollView>
       <SlidingUpPanelComponent
         CARD_HEIGHT={CARD_HEIGHT}
@@ -40,7 +35,6 @@ export default function InfoScreen({ navigation }) {
         setPanelOpen={setPanelOpen}
         navigation={navigation}
       />
-      
     </SafeAreaView>
   );
 }
@@ -83,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-    marginTop: 20,
+    marginTop: 10,
   },
   headerText: {
     fontSize: 26,

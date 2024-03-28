@@ -66,7 +66,7 @@ const NewUserReports = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button className="text-white" variant="success" onClick={handleRemoveRequest}>
+          <Button className="text-white" variant="danger" onClick={handleRemoveRequest}>
             Delete Request
           </Button>
         </Modal.Footer>

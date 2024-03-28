@@ -2,7 +2,6 @@ import { RichText } from "react-native-prismic-richtext";
 import { usePrismicDocumentByID } from "@prismicio/react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-
 import BackButton from "../components/BackButton";
 
 const DetailedNewsScreen = ({ route }) => {
@@ -26,7 +25,6 @@ const DetailedNewsScreen = ({ route }) => {
                 color: "#DA5C59",
               }}
             />
-
           </View>
           <Text style={styles.date}>
             Date Published: {document.data.publication_data}
@@ -88,8 +86,8 @@ const styles = StyleSheet.create({
   title: {
     display: "flex",
     alignItems: "flex-start",
-    gap: 20
-  }
+    gap: 20,
+  },
 });
 
 export default DetailedNewsScreen;

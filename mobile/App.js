@@ -127,17 +127,3 @@ function SettingStack() {
     </Stack.Navigator>
   );
 }
-
-// export default function App() {
-//   return (
-//     <NavigationContainer>
-//       <StatusBar />
-//       <Tab.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
-//         <Tab.Screen name="Map" component={MapScreen} />
-//         <Tab.Screen name="Card" component={CardScreen} />
-//         <Tab.Screen name="Info" component={InfoStack} />
-//         <Tab.Screen name="Settings" component={SettingStack} />
-//       </Tab.Navigator>
-//     </NavigationContainer>
-//   );
-// }
