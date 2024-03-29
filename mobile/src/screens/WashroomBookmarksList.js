@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import WashroomItemComponent from "../components/WashroomItemComponent";
-import SearchComponent from "../components/SearchComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import BackButton from "../components/BackButton";

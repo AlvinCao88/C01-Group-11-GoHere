@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -9,6 +9,7 @@ import { client } from "./prismic";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { LogBox } from "react-native";
 
 import NewsScreen from "./src/screens/NewsScreen";
 import DetailedNewsScreen from "./src/screens/DetailedNewsScreen";
@@ -28,6 +29,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  LogBox.ignoreAllLogs();
   return (
     <GlobalWashroom>
     <NavigationStateProvider>
@@ -127,17 +129,3 @@ function SettingStack() {
     </Stack.Navigator>
   );
 }
-
-// export default function App() {
-//   return (
-//     <NavigationContainer>
-//       <StatusBar />
-//       <Tab.Navigator initialRouteName="Map" screenOptions={{ headerShown: false }}>
-//         <Tab.Screen name="Map" component={MapScreen} />
-//         <Tab.Screen name="Card" component={CardScreen} />
-//         <Tab.Screen name="Info" component={InfoStack} />
-//         <Tab.Screen name="Settings" component={SettingStack} />
-//       </Tab.Navigator>
-//     </NavigationContainer>
-//   );
-// }

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 const NavigationStateContext = createContext();
 
@@ -8,7 +8,9 @@ export const NavigationStateProvider = ({ children }) => {
   const [isWashroomInfoFocused, setIsWashroomInfoFocused] = useState(false);
 
   return (
-    <NavigationStateContext.Provider value={{ isWashroomInfoFocused, setIsWashroomInfoFocused }}>
+    <NavigationStateContext.Provider
+      value={{ isWashroomInfoFocused, setIsWashroomInfoFocused }}
+    >
       {children}
     </NavigationStateContext.Provider>
   );

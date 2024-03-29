@@ -1,19 +1,19 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native"
-const WashroomItemComponent = ({washroom, navigation}) => {
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+const WashroomItemComponent = ({ washroom, navigation }) => {
   return (
-      <TouchableOpacity
-        style={styles.washroomList}
-        onPress={() => {
-          navigation.navigate("WashroomInfo", { id: washroom._id });
-        }}
-      >
-        <Text style={styles.washroomName}>{washroom.name}</Text>
-        <Text style={styles.contentText}>
-          {washroom.fullAddress}, {washroom.province}
-        </Text>
-      </TouchableOpacity>
-  )
-}
+    <TouchableOpacity
+      style={styles.washroomList}
+      onPress={() => {
+        navigation.navigate("WashroomInfo", { id: washroom._id });
+      }}
+    >
+      <Text style={styles.washroomName}>{washroom.name}</Text>
+      <Text style={styles.contentText}>
+        {washroom.fullAddress}, {washroom.province}
+      </Text>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   washroomName: {
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 });
-export default WashroomItemComponent
+export default WashroomItemComponent;

@@ -74,7 +74,7 @@ const WashroomInfo = ( {route, navigation}) => {
   
     getWashroom();
     checkInBookmarks();
-  }, [id, setWashroom, setCenter]);
+  }, [id, setCenter]);
 
 const handleWebsitePress = useCallback(async () => {
   const url = washroom?.contact?.website;
@@ -144,25 +144,6 @@ const handleCallPress = useCallback(async () => {
       console.error(e)
     }
   }
-
-  
-  // const handleWebsitePress = useCallback(async () => {
-  //   if (!washroom || !washroom.website) {
-  //     // Handle the case where washroom or washroom.website is null or undefined
-  //     console.error('Invalid washroom or website property');
-  //     return;
-  //   }
-  
-  //   const supported = await Linking.canOpenURL(washroom.website);
-  
-  //   if (supported) {
-  //     await Linking.openURL(washroom.website);
-  //   } else {
-  //     Alert.alert(`Don't know how to open this URL: ${washroom.website}`);
-  //   }
-  // }, [washroom]);
-  
-  
     
   return (
     <BottomSheetScrollView style={styles.container}  >
@@ -249,10 +230,8 @@ const handleCallPress = useCallback(async () => {
 
 const styles = StyleSheet.create({
   container: {
-    // height:'80',
     flex:1,
     backgroundColor:'white',
-    // padding: 10,
   },
   infoSection: {
     height:'80%',
@@ -262,13 +241,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: '500',
-    // padding:10,
   },
   washroomContent: {
     fontSize: 12,
     fontWeight: '300',
     marginBottom: 15,
-    // padding:5,
   },
   saveButton:{
     backgroundColor:'white',
@@ -314,7 +291,6 @@ const styles = StyleSheet.create({
   contactText:{
     fontSize: 16,
     fontWeight: '400',
-    // justifyContent: 'center',
   },
   directionView:{
     justifyContent:'flex-end',

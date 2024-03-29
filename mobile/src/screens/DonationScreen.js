@@ -1,8 +1,8 @@
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, StatusBar, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { StripeProvider } from '@stripe/stripe-react-native';
 import { useNavigation } from '@react-navigation/native';
-import BackButton from '../components/BackButton'
+import { StripeProvider } from '@stripe/stripe-react-native';
+import React from 'react';
+import { Keyboard, SafeAreaView, StatusBar, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import BackButton from '../components/BackButton';
 
 import Checkout from '../components/Checkout';
 

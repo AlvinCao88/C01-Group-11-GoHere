@@ -15,6 +15,7 @@
     "@expo/vector-icons": "^14.0.0",
     "@gorhom/bottom-sheet": "^4.6.1",
     "@mapbox/geo-viewport": "^0.5.0",
+    "@mapbox/polyline": "^1.2.1",
     "@prismicio/client": "^7.3.1",
     "@prismicio/react": "^2.7.3",
     "@react-native-async-storage/async-storage": "^1.23.1",
@@ -45,10 +46,10 @@
     "react-navigation": "^5.0.0",
     "react-router-dom": "^6.22.3",
     "rn-sliding-up-panel": "^2.4.6",
-    "uuid": "^9.0.1",
     "stripe": "^14.18.0",
     "supercluster": "^8.0.1",
-    "use-supercluster": "^1.2.0"
+    "use-supercluster": "^1.2.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

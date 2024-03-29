@@ -10,7 +10,7 @@ import SlidingUpPanel from "rn-sliding-up-panel";
 import { Linking } from "react-native";
 import { Animated } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 
 const SlidingUpPanelComponent = ({
   isEnglish,
@@ -19,14 +19,14 @@ const SlidingUpPanelComponent = ({
 }) => {
   const openURL = (url) => {
     Linking.openURL(url).catch((err) =>
-      console.error("Couldn't load page", err),
+      console.error("Couldn't load page", err)
     );
   };
 
-  const [condition, setCondition] = useState('');
+  const [condition, setCondition] = useState("");
 
   const loadNames = async () => {
-    const storedCondition = await AsyncStorage.getItem('condition');
+    const storedCondition = await AsyncStorage.getItem("condition");
     if (storedCondition) {
       setCondition(storedCondition);
     } else {
@@ -55,22 +55,22 @@ const SlidingUpPanelComponent = ({
       <View style={styles.panel}>
         <View style={styles.panelHandle}></View>
         <Text style={styles.panelTitle}>
-        {isEnglish && condition == "Ulcerative colitis"
-                ? textTranslations.ulcerativeDisease.en
-                : !isEnglish && condition == "Ulcerative colitis"
-                ? textTranslations.ulcerativeDisease.fr
-                : !isEnglish && condition == "Crohn's disease"
-                ? textTranslations.crohnsDisease.fr
-                : textTranslations.crohnsDisease.en }
+          {isEnglish && condition == "Ulcerative colitis"
+            ? textTranslations.ulcerativeDisease.en
+            : !isEnglish && condition == "Ulcerative colitis"
+            ? textTranslations.ulcerativeDisease.fr
+            : !isEnglish && condition == "Crohn's disease"
+            ? textTranslations.crohnsDisease.fr
+            : textTranslations.crohnsDisease.en}
         </Text>
         <Text style={styles.panelContent}>
-        {isEnglish && condition == "Ulcerative colitis"
-                ? textTranslations.bottomTextColitis.en
-                : !isEnglish && condition == "Ulcerative colitis"
-                ? textTranslations.bottomTextColitis.fr
-                : !isEnglish && condition == "Crohn's disease"
-                ? textTranslations.bottomTextChohns.fr
-                : textTranslations.bottomTextChohns.en }
+          {isEnglish && condition == "Ulcerative colitis"
+            ? textTranslations.bottomTextColitis.en
+            : !isEnglish && condition == "Ulcerative colitis"
+            ? textTranslations.bottomTextColitis.fr
+            : !isEnglish && condition == "Crohn's disease"
+            ? textTranslations.bottomTextChohns.fr
+            : textTranslations.bottomTextChohns.en}
         </Text>
         <View style={styles.dividingLine}></View>
         <Text style={styles.spacingText}> </Text>

@@ -24,13 +24,13 @@ export async function registerUser(req, res) {
     const { email, password, registrationId } = req.body;
 
     if (!email || !password || !registrationId) {
-      return res
-        .status(400)
-        .json({ error: "Email, Password, and Registration Id both needed to register." });
+      return res.status(400).json({
+        error: "Email, Password, and Registration Id both needed to register.",
+      });
     }
 
-    if(registrationId !== "super secret 123"){
-      return res.status(401).json({error: "Registration Id invalid."});
+    if (registrationId !== "super secret 123") {
+      return res.status(401).json({ error: "Registration Id invalid." });
     }
 
     if (!validator.validate(email)) {
@@ -356,7 +356,7 @@ export async function removeSingleReport(req, res) {
       _id: new ObjectId(id),
     });
 
-    if (!data) {
+    if (data.deletedCount === 0) {
       return res
         .status(404)
         .json({ error: "Unable to find request with given ID." });

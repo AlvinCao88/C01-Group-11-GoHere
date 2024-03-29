@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  ScrollView, 
-  TouchableOpacity, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
   Image,
   Modal,
 } from "react-native";
@@ -14,25 +14,32 @@ import { useAllPrismicDocumentsByType } from "@prismicio/react";
 const TierList = ({ navigation }) => {
   const [results] = useAllPrismicDocumentsByType("business");
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalData, setModalData] = useState({ business_name: '', description: '' });
+  const [modalData, setModalData] = useState({
+    business_name: "",
+    description: "",
+  });
   const renderSponsors = (tierLevel) => {
     return (
-      <ScrollView 
-        showsHorizontalScrollIndicator={true}
-        horizontal={true} 
-        style={styles.container} 
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
+        style={styles.container}
         snapToAlignment="start"
-        snapToInterval={400} 
+        snapToInterval={400}
       >
         {results &&
-          results.map((e) => (
+          results.map((e) =>
             e.data.tier_level === tierLevel ? (
-              <TouchableOpacity 
+              <TouchableOpacity
                 key={e.id}
                 onPress={() => {
-                  setModalData({ 
-                    business_name: e.data.business_name ? e.data.business_name[0].text : '',
-                    description: e.data.description ? e.data.description[0].text : '' 
+                  setModalData({
+                    business_name: e.data.business_name
+                      ? e.data.business_name[0].text
+                      : "",
+                    description: e.data.description
+                      ? e.data.description[0].text
+                      : "",
                   });
                   setModalVisible(true);
                 }}
@@ -45,61 +52,62 @@ const TierList = ({ navigation }) => {
                 </View>
               </TouchableOpacity>
             ) : null
-      ))}
-      </ScrollView> 
+          )}
+      </ScrollView>
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
-    <Modal
-     animationType="fade"
-     transparent={true}
-     visible={modalVisible}
-     onRequestClose={() => {
-       setModalVisible(false);
-     }}
-     >
-     <View style={styles.centeredView}>
-       <View style={styles.modalView}>
-          <View>
-            <Text style={styles.businessName}>{modalData.business_name}</Text>
-            <Text style={styles.description}>{modalData.description}</Text>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View>
+              <Text style={styles.businessName}>{modalData.business_name}</Text>
+              <Text style={styles.description}>{modalData.description}</Text>
+            </View>
+            <View>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.textStyle}>Close</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => setModalVisible(false)}>
-              <Text style={styles.textStyle}>Close</Text>
-            </TouchableOpacity>
-          </View>
-       </View>
-     </View>
-   </Modal>
+        </View>
+      </Modal>
 
       <View style={styles.headerContainer}>
         <Text style={[styles.headerText, { color: "#DA5C59" }]}>
           Our Partners
         </Text>
       </View>
-      
+
       <View>
         <Text style={styles.goldSponsorText}>Gold Sponsor</Text>
-        {renderSponsors('Gold')}
+        {renderSponsors("Gold")}
       </View>
 
       <View>
         <Text style={styles.silverSponsorText}>Silver Sponsor</Text>
-        {renderSponsors('Silver')}
+        {renderSponsors("Silver")}
       </View>
 
       <View style={styles.bronzeContainer}>
         <Text style={styles.bronzeSponsorText}>Bronze Sponsor</Text>
-        {renderSponsors('Bronze')}
+        {renderSponsors("Bronze")}
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -122,59 +130,60 @@ const styles = StyleSheet.create({
   goldSponsorText: {
     color: "#FFD700",
     paddingTop: 30,
-    fontWeight: 'bold',
-    fontSize: 22,
-    alignSelf: 'center',
+    fontWeight: "bold",
+    fontSize: 32,
+    alignSelf: "center",
+    borderColor: "#FFD700",
   },
   silverSponsorText: {
     color: "#C0C0C0",
     paddingTop: 0,
-    fontWeight: 'bold',
-    fontSize: 22,
-    alignSelf: 'center',
+    fontWeight: "bold",
+    fontSize: 32,
+    alignSelf: "center",
   },
   bronzeContainer: {
-    alignContent: 'center',
+    alignContent: "center",
     backgroundColor: "#fff",
-    paddingBottom: '40%',
+    paddingBottom: "40%",
     paddingTop: 50,
     borderBottomWidth: 10,
-    borderColor:'black',
+    borderColor: "black",
   },
   bronzeSponsorText: {
     color: "#CD7F32",
     paddingTop: 0,
-    fontWeight: 'bold',
-    fontSize: 22,
-    alignSelf: 'center',
+    fontWeight: "bold",
+    fontSize: 32,
+    alignSelf: "center",
   },
   imageContainer: {
-    width: 420, 
-    height: 220, 
+    padding: 10,
+    width: 450,
+    height: 220,
     overflow: "hidden",
-    marginRight: 5, 
-    // borderWidth: 3,
+    marginRight: 5,
   },
   image: {
     flex: 1,
-    resizeMode: "cover", 
+    resizeMode: "cover",
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
   },
   modalView: {
-    height: '50%', 
+    height: "50%",
     width: "80%",
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    shadowColor: '#000',
+    justifyContent: "space-between",
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -187,29 +196,27 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: '#DA5C59',
+    backgroundColor: "#DA5C59",
   },
 
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     fontSize: 18,
-    textAlign: 'center',
+    textAlign: "center",
   },
   businessName: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#DA5C59',
+    fontWeight: "bold",
+    color: "#DA5C59",
     paddingBottom: 20,
-    textAlign: 'center',
-
+    textAlign: "center",
   },
   description: {
     fontSize: 16,
-    fontWeight: '400',
+    fontWeight: "400",
     padding: 10,
   },
 });
-
 
 export default TierList;

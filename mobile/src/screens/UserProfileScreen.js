@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RNPickerSelect from "react-native-picker-select";
 import BackButton from "../components/BackButton";
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     marginTop: 0,
+    backgroundColor: "white",
   },
   mainContainer: {
     width: "100%",
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginLeft: 20,
     color: "#5A5A5A",
+    fontSize:18,
     fontWeight: "500",
   },
   button: {
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonActive: {
-    backgroundColor: "black",
+    backgroundColor: "#DA5C59",
   },
   saveText: {
     color: "white",
