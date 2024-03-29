@@ -115,8 +115,9 @@ test("get 1 business request, proper Id", async () => {
       },
   })
 
-  const resBody = await res.json();
-  console.log(resBody);
+  console.log(insertedId)
+  // const resBody = await res.json();
+  // console.log(resBody);
   expect(res.status).toBe(200);
 });
 
@@ -156,7 +157,8 @@ test("/admin/validateAddBusinessRequest proper id", async () => {
 
   // Real data for the University of Toronto Scarborough campus
   const requestBody = {
-    businessName: "University of Toronto Scarborough",
+    name: "University of Toronto Scarborough",
+    fullAddress: "1265 Military Trail, Scarborough, ON M1C 1A4, Canada",
     contactName: "Admissions Office",
     email: "admissions@utsc.edu",
     phoneNumber: "416-287-8872",
