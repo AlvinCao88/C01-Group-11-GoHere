@@ -10,7 +10,7 @@ import WashroomBookmarksList from "../screens/WashroomBookmarksList";
 const Stack = createStackNavigator();
 
 const NavigateBottomSheets = forwardRef(function (
-  { sheetRef, setCenter },
+  { sheetRef, setCenter, location },
   ref
 ) {
   return (
@@ -20,6 +20,7 @@ const NavigateBottomSheets = forwardRef(function (
           name="WashroomList"
           component={WashroomList}
           options={{ headerShown: false }}
+            initialParams={{ location: location }}
         />
         <Stack.Screen
           name="WashroomInfo"

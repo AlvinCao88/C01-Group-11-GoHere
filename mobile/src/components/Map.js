@@ -6,7 +6,7 @@ import { decode } from "@mapbox/polyline";
 import { getGlobalWashroom } from "./GlobalWashroomContext";
 import * as Location from "expo-location";
 
-export default function Map({ center, expandFn }) {
+export default function Map({ center, expandFn, location }) {
   const { currentWashroom } = getGlobalWashroom();
   const [loading, setLoading] = useState(true);
   // const mapRef = useRef(null);
@@ -100,10 +100,9 @@ export default function Map({ center, expandFn }) {
   useEffect(() => {
     (async () => {
       try {
-        let location = await Location.getCurrentPositionAsync({});
         if (currentWashroom != null) {
           getDirections(
-            `${location.coords.latitude}, ${location.coords.longitude}`,
+            `${location.latitude}, ${location.longitude}`,
             `${currentWashroom.latitude}, ${currentWashroom.longitude}`
           )
             .then((coords) => setCoords(coords))

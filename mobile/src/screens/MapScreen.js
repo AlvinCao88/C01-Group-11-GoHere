@@ -21,6 +21,10 @@ export default function WashroomBottomSheet() {
     latitudeDelta: 0.05,
     longitudeDelta: 0.05,
   });
+  const [currentLocation, setCurrentLocation] = useState({
+    latitude: 43.78309609,
+    longitude: -79.1873263,
+  });
   const { isWashroomInfoFocused } = useNavigationState();
 
   // Id is the id of the washroom so we can navigate to the correct washroom info page
@@ -38,10 +42,15 @@ export default function WashroomBottomSheet() {
       }
       try {
         let location = await Location.getCurrentPositionAsync({});
-        setCenter({
+        setCurrentLocation({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
         });
+        setCenter((prev) => ({
+          ...prev,
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        }));
       } catch (error) {
         console.error("Error getting current location:", error);
       }
@@ -56,6 +65,7 @@ export default function WashroomBottomSheet() {
             center={center}
             setCenter={center}
             expandFn={expandAndNavigateBottomSheet}
+            location={currentLocation}
           />
           {/** This is to have the map screen with the bottom sheet */}
           <BottomSheet
@@ -64,7 +74,12 @@ export default function WashroomBottomSheet() {
             snapPoints={snapPoints}
             enablePanDownToClose={false}
           >
-            <NavigateBottomSheets ref={navigationRef} sheetRef={sheetRef} setCenter={setCenter}/>
+            <NavigateBottomSheets
+              ref={navigationRef}
+              sheetRef={sheetRef}
+              setCenter={setCenter}
+              location={currentLocation}
+            />
           </BottomSheet>
           <StatusBar style="auto" />
         </View>
