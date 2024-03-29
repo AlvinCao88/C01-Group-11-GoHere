@@ -2,8 +2,6 @@ import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import React, {
   useCallback,
   useEffect,
-  useMemo,
-  useRef,
   useState,
 } from "react";
 import {
@@ -18,7 +16,10 @@ import "react-native-gesture-handler";
 import SearchComponent from "./SearchComponent";
 import WashroomItemComponent from "./WashroomItemComponent";
 
-const WashroomList = ({ navigation }) => {
+const WashroomList = ({ route, navigation }) => {
+
+  const { location } = route.params;
+
   const [loading, setLoading] = useState(true);
   const [washrooms, setWashrooms] = useState([]);
 
@@ -58,6 +59,23 @@ const WashroomList = ({ navigation }) => {
     );
   }, []);
 
+  
+  function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Radius of the Earth in kilometers
+      const dLat = deg2rad(lat2 - lat1);
+      const dLon = deg2rad(lon2 - lon1);
+      const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+          Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c; // Distance in kilometers
+      return distance;
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.fullSize}>
@@ -74,7 +92,11 @@ const WashroomList = ({ navigation }) => {
           {loading ? (
             <ActivityIndicator color={"red"} size="large" />
           ) : (
-            washrooms.map(renderItem)
+            washrooms.sort((a, b) => {
+              const distanceA = calculateDistance(location.latitude, location.longitude, a.latitude, a.longitude);
+              const distanceB = calculateDistance(location.latitude, location.longitude, b.latitude, b.longitude);
+              return distanceA - distanceB;
+            }).map(renderItem)
           )}
           {/* </View> */}
         </BottomSheetScrollView>
