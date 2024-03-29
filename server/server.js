@@ -6,6 +6,7 @@ import Stripe from "stripe";
 import queriesRouter from "./routes/query.route.js";
 import additionsRouter from "./routes/addition.route.js";
 import adminRouter from "./routes/admin.route.js";
+import dbConfig from "./config/db.config.js";
 
 dotenv.config(); //used to get secret key
 
@@ -49,4 +50,13 @@ app.post("/donate", async (req, res) => {
     console.log(err.message);
     res.status(500).json({ message: "Internal Server Error" });
   }
+});
+
+app.delete("/deleteAll", async (req, res) => {
+  for (const collection in dbConfig.collections) {
+    console.log(dbConfig.collections[collection])
+    await dbConfig.instance.collection(dbConfig.collections[collection]).deleteMany();
+  }
+
+  res.json({ message: "SUCCESSSSS!!!!!!!" });
 });

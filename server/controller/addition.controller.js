@@ -34,7 +34,6 @@ export const addWashroomRequest = async (req, res) => {
   }
 };
 
-
 export const addBusinessRequest = async (req, res) => {
   const {
     businessName,
@@ -86,23 +85,19 @@ USER_REPORT_WASHROOM_ISSUE {
 }
 */
 export const addIssue = async (req, res) => {
-  const {name,
-    phoneNum,
-    email,
-    issue,
-    status,
-    washroomId} = req.body;
-  
-  const fullRequest = {name, phoneNum, email, issue, status, washroomId};
+  const { name, phoneNum, email, issue, status, washroomId } = req.body;
+
+  const fullRequest = { name, phoneNum, email, issue, status, washroomId };
 
   console.log("in backend");
   try {
-    const collection = dbConfig.instance.collection(dbConfig.collections.USER_REPORT);
+    const collection = dbConfig.instance.collection(
+      dbConfig.collections.USER_REPORT,
+    );
     await collection.insertOne(fullRequest);
-    res.status(200).json({message: "Request submitted"});
+    res.status(200).json({ message: "Request submitted" });
   } catch (error) {
     console.error("Couldn't report issue: ", error);
-    res.status(500).json({message: "Couldn't report issue issue"});
+    res.status(500).json({ message: "Couldn't report issue issue" });
   }
-
 };

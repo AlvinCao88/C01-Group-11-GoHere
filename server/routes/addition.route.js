@@ -1,7 +1,8 @@
 import express from "express";
 import {
   addBusinessRequest,
-  addWashroomRequest, addIssue,
+  addWashroomRequest,
+  addIssue,
 } from "../controller/addition.controller.js";
 
 const router = express.Router();
@@ -37,7 +38,6 @@ BUSINESS_WASHROOM_REQUEST {
 }
 */
 router.post("/addBusinessRequest", addBusinessRequest);
-
 
 router.post("/add", addWashroomRequest);
 
