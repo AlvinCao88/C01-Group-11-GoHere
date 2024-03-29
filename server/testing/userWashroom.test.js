@@ -31,11 +31,12 @@ beforeAll(async() => {
 
 afterEach(async () => {
     const db = await connectToDatabase();
-    const collection = db.collection(collections.ADD_WASHROOM_REQUESTS);
-    await collection.deleteMany({}); //fresh clean db for each test
+    const washroomRequestCollection = db.collection(collections.ADD_WASHROOM_REQUESTS);
+    await washroomRequestCollection.deleteMany({}); //fresh clean db for each test
 });
 
 afterAll(async () => {
+  await insertOneWashroomRequest();
     if (client) await client.close();
 });
 
@@ -133,4 +134,86 @@ test("/admin/addWashroom/valdateRequest/:id - Incorrect fields in validation", a
 
   expect(res.status).toBe(400)
 
+});
+
+
+async function insertOneWashroomRequest(){
+  const db = await connectToDatabase();
+  const washroomRequestCollection = db.collection(collections.ADD_WASHROOM_REQUESTS);
+  const newRequest = {
+    address: "Test Address",
+    city: "Test City",
+    province: "Test Province",
+    description: "Test Description",
+  };
+
+  try {
+    const result = await washroomRequestCollection.insertOne(newRequest);
+    return result.insertedId;
+  } catch (error) {
+      console.error("Error inserting test business request:", error);
+      throw error;
+  }
+};
+
+test("removeSingleWashroomRequest - removing a washroom request with proper ID", async () => {
+  // Insert a test washroom request
+  const token = await getToken();
+  const insertedId = await insertOneWashroomRequest();
+
+  // Make a DELETE request to remove the inserted washroom request
+  const res = await fetch(`${SERVER_URL}/admin/removeWashroom/${insertedId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  // Check the response status and body
+  const resBody = await res.json();
+  console.log(resBody);
+  expect(res.status).toBe(200);
+});
+
+test("removeSingleWashroomRequest - attempting to remove a washroom request with invalid ID", async () => {
+  // Try to remove a washroom request with an invalid ID
+  const token = await getToken();
+  const invalidId = "660632b44bcbr8a2d5026e75";
+
+  // Make a DELETE request to remove the washroom request with an invalid ID
+  const res = await fetch(`${SERVER_URL}/admin/removeWashroom/${invalidId}`, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+      },
+      
+  });
+
+  // Check the response status
+  expect(res.status).toBe(400);
+});
+
+test("removeSingleWashroomRequest - attempting to remove a non-existent washroom request", async () => {
+  // Try to remove a non-existent washroom request
+  const token = await getToken();
+  const nonExistentId = "sgdfgsdfgsdfgsdf";
+
+  // Make a DELETE request to remove the non-existent washroom request
+  const res = await fetch(`${SERVER_URL}/admin/removeWashroom/${nonExistentId}`, {
+      method: "DELETE",
+      mode: "cors",
+      cache: "no-cache",
+      headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+      },
+      
+  });
+
+  // Check the response status
+  expect(res.status).toBe(400);
 });
